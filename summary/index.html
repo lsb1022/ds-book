@@ -663,7 +663,7 @@ section.sec.d2{margin-top:30px}
 <div class="dlg" id="dlg" hidden role="dialog" aria-modal="true" aria-label="본문 검색">
   <div class="dlg-box">
     <div class="dlg-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="예: 원형 큐, pop_back, 크루스칼" autocomplete="off" spellcheck="false"><button class="iconbtn" id="closeSearch" type="button" aria-label="검색 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-    <div class="res" id="res"><div class="hint">요약 236개 항목에서 제목과 본문, 코드까지 찾습니다.</div></div>
+    <div class="res" id="res"><div class="hint">요약 238개 항목에서 제목과 본문, 코드까지 찾습니다.</div></div>
   </div>
 </div>
 <button class="totop" id="totop" type="button" aria-label="맨 위로" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
@@ -2355,7 +2355,7 @@ function paintSel(){ res.querySelectorAll('.hit').forEach((h,i)=>h.classList.tog
 function mark(s,terms){ let h=esc(s); terms.forEach(t=>{ if(!t) return; const re=new RegExp(t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'); h=h.replace(re,m=>`<mark>${m}</mark>`); }); return h; }
 function search(){
   if(!docs) return; const v=q.value.trim().toLowerCase(); sel=0;
-  if(!v){ res.innerHTML='<div class="hint">요약 236개 항목에서 제목과 본문, 코드까지 찾습니다.</div>'; hits=[]; return; }
+  if(!v){ res.innerHTML='<div class="hint">요약 238개 항목에서 제목과 본문, 코드까지 찾습니다.</div>'; hits=[]; return; }
   const terms=v.split(/\s+/).filter(Boolean);
   hits=[];
   for(const d of docs){ let sc=0, ok=true; for(const t of terms){ const inT=d.lt.includes(t), inX=d.lx.includes(t); if(!inT&&!inX){ok=false;break;} sc+=inT?10:1; } if(ok){ if(d.lt===v) sc+=20; hits.push([sc,d]); } }
