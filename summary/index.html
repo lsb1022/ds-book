@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="ko">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#18181b" media="(prefers-color-scheme: dark)">
 <meta charset="utf-8">
 <title>자료구조와 알고리즘 요약</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -82,7 +87,11 @@ a{color:var(--info-fg)}
 .extlink:hover{background:var(--bg-weak)}
 .progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:transparent}
 .progress i{display:block;height:100%;width:0;background:var(--brand);transition:width .1s linear}
-@media (max-width:720px){.extlink{display:none}.searchbtn{width:auto;flex:0 1 auto}.searchbtn span,.searchbtn kbd{display:none}.logo .t{font-size:15px}}
+.logo .ts{display:none}
+.rail-links{display:none}
+@media (max-width:720px){.extlink{display:none}.searchbtn{width:auto;flex:0 1 auto}.searchbtn span,.searchbtn kbd{display:none}.logo .t{display:none}.logo .ts{display:inline;font-size:16px}
+  .rail-links{display:flex;gap:8px;padding:4px 16px 12px;border-bottom:1px solid var(--line);margin-bottom:6px}
+  .rail-links a{flex:1;text-align:center;padding:10px 12px;border-radius:var(--r-m);background:var(--bg-muted);color:var(--fg);font-size:14px;font-weight:700;text-decoration:none}}
 @media (min-width:1080px){#menu{display:none}}
 
 /* ---------- shell ---------- */
@@ -612,6 +621,20 @@ details.pyfold>figure.code{margin:0 10px 10px;background:var(--bg)}
 details.pyfold>details.drill{margin:0 10px 10px}
 
 .pg-hide{display:none!important}
+@media (max-width:600px){
+  figure.code pre{padding:12px 14px;font-size:12.5px;line-height:1.6}
+  details.pyfold{margin-top:14px}
+  details.pyfold>summary{padding:12px 14px;min-height:44px}
+  details.pyfold>figure.code{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;background:var(--bg)}
+  details.pyfold>figure.code>.code-h{display:none}
+  details.pyfold>details.drill{margin:8px}
+  .pager{gap:8px}
+  .pager button{padding:12px 14px;min-height:64px}
+  .pager b{font-size:14px}
+  .pgtop{font-size:13px}
+  .ch-head h1{font-size:26px;line-height:1.3}
+  table{font-size:13.5px}
+}
 .sec.d1.pg-d2>section.sec.d2{margin-top:0!important;padding-top:0!important;border-top:0!important}
 .pgtop{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;padding-block:14px!important;font-size:13.5px;color:var(--fg-muted)}
 .pg-crumb{font:inherit;font-weight:700;color:var(--brand-fg);background:none;border:0;padding:0;cursor:pointer;text-align:left}
@@ -636,7 +659,7 @@ section.sec.d2{margin-top:30px}
 <header class="topbar">
   <div class="topbar-in">
     <button class="iconbtn" id="menu" type="button" aria-label="목차 열기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-    <a class="logo" href="#home" data-home><span class="logo-mark">요약</span><span class="t">자료구조 요약</span></a>
+    <a class="logo" href="#home" data-home><span class="logo-mark">요약</span><span class="t">자료구조 요약</span><span class="ts">자료구조</span></a>
     <button class="searchbtn" id="openSearch" type="button" aria-label="본문 검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>요약에서 검색</span><kbd>/</kbd></button>
     <div class="langs" id="langs" role="group" aria-label="코드 언어 보이기"><button type="button" data-lang="py" aria-pressed="false" title="Python 코드 펼침/접음">Py</button><button type="button" data-lang="cpp" aria-pressed="true" title="C++ 코드 펼침/접음">C++</button></div>
     <a class="extlink" href="../">교재</a><a class="extlink" href="../drills/">빈칸 연습</a>
@@ -646,6 +669,7 @@ section.sec.d2{margin-top:30px}
 <div class="shell">
   <nav class="rail" id="rail" aria-label="목차">
     <div class="rail-head"><b>목차</b><button class="iconbtn" id="closeRail" type="button" aria-label="목차 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="rail-links" id="railLinks"></div>
     <ul class="toc" id="toc"><li><button type="button" class="ch" data-chi="0" data-i="0"><span class="n">·</span><span class="tt">책 소개</span></button></li><li class="part"><button type="button" data-chi="1">Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석</button></li><li><button type="button" class="ch" data-chi="2" data-i="2"><span class="n">1</span><span class="tt">프로그래밍 기초와 소프트웨어 공학</span></button></li><li><button type="button" class="ch" data-chi="3" data-i="3"><span class="n">2</span><span class="tt">자료 구조와 알고리즘의 본질 - 효율적인 문제 해결</span></button></li><li><button type="button" class="ch" data-chi="4" data-i="4"><span class="n">3</span><span class="tt">알고리즘의 성능 분석</span></button></li><li><button type="button" class="ch" data-chi="5" data-i="5"><span class="n">4</span><span class="tt">재귀(Recursion)</span></button></li><li class="part"><button type="button" data-chi="6">Part 2. 상황별 자료구조 선택(Problem-Oriented)</button></li><li><button type="button" class="ch" data-chi="7" data-i="7"><span class="n">5</span><span class="tt">배열과 연결 리스트: 순서가 중요한 데이터</span></button></li><li><button type="button" class="ch" data-chi="8" data-i="8"><span class="n">6</span><span class="tt">정렬(Sorting)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="9" data-i="9"><span class="n">7</span><span class="tt">선택(Selection)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="10" data-i="10"><span class="n">8</span><span class="tt">스택과 큐: 후입선출/선입선출의 활용</span></button></li><li><button type="button" class="ch" data-chi="11" data-i="11"><span class="n">9</span><span class="tt">트리: 효율적인 탐색을 위한 자료구조</span></button></li><li><button type="button" class="ch" data-chi="12" data-i="12"><span class="n">10</span><span class="tt">탐색(Searching)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="13" data-i="13"><span class="n">11</span><span class="tt">그래프(graphs): 관계를 표현하는 자료구조</span></button></li><li class="part"><button type="button" data-chi="14">Part 3. 알고리즘 전략: 최적화된 문제 해결</button></li><li><button type="button" class="ch" data-chi="15" data-i="15"><span class="n">12</span><span class="tt">백트래킹(Backtracking)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="16" data-i="16"><span class="n">13</span><span class="tt">탐욕(Greedy)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="17" data-i="17"><span class="n">14</span><span class="tt">분할 정복(Divide and Conquer)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="18" data-i="18"><span class="n">15</span><span class="tt">다이내믹 프로그래밍(Dynamic Programming)<span class="tag-a">알고리즘</span></span></button></li><li class="part">실전과 프로젝트</li><li><button type="button" class="ch" data-chi="19" data-i="19"><span class="n">·</span><span class="tt">[자료 구조] 실전 문제</span></button></li><li><button type="button" class="ch" data-chi="20" data-i="20"><span class="n">·</span><span class="tt">실전 문제<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="21" data-i="21"><span class="n">·</span><span class="tt">팀 프로젝트</span></button></li></ul>
   </nav>
   <main id="main">
@@ -2332,7 +2356,15 @@ function renderResume(){
 }
 
 /* progress + top button */
-addEventListener('scroll',()=>{ const h=document.documentElement; const p=h.scrollTop/(h.scrollHeight-h.clientHeight||1); $('#totop').hidden=h.scrollTop<900; },{passive:true});
+addEventListener('scroll',()=>{ const h=document.documentElement; const left=h.scrollHeight-h.clientHeight-h.scrollTop; $('#totop').hidden=h.scrollTop<900||left<240; },{passive:true});
+/* mobile: shortcut links inside drawer, swipe to turn pages */
+(()=>{ const box=$('#railLinks'); if(box) document.querySelectorAll('.topbar .extlink').forEach(a=>{ const c=a.cloneNode(true); c.className=''; c.textContent=c.textContent.replace(/\s*↗$/,''); box.appendChild(c); });
+  let sx=0, sy=0, st=0, ok=false;
+  const skip=el=>el.closest('pre,table,.mx-d,[data-viz],input,textarea,button,details.drill,.tbl,.scroll-x,svg,canvas');
+  chap.addEventListener('touchstart',e=>{ if(e.touches.length!==1||skip(e.target)){ ok=false; return; } ok=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY; st=Date.now(); },{passive:true});
+  chap.addEventListener('touchend',e=>{ if(!ok||!PAGES.length||chap.hidden) return; ok=false; const t=e.changedTouches[0]; const dx=t.clientX-sx, dy=t.clientY-sy;
+    if(Date.now()-st<600 && Math.abs(dx)>80 && Math.abs(dx)>Math.abs(dy)*2.2){ if(getSelection&&String(getSelection()).length) return; dx<0?pageNext():pagePrev(); } },{passive:true});
+})();
 $('#totop').onclick=()=>window.scrollTo({top:0});
 
 /* search */
