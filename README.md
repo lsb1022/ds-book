@@ -3,6 +3,7 @@
 정적 사이트(백엔드 없음). GitHub Pages에 그대로 올리면 동작합니다.
 
 - `/` — 교재 (`index.html`이 `book.json`과 `img/`를 불러옴)
+- `/summary/` — 장별 요약 (교재 목차와 같은 순서, 각 항목의 "원문"으로 교재 해당 절로 이동)
 - `/drills/` — 빈칸 연습 모음
 
 ## GitHub Pages 배포

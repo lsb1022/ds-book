@@ -1,0 +1,2383 @@
+<meta charset="utf-8">
+<title>자료구조와 알고리즘 요약</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+@font-face{font-family:'Pretendard Variable';font-weight:45 920;font-style:normal;font-display:swap;src:url(pretendard.woff2) format('woff2-variations'),url(pretendard.woff2) format('woff2')}
+/* Layout: Karrot-style reader — sticky top bar, chapter rail on the left (drawer on phones), white sheets on a gray ground, one chapter per view. */
+:root{
+  --bg:#ffffff; --bg-muted:#f7f8f9; --bg-weak:#f3f4f5; --divider:#f3f4f5;
+  --line:#eeeff1; --line-strong:#dcdee3;
+  --fg:#1a1c20; --fg-muted:#555d6d; --fg-subtle:#868b94; --fg-disabled:#b0b3ba;
+  --brand:#ff6600; --brand-press:#e14d00; --brand-fg:#e14d00; --brand-weak:#fff2ec; --brand-line:#ffd5c0;
+  --info:#217cf9; --info-fg:#135fcd; --info-weak:#eff6ff;
+  --pos:#079171; --pos-weak:#edfaf6;
+  --crit:#fa342c; --crit-fg:#d92b24; --crit-weak:#fdf0f0;
+  --warn-fg:#9b7821; --warn-weak:#fff7de;
+  --purple:#7c3aed; --purple-weak:#f4effe;
+  --on-solid:#ffffff;
+  --scrim:rgba(0,0,0,.36);
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(0,0,0,.10);
+  --c-kw:#c2410c; --c-str:#047857; --c-num:#1d4ed8; --c-com:#868b94; --c-fn:#7c3aed; --c-bi:#0e7490;
+  --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"D2Coding",monospace;
+  --r-s:8px; --r-m:12px; --r-l:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#16171b; --bg-muted:#1d2025; --bg-weak:#2b2e35; --divider:#000000;
+  --line:#2b2e35; --line-strong:#393d46;
+  --fg:#f3f4f5; --fg-muted:#dcdee3; --fg-subtle:#b0b3ba; --fg-disabled:#5b606a;
+  --brand:#ff6600; --brand-press:#ff9e65; --brand-fg:#ff9e65; --brand-weak:#31241f; --brand-line:#6b311c;
+  --info:#41a2f9; --info-fg:#83bcf9; --info-weak:#202742;
+  --pos:#22b27f; --pos-weak:#202926;
+  --crit:#ff6e60; --crit-fg:#ff8a7e; --crit-weak:#322323;
+  --warn-fg:#dab156; --warn-weak:#302819;
+  --purple:#b89cff; --purple-weak:#2a2340;
+  --scrim:rgba(0,0,0,.6);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.45);
+  --c-kw:#ff9e65; --c-str:#5fd0a3; --c-num:#83bcf9; --c-com:#8a909a; --c-fn:#c4b0ff; --c-bi:#67d3e6;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16171b; --bg-muted:#1d2025; --bg-weak:#2b2e35; --divider:#000000;
+  --line:#2b2e35; --line-strong:#393d46;
+  --fg:#f3f4f5; --fg-muted:#dcdee3; --fg-subtle:#b0b3ba; --fg-disabled:#5b606a;
+  --brand:#ff6600; --brand-press:#ff9e65; --brand-fg:#ff9e65; --brand-weak:#31241f; --brand-line:#6b311c;
+  --info:#41a2f9; --info-fg:#83bcf9; --info-weak:#202742;
+  --pos:#22b27f; --pos-weak:#202926;
+  --crit:#ff6e60; --crit-fg:#ff8a7e; --crit-weak:#322323;
+  --warn-fg:#dab156; --warn-weak:#302819;
+  --purple:#b89cff; --purple-weak:#2a2340;
+  --scrim:rgba(0,0,0,.6);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.45);
+  --c-kw:#ff9e65; --c-str:#5fd0a3; --c-num:#83bcf9; --c-com:#8a909a; --c-fn:#c4b0ff; --c-bi:#67d3e6;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.75;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+button,input{font:inherit;color:inherit;letter-spacing:inherit}
+:focus-visible{outline:2px solid var(--info);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4,h5,h6,p{margin:0}
+h1,h2,h3,h4,h5,h6{text-wrap:balance;letter-spacing:-0.025em}
+a{color:var(--info-fg)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar-in{display:flex;align-items:center;gap:10px;height:56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.iconbtn{flex:none;width:40px;height:40px;border:0;border-radius:10px;background:none;display:grid;place-items:center;cursor:pointer;color:var(--fg)}
+.iconbtn:hover{background:var(--bg-weak)}
+.iconbtn svg{width:22px;height:22px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;white-space:nowrap;color:var(--fg);text-decoration:none;min-width:0}
+.logo-mark{flex:none;width:28px;height:28px;border-radius:8px;background:var(--brand);color:var(--on-solid);display:grid;place-items:center;font-size:12px;font-weight:800;font-family:var(--mono);letter-spacing:0}
+.logo .t{overflow:hidden;text-overflow:ellipsis}
+.searchbtn{margin-left:auto;display:flex;align-items:center;gap:8px;height:40px;min-width:0;width:min(320px,42vw);padding:0 12px;border:0;border-radius:10px;background:var(--bg-weak);color:var(--fg-subtle);font-size:14px;cursor:pointer;text-align:left}
+.searchbtn svg{flex:none;width:18px;height:18px}
+.searchbtn span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.searchbtn kbd{margin-left:auto;font-family:var(--mono);font-size:11px;border:1px solid var(--line-strong);border-radius:5px;padding:1px 5px;color:var(--fg-subtle)}
+.extlink{flex:none;font-size:14px;font-weight:700;color:var(--fg-muted);text-decoration:none;padding:8px 10px;border-radius:999px;white-space:nowrap}
+.extlink:hover{background:var(--bg-weak)}
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:transparent}
+.progress i{display:block;height:100%;width:0;background:var(--brand);transition:width .1s linear}
+@media (max-width:720px){.extlink{display:none}.searchbtn{width:auto;flex:0 1 auto}.searchbtn span,.searchbtn kbd{display:none}.logo .t{font-size:15px}}
+@media (min-width:1080px){#menu{display:none}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:1fr;max-width:1240px;margin:0 auto}
+@media (min-width:1080px){.shell{grid-template-columns:288px minmax(0,1fr);gap:0}}
+.rail{background:var(--bg);border-right:1px solid var(--line)}
+@media (min-width:1080px){.rail{position:sticky;top:calc(57px + env(safe-area-inset-top,0px));height:calc(100vh - 57px - env(safe-area-inset-top,0px));overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}}
+@media (max-width:1079px){
+  .rail{position:fixed;z-index:50;top:0;bottom:0;left:0;width:min(330px,88vw);overflow:auto;transform:translateX(-102%);transition:transform .22s ease;box-shadow:var(--shadow);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px)}
+  body.drawer .rail{transform:none}
+  .scrim{position:fixed;inset:0;z-index:45;background:var(--scrim)}
+}
+.rail-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px}
+.rail-head b{font-size:13px;color:var(--fg-subtle);font-weight:700;letter-spacing:.02em}
+@media (min-width:1080px){.rail-head .iconbtn{display:none}}
+.toc{list-style:none;margin:0;padding:4px 10px 28px}
+.toc .part{font-size:12.5px;font-weight:800;color:var(--fg-subtle);padding:16px 8px 6px;letter-spacing:.01em;line-height:1.4}
+.toc .part button{all:unset;cursor:pointer;display:block}
+.toc .part button:hover{color:var(--fg)}
+.toc .part button:focus-visible{outline:2px solid var(--info);border-radius:4px}
+.ch{display:flex;align-items:flex-start;gap:8px;width:100%;border:0;background:none;text-align:left;padding:8px 10px;border-radius:10px;cursor:pointer;color:var(--fg-muted);font-size:14.5px;font-weight:600;line-height:1.45}
+.ch:hover{background:var(--bg-weak);color:var(--fg)}
+.ch .n{flex:none;min-width:22px;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--fg-subtle);padding-top:2px}
+.ch .tt{min-width:0;flex:1}
+.ch.on{background:var(--brand-weak);color:var(--brand-fg)}
+.ch.on .n{color:var(--brand-fg)}
+.tag-a{display:inline-block;font-size:11px;font-weight:700;padding:0 6px;border-radius:5px;background:var(--purple-weak);color:var(--purple);margin-left:4px;vertical-align:1px;white-space:nowrap}
+.subtoc{list-style:none;margin:2px 0 8px 30px;padding:0 0 0 10px;border-left:1.5px solid var(--line-strong)}
+.subtoc a{display:block;font-size:13.5px;color:var(--fg-subtle);text-decoration:none;padding:4px 8px;border-radius:7px;line-height:1.45}
+.subtoc a.d2{padding-left:20px;font-size:13px}
+.subtoc a:hover{color:var(--fg);background:var(--bg-weak)}
+.subtoc a.on{color:var(--fg);font-weight:700;background:var(--bg-weak)}
+
+main{min-width:0}
+.sheet{background:var(--bg)}
+.sheet-in{max-width:800px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:36px 40px}
+@media (max-width:600px){.sheet-in{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 32px}}
+
+/* ---------- home ---------- */
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--brand-fg);margin-bottom:8px}
+.hero h1{font-size:clamp(30px,6vw,42px);line-height:1.25;font-weight:800}
+.lead{color:var(--fg-muted);font-size:17px;margin-top:12px;max-width:58ch}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 11px;border-radius:999px;font-size:13px;font-weight:700;background:var(--bg-weak);color:var(--fg-muted);white-space:nowrap}
+.chip-brand{background:var(--brand-weak);color:var(--brand-fg)}
+.chip-purple{background:var(--purple-weak);color:var(--purple)}
+.chip-pos{background:var(--pos-weak);color:var(--pos)}
+.resume{display:flex;align-items:center;gap:14px;margin-top:22px;padding:16px 18px;border-radius:var(--r-m);background:var(--brand-weak);border:0;width:100%;text-align:left;cursor:pointer;color:var(--fg)}
+.resume:hover{background:var(--brand-line)}
+.resume .k{flex:none;font-size:13px;font-weight:800;color:var(--brand-fg)}
+.resume .v{min-width:0;flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resume .go{flex:none;font-weight:800;color:var(--brand-fg)}
+.home-h{font-size:22px;font-weight:800;margin-bottom:6px}
+.home-sub{color:var(--fg-subtle);font-size:14.5px;margin-bottom:18px}
+.partblock{margin-top:32px}
+.partblock h3{font-size:14px;font-weight:800;color:var(--fg-subtle);margin-bottom:10px}
+.cards{display:flex;flex-direction:column}
+.card{display:flex;align-items:baseline;gap:14px;padding:11px 8px;margin:0 -8px;border:0;border-radius:var(--r-s,8px);background:none;text-align:left;cursor:pointer;color:var(--fg);font:inherit}
+.card:hover{background:var(--bg-muted)}
+.card .cn{flex:none;width:22px;font-size:14px;font-weight:600;color:var(--fg-subtle);text-align:right}
+.card .ct{font-size:16px;font-weight:600;line-height:1.45}
+.card .alg{flex:none;font-size:12px;font-weight:600;color:var(--purple)}
+
+/* ---------- chapter ---------- */
+.ch-head{padding-bottom:28px}
+.ch-head h1{font-size:clamp(28px,5.4vw,38px);line-height:1.28;font-weight:800}
+.ch-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 16px;border-radius:var(--r-s);border:0;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn.sm{height:34px;padding:0 12px;font-size:13px}
+.btn-brand{background:var(--brand);color:var(--on-solid)} .btn-brand:hover{background:var(--brand-press)}
+.btn-weak{background:var(--bg-weak);color:var(--fg)} .btn-weak:hover{background:var(--line-strong)}
+.loading{color:var(--fg-subtle);padding:40px 0}
+
+/* sections: every top-level part of a chapter is its own white sheet */
+.blk{background:var(--bg);padding-block:36px 40px;padding-left:max(20px,env(safe-area-inset-left,0px),calc((100% - 760px)/2));padding-right:max(20px,env(safe-area-inset-right,0px),calc((100% - 760px)/2))}
+@media (max-width:600px){.blk{padding-block:28px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+.sb>*:first-child{margin-top:0}
+.sec-h{margin-bottom:14px}
+.crumb{font-size:13px;font-weight:700;color:var(--brand-fg);margin-bottom:4px;line-height:1.4}
+.sec-h .st{font-weight:800;line-height:1.35}
+.sec-h.d1 .st{font-size:clamp(23px,4.4vw,28px)}
+.sec.d2{margin-top:40px;padding-top:28px;border-top:1px solid var(--line)}
+.sec-h.d2 .st{font-size:21px}
+.sec.d3{margin-top:32px}
+.sec-h.d3 .st{font-size:18px}
+.sec-h.d3 .st::before{content:"";display:inline-block;width:6px;height:6px;border-radius:2px;background:var(--brand);margin-right:9px;vertical-align:4px}
+
+/* prose */
+.sb p{margin:12px 0 0}
+.sb .gap{height:8px}
+.sb ul,.sb ol{margin:10px 0 0;padding-left:24px}
+.sb li{margin:5px 0}
+.sb li>ul,.sb li>ol{margin-top:4px}
+.sb li::marker{color:var(--fg-subtle)}
+.sb ol>li::marker{font-weight:700;font-variant-numeric:tabular-nums}
+.sb strong{font-weight:700}
+.sb .nest{margin-left:22px}
+.bh{margin:30px 0 4px;font-weight:800;line-height:1.4}
+.bh1{font-size:21px}.bh2{font-size:19px}.bh3{font-size:17px}.bh4{font-size:16px;font-weight:700;color:var(--fg-muted)}
+.sb code{font-family:var(--mono);font-size:.84em;background:var(--bg-weak);padding:1px 6px;border-radius:5px;color:var(--crit-fg)}
+.sb a.ext{color:var(--info-fg);text-underline-offset:3px}
+.sb a.pm{color:var(--fg);font-weight:600;text-decoration:none;background:var(--bg-weak);padding:1px 7px;border-radius:6px}
+.sb a.pm::before{content:"↳ ";color:var(--fg-subtle)}
+.sb a.pm:hover{background:var(--line-strong)}
+.pm.off{color:var(--fg-subtle)}
+.fg-red{color:var(--crit-fg)}.fg-blue{color:var(--info-fg)}.fg-green,.fg-teal{color:var(--pos)}.fg-orange{color:var(--brand-fg)}.fg-yellow,.fg-brown{color:var(--warn-fg)}.fg-purple,.fg-pink{color:var(--purple)}.fg-gray{color:var(--fg-subtle)}
+.bg-red{background:var(--crit-weak)}.bg-blue{background:var(--info-weak)}.bg-green,.bg-teal{background:var(--pos-weak)}.bg-orange{background:var(--brand-weak)}.bg-yellow,.bg-brown{background:var(--warn-weak)}.bg-purple,.bg-pink{background:var(--purple-weak)}.bg-gray{background:var(--bg-weak)}
+.callout{display:flex;gap:12px;align-items:flex-start;margin:16px 0 0;padding:14px 16px;border-radius:var(--r-m);background:var(--bg-muted)}
+.callout .ic{flex:none;font-size:18px;line-height:1.5}
+.callout .cb{min-width:0;flex:1;font-size:15.5px}
+.callout .cb>p:first-child,.callout .cb>*:first-child{margin-top:0}
+blockquote{margin:16px 0 0;padding:2px 0 2px 16px;border-left:3px solid var(--fg);color:var(--fg-muted)}
+hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:12px}
+.cols>.col{min-width:0}
+.cols>.col>*:first-child{margin-top:0}
+
+figure{margin:18px 0 0}
+figure.img{margin-inline:auto;max-width:100%}
+figure.img img{display:block;width:100%;height:auto;border-radius:var(--r-s);background:#fff;border:1px solid var(--line)}
+figcaption{font-size:13.5px;color:var(--fg-subtle);margin-top:8px;text-align:center;line-height:1.5}
+.imgmiss{display:inline-block;padding:10px 14px;border-radius:var(--r-s);background:var(--bg-weak);font-size:14px}
+
+figure.code{border-radius:var(--r-m);background:var(--bg-muted);border:1px solid var(--line);overflow:hidden}
+.code-h{display:flex;align-items:center;justify-content:space-between;padding:6px 8px 6px 14px;border-bottom:1px solid var(--line);font-size:12px;font-weight:700;color:var(--fg-subtle);font-family:var(--mono)}
+.cp{border:0;background:none;color:var(--fg-subtle);font-size:12px;font-weight:700;padding:4px 9px;border-radius:6px;cursor:pointer;font-family:var(--font)}
+.cp:hover{background:var(--bg-weak);color:var(--fg)}
+figure.code pre{margin:0;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.65;tab-size:4}
+figure.code pre code{font-family:inherit;background:none;padding:0;color:var(--fg);font-size:inherit}
+figure.code figcaption{text-align:left;padding:0 14px 10px}
+.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-selector-tag,.hljs-literal{color:var(--c-kw);font-weight:600}
+.hljs-string,.hljs-regexp,.hljs-meta .hljs-string{color:var(--c-str)}
+.hljs-number,.hljs-symbol{color:var(--c-num)}
+.hljs-comment,.hljs-quote{color:var(--c-com);font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-title.class_,.hljs-section{color:var(--c-fn)}
+.hljs-built_in,.hljs-type,.hljs-params .hljs-type{color:var(--c-bi)}
+.hljs-meta{color:var(--c-com)}
+
+.tbl{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:var(--r-m)}
+.tbl table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}
+.tbl th,.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);text-align:left;vertical-align:top;min-width:80px}
+.tbl tr>*:last-child{border-right:0}
+.tbl tbody tr:last-child>*{border-bottom:0}
+.tbl thead th{background:var(--bg-muted);font-weight:700;color:var(--fg-muted);font-size:14px}
+.tbl tbody th{font-weight:700;background:var(--bg-muted)}
+
+.mx-d{margin:16px 0 0;overflow-x:auto;overflow-y:hidden;text-align:center;padding:6px 0}
+.mx,.mx-d{font-family:var(--mono);font-size:.95em}
+.mx.ok,.mx-d.ok{font-family:inherit;font-size:inherit}
+.mx svg{vertical-align:-0.2em;max-width:100%}
+mjx-container[display="true"]{margin:0!important}
+
+.file{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 14px;border-radius:var(--r-m);border:1px solid var(--line)}
+.file .fi{flex:none;font-size:18px}
+.file .fn{min-width:0;flex:1;display:flex;flex-direction:column;line-height:1.45}
+.file .fn small{color:var(--fg-subtle);font-size:13px}
+.bm{display:flex;flex-direction:column;gap:2px;margin-top:14px;padding:14px 16px;border-radius:var(--r-m);border:1px solid var(--line);text-decoration:none;color:var(--fg)}
+.bm:hover{background:var(--bg-muted)}
+.bm span{font-size:14px;color:var(--fg-muted)}
+.bm small{font-size:12.5px;color:var(--fg-subtle);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pager button{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:var(--r-m);background:var(--bg-muted);border:1.5px solid transparent;cursor:pointer;text-align:left;color:var(--fg);min-width:0}
+.pager button:hover{border-color:var(--line-strong)}
+.pager button.next{text-align:right;align-items:flex-end}
+.pager small{font-size:13px;font-weight:700;color:var(--fg-subtle)}
+.pager b{font-size:15px;line-height:1.4}
+.pager button:disabled{visibility:hidden}
+.foot{color:var(--fg-subtle);font-size:13px;line-height:1.6}
+
+/* ---------- search ---------- */
+.dlg{position:fixed;inset:0;z-index:60;background:var(--scrim);display:flex;justify-content:center;align-items:flex-start;padding:calc(64px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 12px max(12px,env(safe-area-inset-left,0px))}
+.dlg-box{width:min(680px,100%);max-height:calc(100vh - 100px);display:flex;flex-direction:column;background:var(--bg);border-radius:var(--r-l);box-shadow:var(--shadow);overflow:hidden}
+.dlg-top{display:flex;align-items:center;gap:8px;padding:10px 10px 10px 16px;border-bottom:1px solid var(--line)}
+.dlg-top svg{flex:none;width:20px;height:20px;color:var(--fg-subtle)}
+#q{flex:1;min-width:0;border:0;background:none;height:40px;font-size:17px;outline:none}
+.res{overflow:auto;padding:6px}
+.res .hint{padding:18px 12px;color:var(--fg-subtle);font-size:14.5px}
+.hit{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--fg)}
+.hit:hover,.hit.sel{background:var(--bg-weak)}
+.hit .hp{font-size:12.5px;font-weight:700;color:var(--brand-fg);line-height:1.4}
+.hit .ht{font-weight:700;font-size:15.5px;line-height:1.45}
+.hit .hs{font-size:13.5px;color:var(--fg-muted);line-height:1.55;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hit mark{background:var(--brand-weak);color:var(--brand-fg);border-radius:3px;padding:0 1px}
+.res .count{font-size:12.5px;color:var(--fg-subtle);padding:6px 12px 2px;font-weight:700}
+
+.totop{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg);box-shadow:var(--shadow);display:grid;place-items:center;cursor:pointer;color:var(--fg)}
+.totop svg{width:20px;height:20px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:70;background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:700}
+
+.vz-more{margin:8px 0 0;font-size:14px;text-align:right}
+.vz-more a{color:var(--brand-fg);font-weight:700;text-decoration:none}
+.vz-more a:hover{text-decoration:underline}
+.vz{margin:22px 0 4px;border:1.5px solid var(--brand-line);border-radius:var(--r-l);background:var(--bg);overflow:hidden;font-size:15px;line-height:1.6}
+.vz *{box-sizing:border-box}
+.vz-head{display:flex;flex-direction:column;gap:2px;padding:16px 18px 12px;background:var(--brand-weak)}
+.vz-kick{font-size:12.5px;font-weight:800;color:var(--brand-fg);letter-spacing:.02em}
+.vz-title{font-size:17px;font-weight:800;color:var(--fg);line-height:1.4}
+.vz-sub{font-size:14px;color:var(--fg-muted)}
+.vz-sub code{font-family:var(--mono);font-size:.86em;background:var(--bg);padding:0 5px;border-radius:4px;color:var(--fg)}
+.vz-ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:12px 18px;border-bottom:1px solid var(--line)}
+.vz-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;width:100%}
+.vz-f{display:flex;flex-direction:column;gap:3px;font-size:12.5px;font-weight:700;color:var(--fg-subtle)}
+.vz-f input,.vz-f select{height:36px;min-width:0;width:6.5em;max-width:100%;border:1px solid var(--line-strong);border-radius:8px;background:var(--bg);color:var(--fg);padding:0 10px;font:inherit;font-size:14px;font-weight:600;font-family:var(--mono)}
+.vz-f select{width:auto;font-family:var(--font)}
+.vz-chk{display:flex;align-items:center;gap:6px;height:36px;font-size:14px;font-weight:600;color:var(--fg-muted)}
+.vz-b{height:36px;padding:0 13px;border-radius:8px;border:0;background:var(--bg-weak);color:var(--fg);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--mono)}
+.vz-b:hover{background:var(--line-strong)}
+.vz-b.pri{background:var(--brand);color:var(--on-solid)}
+.vz-b.pri:hover{background:var(--brand-press)}
+.vz-b.ghost{background:none;color:var(--fg-subtle);font-family:var(--font)}
+.vz-b.ghost:hover{background:var(--bg-weak);color:var(--fg)}
+.vz-seg{display:inline-flex;gap:2px;padding:3px;border-radius:10px;background:var(--bg-weak);flex-wrap:wrap}
+.vz-seg button{border:0;background:none;height:30px;padding:0 12px;border-radius:7px;font:inherit;font-size:13.5px;font-weight:700;color:var(--fg-muted);cursor:pointer}
+.vz-seg button[aria-pressed="true"]{background:var(--bg);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.vz-presets{display:flex;flex-wrap:wrap;gap:6px}
+.vz-chip{height:30px;padding:0 10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--bg);color:var(--fg-muted);font-family:var(--mono);font-size:12.5px;cursor:pointer}
+.vz-chip:hover{border-color:var(--fg-subtle);color:var(--fg)}
+.vz-body{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+@media (min-width:1180px){.vz-body.wide{grid-template-columns:minmax(0,1fr) 340px}}
+.vz-left{min-width:0;padding:16px 18px 14px;display:flex;flex-direction:column;gap:12px}
+.vz-stage{min-width:0;display:flex;flex-direction:column;gap:12px;overflow-x:auto}
+.vz-say{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:var(--r-m);background:var(--fg);color:var(--bg);min-height:52px}
+.vz-say .vz-step{flex:none;font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;background:rgba(127,127,127,.3);margin-top:2px;white-space:nowrap}
+.vz-say .vz-msg{min-width:0;flex:1;font-size:15px;font-weight:600;line-height:1.55}
+.vz-say .vz-msg b{color:var(--brand)}
+.vz-say .vz-msg code{font-family:var(--mono);font-size:.88em;background:rgba(127,127,127,.25);padding:0 4px;border-radius:4px;color:inherit}
+.vz-say[data-tone="good"]{background:var(--pos)}
+.vz-say[data-tone="good"] .vz-msg b{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.vz-say[data-tone="bad"]{background:var(--crit)}
+.vz-say[data-tone="bad"] .vz-msg b{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.vz-say[data-tone="good"],.vz-say[data-tone="bad"]{color:#fff}
+.vz-play{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.vz-ib{width:38px;height:34px;border:0;border-radius:8px;background:var(--bg-weak);color:var(--fg);font-size:13px;cursor:pointer}
+.vz-ib:hover{background:var(--line-strong)}
+.vz-ib.vz-go{background:var(--fg);color:var(--bg);width:46px}
+.vz-count{font-size:13px;color:var(--fg-subtle);font-weight:700;margin:0 4px;font-variant-numeric:tabular-nums}
+.vz-speed{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--fg-subtle);font-weight:700}
+.vz-speed select{height:32px;border:1px solid var(--line-strong);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit;font-size:13px;padding:0 6px}
+.vz-code{border-top:1px solid var(--line);background:var(--bg-muted);min-width:0}
+.vz-code summary{cursor:pointer;padding:10px 18px;font-size:13px;font-weight:800;color:var(--fg-muted);list-style:none}
+.vz-code summary::-webkit-details-marker{display:none}
+.vz-code summary::before{content:"▸ "}
+.vz-code[open] summary::before{content:"▾ "}
+.vz-code-t{padding:0 18px 6px;font-size:12.5px;font-weight:700;color:var(--brand-fg);font-family:var(--mono)}
+.vz-code pre{margin:0;padding:4px 0 14px;max-height:300px;overflow:auto;font-family:var(--mono);font-size:12.5px;line-height:1.7;scroll-behavior:smooth}
+.vz-code .ln{display:block;padding:0 14px 0 0;white-space:pre;color:var(--fg-muted);border-left:3px solid transparent}
+.vz-code .ln i{display:inline-block;width:34px;text-align:right;padding-right:10px;color:var(--fg-disabled);font-style:normal;user-select:none}
+.vz-code .ln.on{background:var(--brand-weak);color:var(--fg);border-left-color:var(--brand);font-weight:600}
+@media (min-width:1180px){.vz-body.wide .vz-code{border-top:0;border-left:1px solid var(--line)}.vz-body.wide .vz-code pre{max-height:520px}}
+.vz-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--fg-muted);align-items:center}
+.vz-meta b{color:var(--fg);font-variant-numeric:tabular-nums}
+.vz-meta .good{color:var(--pos);font-weight:700}.vz-meta .bad{color:var(--crit-fg);font-weight:700}
+.vz-meta .pill{font-size:12.5px;font-weight:700;padding:1px 9px;border-radius:999px;background:var(--bg-weak);color:var(--fg-subtle);font-family:var(--mono)}
+.vz-meta .pill.on{background:var(--info-weak);color:var(--info-fg)}
+.vz-meta .pill.on.bad{background:var(--crit-weak);color:var(--crit-fg)}
+.vz-cap{font-size:12.5px;font-weight:800;color:var(--fg-subtle);margin-bottom:6px}
+.vz-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;align-items:start}
+.vz-two>*{min-width:0}
+.vz-empty{color:var(--fg-subtle);padding:20px 0;text-align:center}
+.vz-err{color:var(--crit-fg);padding:12px 18px}
+
+/* array cells */
+.vz-strip{display:flex;flex-wrap:wrap;gap:4px}
+.vz-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:46px;height:52px;padding:0 6px;border-radius:9px;background:var(--bg-muted);border:1.5px solid var(--line-strong);transition:background .2s,border-color .2s,transform .2s}
+.vz-strip.big .vz-cell{min-width:54px;height:60px}
+.vz-cell .v{font-size:17px;font-weight:800;font-family:var(--mono);line-height:1.1;font-variant-numeric:tabular-nums}
+.vz-cell .i{position:absolute;bottom:-1px;font-size:10.5px;color:var(--fg-subtle);font-family:var(--mono);transform:translateY(100%)}
+.vz-strip{padding-bottom:18px}
+.vz-cell.empty{background:transparent;border-style:dashed}
+.vz-cell.out{opacity:.55}
+.vz-cell.ghost{opacity:.6;border-style:dotted;background:transparent;min-width:34px}
+.vz-cell.hit{background:var(--pos-weak);border-color:var(--pos)}
+.vz-cell.cmp{background:var(--info-weak);border-color:var(--info)}
+.vz-cell.mark,.vz-cell.cur{background:var(--brand-weak);border-color:var(--brand)}
+.vz-cell.from{background:var(--warn-weak);border-color:var(--warn-fg)}
+.vz-cell.to,.vz-cell.in{background:var(--brand);border-color:var(--brand);color:var(--on-solid)}
+.vz-cell.to .v,.vz-cell.in .v{color:var(--on-solid)}
+.vz-cell.gone,.vz-cell.out2{background:var(--crit-weak);border-color:var(--crit)}
+.vz-cell.swap{background:var(--purple-weak);border-color:var(--purple)}
+.vz-cell.pick{border-color:var(--purple);border-width:2.5px}
+.vz-cell.par{background:var(--info-weak);border-color:var(--info)}
+.vz-cell.kid{background:var(--pos-weak);border-color:var(--pos)}
+.vz-cell .tg{position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);display:flex;gap:2px;white-space:nowrap}
+.vz-cell .tg b{font-size:10.5px;font-weight:800;padding:0 5px;border-radius:5px;line-height:1.6}
+.qf{background:var(--info);color:#fff}.qr{background:var(--brand);color:#fff}
+.vz-strip.q{padding-top:22px}
+
+/* matrix (sparse) */
+.vz-mat{display:grid;grid-template-columns:repeat(6,minmax(0,40px));gap:4px}
+.vz-mc{height:40px;border:1px solid var(--line-strong);border-radius:8px;background:var(--bg);color:var(--fg-disabled);font-family:var(--mono);font-weight:700;font-size:15px;cursor:pointer;padding:0}
+.vz-mc.nz{background:var(--brand-weak);border-color:var(--brand);color:var(--brand-fg)}
+.vz-mc.hl{outline:2px solid var(--info);outline-offset:1px}
+.vz-tbl{overflow-x:auto}
+.vz-tbl table{border-collapse:collapse;font-family:var(--mono);font-size:13.5px}
+.vz-tbl th,.vz-tbl td{border:1px solid var(--line);padding:5px 12px;text-align:center}
+.vz-tbl th{background:var(--bg-muted);color:var(--fg-muted);font-family:var(--font);font-size:12.5px}
+.vz-tbl tr.hl td{background:var(--info-weak)}
+
+/* linked list */
+.ll{display:flex;align-items:center;flex-wrap:wrap;row-gap:44px;padding:30px 4px 32px;min-height:120px}
+.ll-node{position:relative;transition:transform .25s}
+.ll-box{display:flex;border:2px solid var(--fg);border-radius:10px;overflow:hidden;background:var(--bg)}
+.ll-box .d{min-width:46px;padding:8px 10px;text-align:center;font-weight:800;font-family:var(--mono);font-size:16px}
+.ll-box .nx{width:26px;display:grid;place-items:center;border-left:2px solid var(--fg);background:var(--bg-muted);font-size:12px;color:var(--fg-subtle)}
+.ll-node.new .ll-box{border-style:dashed;border-color:var(--brand);background:var(--brand-weak)}
+.ll-node.new .ll-box .nx{border-color:var(--brand)}
+.ll-node.hit .ll-box{border-color:var(--pos);background:var(--pos-weak)}
+.ll-node.cmp .ll-box{border-color:var(--info);background:var(--info-weak)}
+.ll-node.gone{opacity:.45}
+.ll-node.gone .ll-box{border-color:var(--crit);border-style:dashed}
+.ll-node.lift{transform:translateY(-30px)}
+.ll-ptr{position:absolute;left:50%;transform:translateX(-50%);font-size:11.5px;font-weight:800;white-space:nowrap;padding:1px 7px;border-radius:999px}
+.ll-ptr.top{top:-26px;background:var(--fg);color:var(--bg)}
+.ll-ptr.bot{bottom:-26px;background:var(--brand);color:var(--on-solid)}
+.ll-head{font-size:11.5px;font-weight:800;padding:1px 7px;border-radius:999px;background:var(--fg);color:var(--bg);margin-right:8px}
+.ll-arrow{width:34px;height:2px;background:var(--fg);position:relative;flex:none;margin:0 2px}
+.ll-arrow::after{content:"";position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-left:8px solid var(--fg);border-right:0}
+.ll-arrow.off{background:transparent;border-top:2px dashed var(--fg-disabled);height:0}
+.ll-arrow.off::after{display:none}
+.ll-arrow.skip{width:60px;background:var(--brand)}
+.ll-arrow.skip::after{border-left-color:var(--brand)}
+.ll-none{font-family:var(--mono);font-size:13px;color:var(--fg-subtle);padding:0 4px}
+
+/* stack */
+.sk-col{display:flex;flex-direction:column;gap:3px;width:min(220px,100%);border:2px solid var(--fg);border-top:0;border-radius:0 0 12px 12px;padding:6px}
+.sk-cell{position:relative;display:flex;align-items:center;gap:10px;height:36px;border-radius:7px;padding:0 10px;background:var(--bg-muted);border:1.5px solid var(--line-strong);transition:background .2s}
+.sk-cell .i{font-size:11px;color:var(--fg-subtle);font-family:var(--mono);width:12px}
+.sk-cell .v{font-weight:800;font-family:var(--mono);font-size:16px}
+.sk-cell .t{margin-left:auto;font-size:11.5px;font-weight:800;color:var(--brand-fg)}
+.sk-cell.empty{background:transparent;border-style:dashed;border-color:var(--line)}
+.sk-cell.top{border-color:var(--fg)}
+.sk-cell.in{background:var(--brand);border-color:var(--brand);color:var(--on-solid)}
+.sk-cell.in .t,.sk-cell.in .i{color:var(--on-solid)}
+.sk-cell.out{background:var(--crit-weak);border-color:var(--crit)}
+.sk-cell.hit{background:var(--pos-weak);border-color:var(--pos)}
+.sk-side{display:flex;flex-direction:column;gap:12px}
+.tape{display:flex;flex-wrap:wrap;gap:4px}
+.tape span{min-width:30px;height:36px;padding:0 8px;display:grid;place-items:center;border-radius:7px;background:var(--bg-muted);border:1.5px solid var(--line-strong);font-family:var(--mono);font-weight:800}
+.tape span.on{background:var(--brand);border-color:var(--brand);color:var(--on-solid)}
+.tape span.done{opacity:.45}
+.tape.out span{background:var(--pos-weak);border-color:var(--pos);color:var(--fg)}
+.tape .ph{background:none!important;border:0!important;color:var(--fg-subtle);font-weight:600;font-family:var(--font)}
+.sk-out{align-self:flex-start;padding:8px 14px;border-radius:10px;font-family:var(--mono);font-weight:800;font-size:16px;background:var(--bg-weak)}
+.sk-out.good{background:var(--pos-weak);color:var(--pos)}
+.sk-out.bad{background:var(--crit-weak);color:var(--crit-fg)}
+
+/* queue ring */
+.ring .rs{fill:var(--bg-muted);stroke:var(--line-strong);stroke-width:1.5}
+.ring .rs.used{fill:var(--brand-weak);stroke:var(--brand-line)}
+.ring .rs.mark{fill:var(--warn-weak);stroke:var(--warn-fg)}
+.ring .rs.in{fill:var(--brand);stroke:var(--brand)}
+.ring .rs.hit{fill:var(--pos-weak);stroke:var(--pos)}
+.ring .rv{text-anchor:middle;font-family:var(--mono);font-weight:800;font-size:15px;fill:var(--fg)}
+.ring .ri{text-anchor:middle;font-family:var(--mono);font-size:11px;fill:var(--fg-subtle)}
+.ring .fmk line{stroke:var(--info);stroke-width:3;stroke-linecap:round}
+.ring .rmk line{stroke:var(--brand);stroke-width:3;stroke-linecap:round}
+.ring .fmk text,.ring .rmk text{text-anchor:middle;font-weight:800;font-size:12px}
+.ring .fmk text{fill:var(--info-fg)}.ring .rmk text{fill:var(--brand-fg)}
+.ring .hub{fill:var(--fg)}
+.q-right{display:flex;flex-direction:column;gap:10px}
+
+/* trees */
+.tree-wrap,.graph-wrap,.grid-wrap{overflow-x:auto}
+.vz-svg{display:block;width:100%;height:auto;margin:0 auto}
+.vz-svg .e{stroke:var(--line-strong);stroke-width:2}
+.vz-svg .n circle{fill:var(--bg);stroke:var(--fg);stroke-width:2;transition:fill .2s}
+.vz-svg .n text{text-anchor:middle;font-family:var(--mono);font-weight:800;font-size:15px;fill:var(--fg)}
+.vz-svg .n text.ix{font-size:10.5px;font-weight:600;fill:var(--fg-subtle)}
+.vz-svg .n text.badge{font-size:11px;fill:var(--pos)}
+.vz-svg .n{cursor:pointer;outline:none}
+.vz-svg .n:focus-visible circle{stroke:var(--info);stroke-width:3}
+.vz-svg .n.cur circle,.vz-svg .n.mark circle{fill:var(--brand);stroke:var(--brand)}
+.vz-svg .n.cur text:not(.ix):not(.badge),.vz-svg .n.mark text:not(.ix){fill:var(--on-solid)}
+.vz-svg .n.done circle,.vz-svg .n.hit circle{fill:var(--pos-weak);stroke:var(--pos)}
+.vz-svg .n.onstack circle{fill:var(--warn-weak);stroke:var(--warn-fg)}
+.vz-svg .n.cmp circle,.vz-svg .n.par circle{fill:var(--info-weak);stroke:var(--info)}
+.vz-svg .n.kid circle{fill:var(--pos-weak);stroke:var(--pos)}
+.vz-svg .n.swap circle{fill:var(--purple-weak);stroke:var(--purple)}
+.vz-svg .n.pick circle{stroke:var(--purple);stroke-width:3.5}
+.vz-svg .n.gone circle{fill:var(--crit-weak);stroke:var(--crit);stroke-dasharray:4 3}
+.callstack{display:flex;flex-direction:column;gap:3px}
+.callstack div{font-family:var(--mono);font-size:13px;padding:5px 10px;border-radius:7px;background:var(--bg-muted);border:1px solid var(--line);color:var(--fg-muted)}
+.callstack div.top{background:var(--warn-weak);border-color:var(--warn-fg);color:var(--fg);font-weight:700}
+.callstack .empty{color:var(--fg-subtle)}
+
+/* graph */
+.graph .ge{stroke:var(--line-strong);stroke-width:2.5;transition:stroke .2s}
+.graph .ge.tree{stroke:var(--pos);stroke-width:4}
+.graph .ge.look{stroke:var(--brand);stroke-width:4;stroke-dasharray:6 4}
+.graph .ge.rej{stroke:var(--crit);stroke-dasharray:3 4;opacity:.7}
+.graph .garh{fill:var(--fg-subtle)}
+.graph .gn>circle{fill:var(--bg);stroke:var(--fg);stroke-width:2}
+.graph .gn>text{text-anchor:middle;font-family:var(--mono);font-weight:800;font-size:15px;fill:var(--fg)}
+.graph .gn{cursor:pointer;outline:none}
+.graph .gn.cur>circle{fill:var(--brand);stroke:var(--brand)}
+.graph .gn.cur>text{fill:var(--on-solid)}
+.graph .gn.done>circle{fill:var(--pos-weak);stroke:var(--pos)}
+.graph .gn.front>circle{fill:var(--warn-weak);stroke:var(--warn-fg)}
+.graph .gn.seen>circle{fill:var(--info-weak);stroke:var(--info)}
+.graph .gn.goal>circle{stroke-width:4;stroke-dasharray:3 3}
+.graph .gb circle{fill:var(--pos);stroke:none}
+.graph .gb text{text-anchor:middle;font-size:11px;font-weight:800;fill:#fff}
+.graph .gw rect{fill:var(--bg);stroke:var(--line-strong)}
+.graph .gw text{text-anchor:middle;font-family:var(--mono);font-size:12px;font-weight:800;fill:var(--fg-muted)}
+.graph .gw.tree rect{fill:var(--pos);stroke:var(--pos)}.graph .gw.tree text{fill:#fff}
+.graph .gw.look rect{fill:var(--brand);stroke:var(--brand)}.graph .gw.look text{fill:#fff}
+.graph .gw.rej rect{fill:var(--crit-weak);stroke:var(--crit)}
+table.mat td{padding:2px}
+.mc{width:32px;height:30px;border:0;border-radius:6px;background:var(--bg);font-family:var(--mono);font-weight:700;color:var(--fg-disabled);cursor:pointer}
+.mc.on{background:var(--brand-weak);color:var(--brand-fg)}
+.mc.rowhl{box-shadow:inset 0 0 0 1.5px var(--info)}
+.mc:disabled{cursor:default;opacity:.5}
+table.mat th.hl{background:var(--info-weak);color:var(--info-fg)}
+.adjl{display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:13.5px}
+.adjl .al{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:3px 6px;border-radius:7px}
+.adjl .al.hl{background:var(--info-weak)}
+.adjl b{min-width:22px}.adjl span{color:var(--fg-subtle)}
+.adjl i{font-style:normal;padding:1px 8px;border-radius:6px;background:var(--bg-weak);font-weight:700}
+.adjl em{color:var(--fg-subtle);font-style:normal}
+.qline{display:flex;flex-wrap:wrap;gap:4px;font-family:var(--mono)}
+.qline span{padding:5px 11px;border-radius:7px;background:var(--warn-weak);border:1px solid var(--warn-fg);font-weight:800}
+.qline span:first-child{background:var(--brand);border-color:var(--brand);color:#fff}
+.qline em{color:var(--fg-subtle);font-style:normal}
+.vtab{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.vtab span{display:flex;flex-direction:column;align-items:center;min-width:34px;padding:3px 6px;border-radius:7px;background:var(--bg-muted);border:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--fg-subtle)}
+.vtab span b{font-size:13.5px;color:var(--fg)}
+.vtab span.on{background:var(--pos-weak);border-color:var(--pos);color:var(--pos)}
+.klist{display:flex;flex-direction:column;gap:3px}
+.kl{display:flex;align-items:center;gap:10px;padding:5px 10px;border-radius:8px;background:var(--bg-muted);font-family:var(--mono);font-size:13.5px}
+.kl .w{min-width:24px;font-weight:800}
+.kl em{margin-left:auto;font-style:normal;font-size:12px;font-weight:700;font-family:var(--font)}
+.kl.ok{background:var(--pos-weak)}.kl.ok em{color:var(--pos)}
+.kl.no{background:var(--crit-weak);text-decoration:line-through;text-decoration-color:var(--crit)}.kl.no em{color:var(--crit-fg)}
+.kl.look{background:var(--brand-weak);outline:1.5px solid var(--brand)}.kl.look em{color:var(--brand-fg)}
+
+/* grid */
+.grid{display:grid;gap:4px;width:max-content;max-width:100%}
+.gc{aspect-ratio:1;min-width:34px;border:0;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:800;cursor:pointer;padding:0;color:var(--fg);transition:background .15s}
+.gc.sea{background:var(--info-weak)}
+.gc.land{background:#c8b28a}
+.gc.path{background:var(--bg-muted);border:1px solid var(--line)}
+.gc.wall{background:var(--fg)}
+.gc.start{box-shadow:inset 0 0 0 2.5px var(--info)}
+.gc.exit{box-shadow:inset 0 0 0 2.5px var(--pos)}
+.gc.cur{outline:3px solid var(--brand);outline-offset:1px;z-index:1}
+.gc.seen{background:var(--info-weak);border-color:var(--info)}
+.gc.dead{background:var(--crit-weak)}
+.gc.route{background:var(--pos);color:#fff}
+.gc.c1{background:#ff8a3d;color:#fff}.gc.c2{background:#2e9bff;color:#fff}.gc.c3{background:#20b07a;color:#fff}.gc.c4{background:#a066ff;color:#fff}.gc.c5{background:#f2b51b;color:#000}.gc.c6{background:#ef5da8;color:#fff}
+.lg{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.lg.land{background:#c8b28a}.lg.sea{background:var(--info-weak);border:1px solid var(--info)}.lg.c1{background:#ff8a3d}.lg.path{background:var(--bg-muted);border:1px solid var(--line-strong)}.lg.wall{background:var(--fg)}.lg.seen{background:var(--info-weak);border:1px solid var(--info)}.lg.route{background:var(--pos)}
+@media (max-width:600px){.vz-head,.vz-ctrl,.vz-left{padding-left:14px;padding-right:14px}.vz-code summary,.vz-code-t{padding-left:14px}.vz-speed{margin-left:0}.ll-arrow{width:22px}.vz-cell{min-width:40px}.vz-strip.big .vz-cell{min-width:42px}}
+@media (prefers-reduced-motion:reduce){.vz *{transition:none!important}}
+
+/* ---- fill-in-the-blank drill ---- */
+details.drill{margin-top:10px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--bg)}
+details.drill>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 14px;font-size:14.5px;border-radius:var(--r-m)}
+details.drill>summary::-webkit-details-marker{display:none}
+details.drill>summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid var(--fg-subtle);border-bottom:2px solid var(--fg-subtle);transform:rotate(45deg);transition:transform .15s}
+details.drill[open]>summary::after{transform:rotate(-135deg)}
+details.drill>summary:hover{background:var(--bg-muted)}
+details.drill>summary b{color:var(--brand-fg)}
+.dr-sub{color:var(--fg-muted);font-size:13px}
+.dr-body{padding:4px 14px 16px;border-top:1px solid var(--line)}
+.dr-tabs{display:flex;gap:6px;margin:12px 0 4px}
+.dr-tabs button{font:inherit;font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--fg-muted);cursor:pointer}
+.dr-tabs button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.dr-tip{font-size:13.5px;color:var(--fg-muted);margin:10px 0 0}
+.dr-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.dbtn{font:inherit;font-size:13.5px;font-weight:700;padding:7px 13px;border-radius:10px;border:0;background:var(--bg-weak);color:var(--fg);cursor:pointer}
+.dbtn:hover{filter:brightness(.97)}
+.dbtn.pri{background:var(--brand);color:#fff}
+.dr-score{font-weight:700;font-size:14px;color:var(--fg)}
+.dr-sel{font-size:13.5px;color:var(--fg-muted);display:flex;align-items:center;gap:6px}
+.dr-sel select{font:inherit;font-size:13.5px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+pre.dr-code{margin:0;padding:12px 14px;background:var(--bg-muted);border:1px solid var(--line);border-radius:10px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.75;tab-size:4}
+pre.dr-code.ctx{color:var(--fg-muted)}
+pre.dr-code.ctx:empty{display:none}
+.dl{white-space:pre;min-height:1.75em}
+.dl.hit{background:var(--brand-weak);margin:0 -14px;padding:0 14px}
+.bx{position:relative;display:inline-flex;align-items:center;gap:4px;vertical-align:baseline}
+.bn{font-size:10.5px;font-weight:800;color:#fff;background:var(--brand);border-radius:6px;padding:0 5px;line-height:1.6;font-family:var(--font)}
+.bi{font:inherit;font-family:var(--mono);font-size:13px;min-width:6ch;max-width:62ch;padding:1px 6px;border:0;border-bottom:2px solid var(--brand);border-radius:4px 4px 0 0;background:var(--bg);color:var(--fg);outline:none}
+.bi:focus{box-shadow:0 0 0 2px var(--brand-line)}
+.bx.ok .bi{border-color:var(--pos);background:var(--pos-weak)}
+.bx.no .bi{border-color:var(--crit);background:var(--crit-weak)}
+.bx.shown .bi{border-color:var(--fg-subtle);color:var(--fg-muted)}
+.ans{font:inherit;font-family:var(--font);font-size:11.5px;font-weight:700;border:0;background:var(--crit-weak);color:var(--crit-fg);border-radius:6px;padding:1px 6px;cursor:pointer}
+.ans-t{font-size:12.5px;color:var(--pos);font-weight:700;white-space:pre}
+.dr-ta{display:block;width:100%;font-family:var(--mono);font-size:13px;line-height:1.75;padding:10px 14px;border:2px dashed var(--brand);border-radius:10px;margin:6px 0;background:var(--bg);color:var(--fg);resize:vertical;tab-size:4;white-space:pre;overflow-x:auto}
+.dr-ta:focus{outline:none;border-style:solid}
+.dr-cmp{margin:10px 0}
+.dr-cmp-h{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:4px 14px;max-width:100%;font-size:13px;font-weight:700;color:var(--fg-muted);margin-bottom:6px}
+.dr-cmp-h .lg{display:inline-flex;flex:none;align-items:center;gap:6px;font-weight:500;white-space:nowrap}
+.dr-cmp-h .sw{display:inline-block;width:10px;height:10px;border-radius:3px;flex:none}
+.dr-cmp-h .sw.g{background:var(--pos)}.dr-cmp-h .sw.r{background:var(--crit);margin-left:6px}
+.dl.m-ok{background:var(--pos-weak);margin:0 -14px;padding:0 14px}
+.dl.m-no{background:var(--crit-weak);margin:0 -14px;padding:0 14px}
+@media (max-width:600px){details.drill>summary{padding:10px 12px}.dr-body{padding:4px 10px 14px}pre.dr-code{font-size:12px}.bi{font-size:12px}}
+
+.dr-tabs{flex-wrap:wrap}
+.dr-m{margin:8px 0;padding:10px 12px;border:1px solid var(--brand-line);border-radius:12px;background:var(--brand-weak)}
+.dr-m.ok{border-color:var(--pos);background:var(--pos-weak)}
+.dr-m.no{border-color:var(--crit);background:var(--crit-weak)}
+.dr-m-h{font-size:13px;color:var(--fg-muted);margin-bottom:2px}
+.dr-m-h b{font-family:var(--mono);color:var(--fg)}
+.dr-m-s{font-weight:700;color:var(--fg)}
+.dr-m .dr-ta{margin:4px 0 0;background:var(--bg)}
+.dr-m .dr-cmp{margin:8px 0 0}
+.dr-all>pre.dr-code.ctx{margin:8px 0}
+.dr-score2{font-weight:700;font-size:14px}
+
+details.pyfold{margin-top:16px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--bg-muted)}
+details.pyfold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:14px;color:var(--fg-muted);border-radius:var(--r-m)}
+details.pyfold>summary::-webkit-details-marker{display:none}
+details.pyfold>summary::after{content:"";margin-left:auto;width:7px;height:7px;border-right:2px solid var(--fg-subtle);border-bottom:2px solid var(--fg-subtle);transform:rotate(45deg);transition:transform .15s}
+details.pyfold[open]>summary::after{transform:rotate(-135deg)}
+details.pyfold>summary:hover{color:var(--fg)}
+.pf-tag{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:6px;background:var(--bg-weak);color:var(--fg-muted)}
+.pf-n{font-size:12.5px;color:var(--fg-subtle)}
+details.pyfold>figure.code>.code-h>span,details.pyfold>figure.code>.code-h>.xtag{display:none}
+details.pyfold>figure.code>.code-h{justify-content:flex-end}
+.xtag{margin-left:8px;margin-right:auto;font-size:11px;font-weight:700;color:var(--brand-fg);background:var(--brand-weak);padding:2px 7px;border-radius:999px;font-family:var(--font)}
+.pf-x{font-family:var(--font);font-size:11px;font-weight:700;color:var(--brand-fg);border:1px solid var(--brand-line);padding:1px 7px;border-radius:999px}
+details.pyfold>figure.code{margin:0 10px 10px;background:var(--bg)}
+details.pyfold>details.drill{margin:0 10px 10px}
+
+.pg-hide{display:none!important}
+.sec.d1.pg-d2>section.sec.d2{margin-top:0!important;padding-top:0!important;border-top:0!important}
+.pgtop{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;padding-block:14px!important;font-size:13.5px;color:var(--fg-muted)}
+.pg-crumb{font:inherit;font-weight:700;color:var(--brand-fg);background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.pg-crumb:hover{text-decoration:underline}
+.pg-sep{color:var(--fg-subtle)}
+.pg-par{font-weight:600;color:var(--fg-muted)}
+.pg-cnt{margin-left:auto;font-weight:700;color:var(--fg-subtle)}
+.langs{flex:none;display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:var(--bg-weak)}
+.langs button{font:inherit;font-family:var(--mono);font-size:12.5px;font-weight:700;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:var(--fg-subtle);cursor:pointer;text-decoration:line-through;text-decoration-thickness:1.5px}
+.langs button.on{background:var(--bg);color:var(--fg);text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.langs button.on[data-lang="cpp"]{color:var(--brand-fg)}
+
+.sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sec-h .st{flex:1 1 auto;min-width:0}
+a.orig{flex:none;font-size:13px;font-weight:600;color:var(--fg-subtle);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+a.orig:hover{color:var(--brand);border-color:var(--brand)}
+section.sec.d2{margin-top:30px}
+.glance .sec-h .st::after{content:"요약";margin-left:10px;font-size:12px;font-weight:700;color:var(--brand);background:var(--brand-weak, rgba(255,102,0,.12));padding:2px 8px;border-radius:999px;vertical-align:4px}
+.callout.exam{background:var(--bg-muted);border-left:3px solid var(--brand)}
+</style>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="iconbtn" id="menu" type="button" aria-label="목차 열기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <a class="logo" href="#home" data-home><span class="logo-mark">요약</span><span class="t">자료구조 요약</span></a>
+    <button class="searchbtn" id="openSearch" type="button" aria-label="본문 검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>요약에서 검색</span><kbd>/</kbd></button>
+    <div class="langs" id="langs" role="group" aria-label="코드 언어 보이기"><button type="button" data-lang="py" aria-pressed="false" title="Python 코드 펼침/접음">Py</button><button type="button" data-lang="cpp" aria-pressed="true" title="C++ 코드 펼침/접음">C++</button></div>
+    <a class="extlink" href="../">교재</a><a class="extlink" href="../drills/">빈칸 연습</a>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="rail" id="rail" aria-label="목차">
+    <div class="rail-head"><b>목차</b><button class="iconbtn" id="closeRail" type="button" aria-label="목차 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <ul class="toc" id="toc"><li><button type="button" class="ch" data-chi="0" data-i="0"><span class="n">·</span><span class="tt">책 소개</span></button></li><li class="part"><button type="button" data-chi="1">Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석</button></li><li><button type="button" class="ch" data-chi="2" data-i="2"><span class="n">1</span><span class="tt">프로그래밍 기초와 소프트웨어 공학</span></button></li><li><button type="button" class="ch" data-chi="3" data-i="3"><span class="n">2</span><span class="tt">자료 구조와 알고리즘의 본질 - 효율적인 문제 해결</span></button></li><li><button type="button" class="ch" data-chi="4" data-i="4"><span class="n">3</span><span class="tt">알고리즘의 성능 분석</span></button></li><li><button type="button" class="ch" data-chi="5" data-i="5"><span class="n">4</span><span class="tt">재귀(Recursion)</span></button></li><li class="part"><button type="button" data-chi="6">Part 2. 상황별 자료구조 선택(Problem-Oriented)</button></li><li><button type="button" class="ch" data-chi="7" data-i="7"><span class="n">5</span><span class="tt">배열과 연결 리스트: 순서가 중요한 데이터</span></button></li><li><button type="button" class="ch" data-chi="8" data-i="8"><span class="n">6</span><span class="tt">정렬(Sorting)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="9" data-i="9"><span class="n">7</span><span class="tt">선택(Selection)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="10" data-i="10"><span class="n">8</span><span class="tt">스택과 큐: 후입선출/선입선출의 활용</span></button></li><li><button type="button" class="ch" data-chi="11" data-i="11"><span class="n">9</span><span class="tt">트리: 효율적인 탐색을 위한 자료구조</span></button></li><li><button type="button" class="ch" data-chi="12" data-i="12"><span class="n">10</span><span class="tt">탐색(Searching)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="13" data-i="13"><span class="n">11</span><span class="tt">그래프(graphs): 관계를 표현하는 자료구조</span></button></li><li class="part"><button type="button" data-chi="14">Part 3. 알고리즘 전략: 최적화된 문제 해결</button></li><li><button type="button" class="ch" data-chi="15" data-i="15"><span class="n">12</span><span class="tt">백트래킹(Backtracking)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="16" data-i="16"><span class="n">13</span><span class="tt">탐욕(Greedy)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="17" data-i="17"><span class="n">14</span><span class="tt">분할 정복(Divide and Conquer)<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="18" data-i="18"><span class="n">15</span><span class="tt">다이내믹 프로그래밍(Dynamic Programming)<span class="tag-a">알고리즘</span></span></button></li><li class="part">실전과 프로젝트</li><li><button type="button" class="ch" data-chi="19" data-i="19"><span class="n">·</span><span class="tt">[자료 구조] 실전 문제</span></button></li><li><button type="button" class="ch" data-chi="20" data-i="20"><span class="n">·</span><span class="tt">실전 문제<span class="tag-a">알고리즘</span></span></button></li><li><button type="button" class="ch" data-chi="21" data-i="21"><span class="n">·</span><span class="tt">팀 프로젝트</span></button></li></ul>
+  </nav>
+  <main id="main">
+    <div id="home"><section class="sheet hero"><div class="sheet-in">
+<h1>자료구조와 알고리즘 요약</h1>
+<button type="button" class="resume" id="resume" hidden><span class="k">이어 읽기</span><span class="v"></span><span class="go">→</span></button>
+<div class="partblock"><h3>시작하기</h3><div class="cards"><button type="button" class="card" data-chi="0"><span class="cn num"></span><span class="ct">책 소개</span></button></div></div><div class="partblock"><h3>Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석</h3><div class="cards"><button type="button" class="card" data-chi="2"><span class="cn num">1</span><span class="ct">프로그래밍 기초와 소프트웨어 공학</span></button><button type="button" class="card" data-chi="3"><span class="cn num">2</span><span class="ct">자료 구조와 알고리즘의 본질 - 효율적인 문제 해결</span></button><button type="button" class="card" data-chi="4"><span class="cn num">3</span><span class="ct">알고리즘의 성능 분석</span></button><button type="button" class="card" data-chi="5"><span class="cn num">4</span><span class="ct">재귀(Recursion)</span></button></div></div><div class="partblock"><h3>Part 2. 상황별 자료구조 선택(Problem-Oriented)</h3><div class="cards"><button type="button" class="card" data-chi="7"><span class="cn num">5</span><span class="ct">배열과 연결 리스트: 순서가 중요한 데이터</span></button><button type="button" class="card" data-chi="8"><span class="cn num">6</span><span class="ct">정렬(Sorting)</span><span class="alg">알고리즘</span></button><button type="button" class="card" data-chi="9"><span class="cn num">7</span><span class="ct">선택(Selection)</span><span class="alg">알고리즘</span></button><button type="button" class="card" data-chi="10"><span class="cn num">8</span><span class="ct">스택과 큐: 후입선출/선입선출의 활용</span></button><button type="button" class="card" data-chi="11"><span class="cn num">9</span><span class="ct">트리: 효율적인 탐색을 위한 자료구조</span></button><button type="button" class="card" data-chi="12"><span class="cn num">10</span><span class="ct">탐색(Searching)</span><span class="alg">알고리즘</span></button><button type="button" class="card" data-chi="13"><span class="cn num">11</span><span class="ct">그래프(graphs): 관계를 표현하는 자료구조</span></button></div></div><div class="partblock"><h3>Part 3. 알고리즘 전략: 최적화된 문제 해결</h3><div class="cards"><button type="button" class="card" data-chi="15"><span class="cn num">12</span><span class="ct">백트래킹(Backtracking)</span><span class="alg">알고리즘</span></button><button type="button" class="card" data-chi="16"><span class="cn num">13</span><span class="ct">탐욕(Greedy)</span><span class="alg">알고리즘</span></button><button type="button" class="card" data-chi="17"><span class="cn num">14</span><span class="ct">분할 정복(Divide and Conquer)</span><span class="alg">알고리즘</span></button><button type="button" class="card" data-chi="18"><span class="cn num">15</span><span class="ct">다이내믹 프로그래밍(Dynamic Programming)</span><span class="alg">알고리즘</span></button></div></div><div class="partblock"><h3>실전과 프로젝트</h3><div class="cards"><button type="button" class="card" data-chi="19"><span class="cn num"></span><span class="ct">[자료 구조] 실전 문제</span></button><button type="button" class="card" data-chi="20"><span class="cn num"></span><span class="ct">실전 문제</span><span class="alg">알고리즘</span></button><button type="button" class="card" data-chi="21"><span class="cn num"></span><span class="ct">팀 프로젝트</span></button></div></div>
+
+</div></section></div>
+    <div id="chap" hidden></div>
+  </main>
+</div>
+<div class="scrim" id="scrim" hidden></div>
+
+<div class="dlg" id="dlg" hidden role="dialog" aria-modal="true" aria-label="본문 검색">
+  <div class="dlg-box">
+    <div class="dlg-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="예: 원형 큐, pop_back, 크루스칼" autocomplete="off" spellcheck="false"><button class="iconbtn" id="closeSearch" type="button" aria-label="검색 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="res" id="res"><div class="hint">요약 236개 항목에서 제목과 본문, 코드까지 찾습니다.</div></div>
+  </div>
+</div>
+<button class="totop" id="totop" type="button" aria-label="맨 위로" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<div class="toast" id="toast" hidden aria-live="polite"></div>
+
+<script>window.MathJax={startup:{typeset:false},svg:{fontCache:'global'},options:{enableMenu:false}};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script>/* ===== DSViz core: player, helpers ===== */
+const DSViz = (() => {
+  const REG = {};
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const clone = o => JSON.parse(JSON.stringify(o));
+  let uid = 0;
+  const nid = p => `${p}-${++uid}`;
+
+  function el(tag, cls, html) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+
+  /* A widget shell: header, controls slot, stage, message bar, step player, code panel */
+  function shell(root, { title, sub, kicker = '직접 해보기' }) {
+    root.classList.add('vz');
+    root.innerHTML = '';
+    const head = el('div', 'vz-head', `<span class="vz-kick">${esc(kicker)}</span><b class="vz-title">${esc(title)}</b>${sub ? `<span class="vz-sub">${sub}</span>` : ''}`);
+    const ctrl = el('div', 'vz-ctrl');
+    const stage = el('div', 'vz-stage');
+    const say = el('div', 'vz-say', '<span class="vz-step">준비</span><span class="vz-msg">버튼을 눌러 연산을 실행해 보세요.</span>');
+    const play = el('div', 'vz-play');
+    const code = el('details', 'vz-code');
+    code.open = true;
+    code.innerHTML = '<summary>코드 보기</summary><div class="vz-code-t"></div><pre></pre>';
+    const body = el('div', 'vz-body');
+    const left = el('div', 'vz-left');
+    left.append(stage, say, play);
+    body.append(left, code);
+    if (root.dataset.wide) body.classList.add('wide');
+    root.append(head, ctrl, body);
+    return { root, head, ctrl, stage, say, play, code, body };
+  }
+
+  /* Player: steps through frames, calls render(frame) */
+  class Player {
+    constructor(ui, render) {
+      this.ui = ui; this.render = render; this.frames = []; this.i = 0; this.timer = null; this.speed = 750; this.codeSrc = null;
+      const id = nid('spd');
+      ui.play.innerHTML = `
+        <button type="button" class="vz-ib" data-a="first" aria-label="처음 단계">⏮</button>
+        <button type="button" class="vz-ib" data-a="prev" aria-label="이전 단계">◀</button>
+        <button type="button" class="vz-ib vz-go" data-a="toggle" aria-label="자동 재생">▶</button>
+        <button type="button" class="vz-ib" data-a="next" aria-label="다음 단계">▶|</button>
+        <span class="vz-count num">0 / 0</span>
+        <label class="vz-speed" for="${id}">속도
+          <select id="${id}"><option value="1300">느리게</option><option value="750" selected>보통</option><option value="300">빠르게</option></select></label>`;
+      ui.play.addEventListener('click', e => {
+        const a = e.target.closest('[data-a]'); if (!a) return;
+        const k = a.dataset.a;
+        if (k === 'first') { this.stop(); this.go(0); }
+        if (k === 'prev') { this.stop(); this.go(this.i - 1); }
+        if (k === 'next') { this.stop(); this.go(this.i + 1); }
+        if (k === 'toggle') { this.timer ? this.stop() : this.start(); }
+      });
+      ui.play.querySelector('select').addEventListener('change', e => { this.speed = +e.target.value; if (this.timer) { this.stop(); this.start(); } });
+    }
+    setCode(title, src) {
+      if (this.codeSrc === src) return;
+      this.codeSrc = src;
+      this.ui.code.querySelector('.vz-code-t').textContent = title || '';
+      const lines = src.replace(/\n$/, '').split('\n');
+      this.ui.code.querySelector('pre').innerHTML = lines.map((l, i) => `<span class="ln" data-l="${i + 1}"><i>${i + 1}</i>${esc(l) || ' '}</span>`).join('');
+    }
+    load(frames, { code, codeTitle, autoplay = true } = {}) {
+      this.stop();
+      if (code) this.setCode(codeTitle, code);
+      this.frames = frames;
+      this.go(0);
+      if (autoplay && frames.length > 1) this.start();
+    }
+    go(i) {
+      if (!this.frames.length) return;
+      this.i = Math.max(0, Math.min(this.frames.length - 1, i));
+      const f = this.frames[this.i];
+      this.render(f);
+      const s = this.ui.say;
+      s.querySelector('.vz-step').textContent = f.tag || `${this.i + 1}단계`;
+      s.querySelector('.vz-msg').innerHTML = f.msg || '';
+      s.dataset.tone = f.tone || '';
+      this.ui.play.querySelector('.vz-count').textContent = `${this.i + 1} / ${this.frames.length}`;
+      this.ui.code.querySelectorAll('.ln').forEach(n => n.classList.toggle('on', (f.lines || [f.line]).includes(+n.dataset.l)));
+      const on = this.ui.code.querySelector('.ln.on');
+      if (on) { const pre = on.parentElement; const top = on.offsetTop - pre.clientHeight / 2; if (top > pre.scrollTop + pre.clientHeight - 30 || top < pre.scrollTop - 10 || true) pre.scrollTop = Math.max(0, top); }
+      if (this.i >= this.frames.length - 1) this.stop();
+    }
+    start() {
+      if (this.i >= this.frames.length - 1) this.go(0);
+      const b = this.ui.play.querySelector('.vz-go'); b.textContent = '⏸'; b.setAttribute('aria-label', '일시 정지');
+      this.timer = setInterval(() => { if (this.i >= this.frames.length - 1) this.stop(); else this.go(this.i + 1); }, this.speed);
+    }
+    stop() {
+      clearInterval(this.timer); this.timer = null;
+      const b = this.ui.play.querySelector('.vz-go'); if (b) { b.textContent = '▶'; b.setAttribute('aria-label', '자동 재생'); }
+    }
+  }
+
+  /* small form helpers */
+  function field(label, attrs) {
+    const id = nid('f');
+    return `<label class="vz-f" for="${id}"><span>${label}</span><input id="${id}" ${attrs}></label>`;
+  }
+  function btn(label, act, cls = '') { return `<button type="button" class="vz-b ${cls}" data-act="${act}">${label}</button>`; }
+  function seg(name, opts, cur) {
+    return `<div class="vz-seg" role="group" aria-label="${esc(name)}">` + opts.map(([v, l]) => `<button type="button" data-mode="${v}" aria-pressed="${v === cur}">${l}</button>`).join('') + '</div>';
+  }
+  const num = v => { const n = Number(String(v).trim()); return Number.isFinite(n) ? n : NaN; };
+
+  /* tree layout in SVG: nodes = {idx:value} (1-based array), returns positions */
+  function treeLayout(arr, W = 560) {
+    const n = arr.length - 1;
+    const exists = i => i <= n && arr[i] !== null && arr[i] !== undefined;
+    let x = 0; const pos = {}; let maxD = 0;
+    (function walk(i, d) {
+      if (!exists(i)) return;
+      walk(2 * i, d + 1);
+      pos[i] = { x: x++, d };
+      maxD = Math.max(maxD, d);
+      walk(2 * i + 1, d + 1);
+    })(1, 0);
+    const cnt = Math.max(1, x);
+    const gap = Math.min(64, (W - 40) / cnt);
+    const ox = (W - gap * (cnt - 1)) / 2;
+    for (const k in pos) { pos[k].px = ox + pos[k].x * gap; pos[k].py = 34 + pos[k].d * 66; }
+    return { pos, h: 34 + maxD * 66 + 40, W };
+  }
+  function treeSVG(arr, { W = 560, cls = {}, sub = {}, labelIdx = true } = {}) {
+    const { pos, h } = treeLayout(arr, W);
+    let edges = '', nodes = '';
+    for (const k in pos) {
+      const i = +k, p = pos[k];
+      const par = i >> 1;
+      if (i > 1 && pos[par]) edges += `<line x1="${pos[par].px}" y1="${pos[par].py}" x2="${p.px}" y2="${p.py}" class="e ${cls['e' + i] || ''}"/>`;
+      nodes += `<g class="n ${cls[i] || ''}" data-i="${i}" transform="translate(${p.px},${p.py})" tabindex="0" role="button" aria-label="노드 ${esc(arr[i])}, 인덱스 ${i}"><circle r="20"/><text dy=".35em">${esc(arr[i])}</text>${labelIdx ? `<text class="ix" dy="34">${i}</text>` : ''}${sub[i] ? `<text class="badge" dx="22" dy="-16">${esc(sub[i])}</text>` : ''}</g>`;
+    }
+    return `<svg class="vz-svg" viewBox="0 0 ${W} ${h}" style="max-width:${W}px">${edges}${nodes}</svg>`;
+  }
+  function arrayStrip(arr, { from = 1, cls = {}, label = 'index', cap } = {}) {
+    const end = cap != null ? cap : arr.length;
+    let cells = '';
+    for (let i = from; i < end; i++) {
+      const v = arr[i];
+      cells += `<div class="vz-cell ${v === null || v === undefined ? 'empty' : ''} ${cls[i] || ''}"><span class="v">${v === null || v === undefined ? '' : esc(v)}</span><span class="i">${i}</span></div>`;
+    }
+    return `<div class="vz-strip" aria-label="${esc(label)}">${cells}</div>`;
+  }
+
+  function register(name, fn) { REG[name] = fn; }
+  function mount(node) {
+    if (node.dataset.mounted) return;
+    const fn = REG[node.dataset.viz];
+    if (!fn) return;
+    node.dataset.mounted = '1';
+    try { fn(node, node.dataset.vmode || ''); } catch (e) { node.innerHTML = '<p class="vz-err">시각화를 불러오지 못했습니다.</p>'; console.error(e); }
+  }
+  function mountAll(root = document) { root.querySelectorAll('[data-viz]').forEach(mount); }
+
+  return { register, mount, mountAll, shell, Player, field, btn, seg, num, esc, clone, el, treeSVG, treeLayout, arrayStrip, nid };
+})();
+
+/* ===== 배열 ===== */
+DSViz.register('array', (root) => {
+  const { shell, Player, field, btn, num, esc, clone } = DSViz;
+  const CAP = 8;
+  const ui = shell(root, { title: '배열: 연속된 칸에서 읽기·삽입·삭제', sub: '크기 8짜리 배열. 중간에 넣거나 빼면 뒤쪽 원소가 한 칸씩 움직입니다.' });
+  ui.ctrl.innerHTML = field('위치 i', 'type="number" min="0" max="7" value="1" data-k="i"') + field('값', 'type="number" value="10" data-k="v"') +
+    btn('a[i] 읽기', 'get') + btn('i에 삽입', 'ins', 'pri') + btn('i 삭제', 'del') + btn('값 찾기', 'find') + btn('처음 상태로', 'reset', 'ghost');
+  let st = { a: [3, 8, 12, 5, 7, null, null, null], n: 5 };
+  const CODE = {
+    get: ['읽기 a[i]', 'def get(a, i):\n    # 주소 = 시작 주소 + i × 칸 크기\n    return a[i]            # O(1)'],
+    ins: ['삽입 insert(i, v)', 'def insert(a, n, i, v):\n    if n == len(a):\n        raise OverflowError("가득 참")\n    for j in range(n - 1, i - 1, -1):\n        a[j + 1] = a[j]    # 한 칸 뒤로\n    a[i] = v\n    n += 1                 # O(n)'],
+    del: ['삭제 remove(i)', 'def remove(a, n, i):\n    v = a[i]\n    for j in range(i, n - 1):\n        a[j] = a[j + 1]    # 한 칸 앞으로\n    a[n - 1] = None\n    n -= 1\n    return v               # O(n)'],
+    find: ['찾기 find(v)', 'def find(a, n, v):\n    for j in range(n):\n        if a[j] == v:      # 비교\n            return j\n    return -1              # O(n)'],
+  };
+  const P = new Player(ui, f => {
+    let cells = '';
+    for (let i = 0; i < CAP; i++) {
+      const v = f.a[i];
+      const c = (f.hl || {})[i] || '';
+      cells += `<div class="vz-cell ${v == null ? 'empty' : ''} ${c} ${i >= f.n ? 'out' : ''}"><span class="v">${v == null ? '' : esc(v)}</span><span class="i">${i}</span></div>`;
+    }
+    ui.stage.innerHTML = `<div class="vz-strip big">${cells}</div>
+      <div class="vz-meta"><span>원소 수 n = <b>${f.n}</b> / ${CAP}</span><span>이동 <b>${f.mv || 0}</b>번</span><span>비교 <b>${f.cmp || 0}</b>번</span></div>`;
+  });
+  const fr = (s, o) => Object.assign(clone(s), o);
+  function run(act) {
+    const i = Math.floor(num(ui.ctrl.querySelector('[data-k=i]').value));
+    const v = num(ui.ctrl.querySelector('[data-k=v]').value);
+    const F = []; let s = clone(st);
+    if (act === 'reset') { st = { a: [3, 8, 12, 5, 7, null, null, null], n: 5 }; P.load([fr(st, { msg: '처음 상태로 돌렸습니다: [3, 8, 12, 5, 7]', tag: '초기화' })], { code: CODE.ins[1], codeTitle: CODE.ins[0], autoplay: false }); return; }
+    if (act === 'get') {
+      if (!(i >= 0 && i < s.n)) { P.load([fr(s, { msg: `i는 0부터 ${s.n - 1} 사이여야 합니다.`, tone: 'bad' })], { code: CODE.get[1], codeTitle: CODE.get[0] }); return; }
+      F.push(fr(s, { hl: { [i]: 'hit' }, line: 3, msg: `<b>a[${i}] = ${s.a[i]}</b>. 몇 번째 칸이든 주소 계산 한 번으로 바로 갑니다. <b>O(1)</b>`, tone: 'good' }));
+      P.load(F, { code: CODE.get[1], codeTitle: CODE.get[0] }); return;
+    }
+    if (act === 'ins') {
+      if (Number.isNaN(v)) return;
+      if (s.n === CAP) { P.load([fr(s, { line: 3, msg: '배열이 가득 찼습니다. 고정 크기 배열은 더 넣을 수 없습니다.', tone: 'bad' })], { code: CODE.ins[1], codeTitle: CODE.ins[0] }); return; }
+      if (!(i >= 0 && i <= s.n)) { P.load([fr(s, { msg: `삽입 위치는 0부터 ${s.n} 사이여야 합니다.`, tone: 'bad' })], { code: CODE.ins[1], codeTitle: CODE.ins[0] }); return; }
+      let mv = 0;
+      F.push(fr(s, { hl: { [i]: 'mark' }, line: 1, msg: `${i}번 칸에 ${v}를 넣으려면 ${i}번부터 끝(${s.n - 1}번)까지를 뒤로 밀어야 합니다.`, mv }));
+      for (let j = s.n - 1; j >= i; j--) {
+        F.push(fr(s, { hl: { [j]: 'from', [j + 1]: 'to' }, line: 5, msg: `a[${j + 1}] = a[${j}] → ${s.a[j]}을(를) 한 칸 뒤로`, mv }));
+        s.a[j + 1] = s.a[j]; mv++;
+        F.push(fr(s, { hl: { [j + 1]: 'to' }, line: 5, msg: `옮김 ${mv}번째`, mv }));
+      }
+      s.a[i] = v; s.n++;
+      F.push(fr(s, { hl: { [i]: 'hit' }, line: 6, msg: `a[${i}] = ${v}. 원소 ${mv}개를 옮겼습니다. 앞쪽에 넣을수록 많이 옮깁니다 → <b>O(n)</b>`, mv, tone: 'good' }));
+      st = s; P.load(F, { code: CODE.ins[1], codeTitle: CODE.ins[0] }); return;
+    }
+    if (act === 'del') {
+      if (!(i >= 0 && i < s.n)) { P.load([fr(s, { msg: `삭제 위치는 0부터 ${s.n - 1} 사이여야 합니다.`, tone: 'bad' })], { code: CODE.del[1], codeTitle: CODE.del[0] }); return; }
+      let mv = 0; const val = s.a[i];
+      F.push(fr(s, { hl: { [i]: 'gone' }, line: 2, msg: `a[${i}] = ${val}을(를) 꺼냅니다. 이제 빈자리를 메워야 합니다.`, mv }));
+      for (let j = i; j < s.n - 1; j++) {
+        F.push(fr(s, { hl: { [j + 1]: 'from', [j]: 'to' }, line: 4, msg: `a[${j}] = a[${j + 1}] → ${s.a[j + 1]}을(를) 한 칸 앞으로`, mv }));
+        s.a[j] = s.a[j + 1]; mv++;
+      }
+      s.a[s.n - 1] = null; s.n--;
+      F.push(fr(s, { line: 5, msg: `삭제 끝: ${val}. 원소 ${mv}개를 앞으로 당겼습니다 → <b>O(n)</b>`, mv, tone: 'good' }));
+      st = s; P.load(F, { code: CODE.del[1], codeTitle: CODE.del[0] }); return;
+    }
+    if (act === 'find') {
+      if (Number.isNaN(v)) return;
+      let cmp = 0;
+      for (let j = 0; j < s.n; j++) {
+        cmp++;
+        if (s.a[j] === v) { F.push(fr(s, { hl: { [j]: 'hit' }, line: 3, cmp, msg: `a[${j}] == ${v} → 찾았습니다. 위치 ${j}, 비교 ${cmp}번`, tone: 'good' })); P.load(F, { code: CODE.find[1], codeTitle: CODE.find[0] }); return; }
+        F.push(fr(s, { hl: { [j]: 'cmp' }, line: 3, cmp, msg: `a[${j}] = ${s.a[j]} ≠ ${v}, 다음 칸으로` }));
+      }
+      F.push(fr(s, { line: 5, cmp, msg: `끝까지 봤지만 ${v}가 없습니다. -1을 돌려줍니다. 비교 ${cmp}번 → <b>O(n)</b>`, tone: 'bad' }));
+      P.load(F, { code: CODE.find[1], codeTitle: CODE.find[0] });
+    }
+  }
+  ui.ctrl.addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b) run(b.dataset.act); });
+  P.setCode(CODE.ins[0], CODE.ins[1]);
+  P.load([Object.assign(clone(st), { tag: '준비', msg: '위치 i와 값을 정하고 <b>i에 삽입</b>을 눌러 보세요. 0번에 넣으면 5개가 전부 움직입니다.' })], { autoplay: false });
+});
+
+/* ===== 희소 행렬 ===== */
+DSViz.register('sparse', (root) => {
+  const { shell, esc } = DSViz;
+  const R = 5, C = 6;
+  const ui = shell(root, { title: '희소 행렬을 (행, 열, 값)으로 저장하기', sub: '칸을 눌러 값을 넣거나 지워 보세요. 0이 아닌 값만 오른쪽 표에 남습니다.' });
+  ui.play.remove(); ui.code.remove();
+  let m = Array.from({ length: R }, () => Array(C).fill(0));
+  m[0][2] = 7; m[1][4] = 3; m[3][0] = 9; m[4][5] = 2; m[2][2] = 5;
+  let nextVal = 1;
+  ui.ctrl.innerHTML = '<button type="button" class="vz-b ghost" data-act="clear">모두 0으로</button><button type="button" class="vz-b ghost" data-act="fill">값 많이 넣기</button>';
+  function render(hlR = -1, hlC = -1) {
+    const nz = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) if (m[r][c]) nz.push([r, c, m[r][c]]);
+    let g = '<div class="vz-mat" role="grid" aria-label="5×6 행렬">';
+    for (let r = 0; r < R; r++) {
+      for (let c = 0; c < C; c++) {
+        const v = m[r][c];
+        g += `<button type="button" class="vz-mc ${v ? 'nz' : ''} ${r === hlR && c === hlC ? 'hl' : ''}" data-r="${r}" data-c="${c}" aria-label="${r}행 ${c}열 값 ${v}">${v}</button>`;
+      }
+    }
+    g += '</div>';
+    const rows = nz.map(([r, c, v]) => `<tr class="${r === hlR && c === hlC ? 'hl' : ''}"><td>${r}</td><td>${c}</td><td>${v}</td></tr>`).join('');
+    const dense = R * C, sparse = 3 * nz.length;
+    ui.stage.innerHTML = `<div class="vz-two">
+      <div><div class="vz-cap">2차원 배열 (5행 × 6열)</div>${g}</div>
+      <div><div class="vz-cap">희소 표현 (${nz.length}행 × 3열)</div><div class="vz-tbl"><table><thead><tr><th>행</th><th>열</th><th>값</th></tr></thead><tbody>${rows || '<tr><td colspan="3">0이 아닌 값이 없습니다</td></tr>'}</tbody></table></div></div></div>
+      <div class="vz-meta"><span>2차원 배열 <b>${dense}</b>칸</span><span>희소 표현 <b>${sparse}</b>칸</span><span class="${sparse < dense ? 'good' : 'bad'}">${sparse < dense ? `${dense - sparse}칸 절약` : `오히려 ${sparse - dense}칸 손해. 0이 적으면 그냥 배열이 낫습니다`}</span></div>`;
+    ui.say.querySelector('.vz-step').textContent = '규칙';
+    ui.say.querySelector('.vz-msg').innerHTML = `0이 아닌 값이 k개면 희소 표현은 <b>3 × k</b>칸입니다. 지금 k = ${nz.length}. k가 ${Math.floor(dense / 3)}을 넘으면 손해입니다.`;
+  }
+  ui.stage.addEventListener('click', e => {
+    const b = e.target.closest('.vz-mc'); if (!b) return;
+    const r = +b.dataset.r, c = +b.dataset.c;
+    m[r][c] = m[r][c] ? 0 : (nextVal = nextVal % 9 + 1);
+    render(r, c);
+  });
+  ui.ctrl.addEventListener('click', e => {
+    const a = e.target.closest('[data-act]'); if (!a) return;
+    if (a.dataset.act === 'clear') m = m.map(r => r.map(() => 0));
+    else m = m.map(r => r.map(() => (Math.random() < 0.65 ? Math.ceil(Math.random() * 9) : 0)));
+    render();
+  });
+  render();
+});
+
+/* ===== 단순 연결 리스트 (교재 SinglyLinkedList와 같은 코드) ===== */
+DSViz.register('linkedlist', (root) => {
+  const { shell, Player, field, btn, num, esc, clone } = DSViz;
+  const ui = shell(root, { title: '단순 연결 리스트: 링크를 바꾸는 순서 보기', sub: '교재의 <code>SinglyLinkedList</code> 메서드를 한 줄씩 실행합니다. current가 어디까지 걸어가는지 보세요.' });
+  ui.ctrl.innerHTML = field('값', 'type="number" value="25" data-k="v"') + field('기준 값 x', 'type="number" value="20" data-k="x"') +
+    btn('push_front', 'pf', 'pri') + btn('push_back', 'pb', 'pri') + btn('pop_front', 'of') + btn('pop_back', 'ob') +
+    btn('find(값)', 'find') + btn('insert_after(find(x), 값)', 'ia') + btn('remove(값)', 'rm') + btn('처음 상태로', 'reset', 'ghost');
+  const INIT = [10, 20, 30];
+  let list = INIT.slice();
+  const CODE = {
+    pf: ['push_front(value)  O(1)', 'def push_front(self, value):\n    new_node = Node(value)\n    new_node.next = self._head\n    self._head = new_node\n    self._size += 1'],
+    pb: ['push_back(value)  O(n)', 'def push_back(self, value):\n    new_node = Node(value)\n    if self.is_empty():\n        self._head = new_node\n    else:\n        current = self._head\n        while current.next is not None:\n            current = current.next\n        current.next = new_node\n    self._size += 1'],
+    of: ['pop_front()  O(1)', 'def pop_front(self):\n    if self.is_empty():\n        raise IndexError("비어 있음")\n    value = self._head.data\n    self._head = self._head.next\n    self._size -= 1\n    return value'],
+    ob: ['pop_back()  O(n)', 'def pop_back(self):\n    if self.is_empty():\n        raise IndexError("비어 있음")\n    if self._head.next is None:\n        return self.pop_front()\n    current = self._head\n    while current.next.next is not None:\n        current = current.next\n    value = current.next.data\n    current.next = None\n    self._size -= 1\n    return value'],
+    find: ['find(value)  O(n)', 'def find(self, value):\n    current = self._head\n    while current is not None:\n        if current.data == value:\n            return current\n        current = current.next\n    return None'],
+    rm: ['remove(value)  O(n)', 'def remove(self, value):\n    if self._head.data == value:\n        self.pop_front()\n        return\n    current = self._head\n    while current.next is not None:\n        if current.next.data == value:\n            current.next = current.next.next\n            self._size -= 1\n            return\n        current = current.next\n    raise ValueError("없음")'],
+    ia: ['insert_after(node, value)  O(1)', 'node = ll.find(x)          # 먼저 노드를 찾고\nnew_node = Node(value)\nnew_node.next = node.next  # ① 새 노드가 뒤를 먼저 잡고\nnode.next = new_node       # ② 앞 노드가 새 노드를 가리킴\nself._size += 1'],
+  };
+  /* frame: items [{v, cls, lab}], link[k]: 'on' | 'off' | 'skip' ; head: index | -1 */
+  const mk = (vals) => ({ items: vals.map(v => ({ v })), link: vals.map(() => 'on'), head: vals.length ? 0 : -1 });
+  const P = new Player(ui, f => {
+    if (!f.items.length) { ui.stage.innerHTML = `<div class="ll"><div class="ll-head">head</div><div class="ll-none">None</div></div><div class="vz-meta"><span>size = <b>0</b></span></div>`; return; }
+    let h = '<div class="ll" role="img" aria-label="연결 리스트">';
+    f.items.forEach((it, k) => {
+      const isHead = k === f.head;
+      h += `<div class="ll-node ${it.cls || ''}">
+        ${isHead ? '<div class="ll-ptr top">head</div>' : ''}
+        <div class="ll-box"><span class="d">${esc(it.v)}</span><span class="nx">${f.link[k] === 'off' ? '∅' : '•'}</span></div>
+        ${it.lab ? `<div class="ll-ptr bot">${esc(it.lab)}</div>` : ''}
+      </div>`;
+      const ln = f.link[k];
+      if (k < f.items.length - 1) h += `<div class="ll-arrow ${ln}" aria-hidden="true"></div>`;
+      else h += `<div class="ll-arrow ${ln === 'off' ? 'off' : 'on'}" aria-hidden="true"></div><div class="ll-none">None</div>`;
+    });
+    h += '</div>';
+    const real = f.items.filter(i => !/gone|new-float/.test(i.cls || '')).length;
+    ui.stage.innerHTML = h + `<div class="vz-meta"><span>size = <b>${f.size != null ? f.size : real}</b></span>${f.ret !== undefined ? `<span>반환값 <b>${esc(f.ret)}</b></span>` : ''}</div>`;
+  });
+  const F = [];
+  const push = (fr, o) => F.push(Object.assign(clone(fr), o));
+  function lab(fr, k, text, cls) { fr.items.forEach(i => { if (i.lab === text) i.lab = ''; }); if (k >= 0 && fr.items[k]) { fr.items[k].lab = text; if (cls) fr.items[k].cls = cls; } }
+  function run(act) {
+    F.length = 0;
+    const v = num(ui.ctrl.querySelector('[data-k=v]').value);
+    const x = num(ui.ctrl.querySelector('[data-k=x]').value);
+    let code = CODE[act];
+    if (act === 'reset') { list = INIT.slice(); P.load([Object.assign(mk(list), { tag: '초기화', msg: '10 → 20 → 30 상태로 돌렸습니다.' })], { autoplay: false }); return; }
+    const n = list.length;
+    if (act === 'pf') {
+      let f = mk([v, ...list]); f.items[0].cls = 'new'; f.items[0].lab = 'new_node'; f.link[0] = 'off'; f.head = n ? 1 : -1; f.size = n;
+      push(f, { line: 2, msg: `새 노드 [${v}]를 만듭니다. 아직 아무것과도 연결되지 않았습니다.` });
+      f.link[0] = 'on'; push(f, { line: 3, msg: '<b>new_node.next = self._head</b>: 새 노드가 지금의 첫 노드를 가리킵니다. (이 순서가 먼저!)' });
+      f.head = 0; push(f, { line: 4, msg: '<b>self._head = new_node</b>: head가 새 노드로 옮겨갑니다.' });
+      f.items[0].cls = ''; f.items[0].lab = ''; f.size = n + 1; push(f, { line: 5, msg: `끝. 다른 노드는 하나도 움직이지 않았습니다 → <b>O(1)</b>`, tone: 'good' });
+      list = [v, ...list];
+    }
+    if (act === 'pb') {
+      let f = mk([...list, v]); f.items[n].cls = 'new'; f.items[n].lab = 'new_node'; f.size = n;
+      if (n) f.link[n - 1] = 'off';
+      f.head = n ? 0 : -1;
+      push(f, { line: 2, msg: `새 노드 [${v}]를 만듭니다.` });
+      if (!n) { f.head = 0; push(f, { line: 4, msg: '리스트가 비어 있으므로 head가 바로 새 노드를 가리킵니다.' }); }
+      else {
+        lab(f, 0, 'current', ''); f.items[n].lab = 'new_node'; push(f, { line: 6, msg: 'current = head. 맨 끝을 찾으러 출발합니다.' });
+        for (let k = 0; k < n - 1; k++) { push(f, { line: 7, msg: `current.next(${list[k + 1]})가 None이 아니므로 계속 갑니다.` }); lab(f, k + 1, 'current'); push(f, { line: 8, msg: `current = current.next → [${list[k + 1]}]` }); }
+        push(f, { line: 7, msg: 'current.next가 None입니다. 여기가 마지막 노드입니다.' });
+        f.link[n - 1] = 'on'; push(f, { line: 9, msg: '<b>current.next = new_node</b>: 마지막 노드가 새 노드를 가리킵니다.' });
+      }
+      f.items.forEach(i => { i.lab = ''; i.cls = ''; }); f.size = n + 1;
+      push(f, { line: 10, msg: `끝. 노드 ${Math.max(0, n - 1)}개를 건너 걸어가야 했습니다 → <b>O(n)</b>. tail 포인터가 있으면 O(1)이 됩니다.`, tone: 'good' });
+      list = [...list, v];
+    }
+    if (act === 'of') {
+      let f = mk(list); f.size = n;
+      if (!n) { push(f, { line: 3, msg: '비어 있어서 IndexError가 납니다.', tone: 'bad' }); }
+      else {
+        f.items[0].cls = 'hit'; push(f, { line: 4, msg: `value = head.data → ${list[0]}` });
+        f.head = n > 1 ? 1 : -1; f.items[0].cls = 'gone'; f.link[0] = 'off'; push(f, { line: 5, msg: '<b>self._head = self._head.next</b>: head가 다음 노드로 넘어갑니다. 첫 노드는 아무도 가리키지 않아 사라집니다(파이썬은 GC가 정리).' });
+        const g = mk(list.slice(1)); g.size = n - 1; F.push(Object.assign(g, { line: 7, ret: list[0], msg: `${list[0]}을(를) 반환. <b>O(1)</b>`, tone: 'good' }));
+        list = list.slice(1);
+      }
+    }
+    if (act === 'ob') {
+      let f = mk(list); f.size = n;
+      if (!n) push(f, { line: 3, msg: '비어 있어서 IndexError가 납니다.', tone: 'bad' });
+      else if (n === 1) { push(f, { line: 5, msg: '노드가 하나뿐이면 pop_front()와 같습니다.' }); const g = mk([]); F.push(Object.assign(g, { line: 5, ret: list[0], msg: `${list[0]} 반환`, tone: 'good' })); list = []; }
+      else {
+        lab(f, 0, 'current'); push(f, { line: 6, msg: 'current = head. <b>끝에서 두 번째</b> 노드를 찾아야 합니다.' });
+        for (let k = 0; k < n - 2; k++) { push(f, { line: 7, msg: `current.next.next(${list[k + 2]})가 None이 아님 → 계속` }); lab(f, k + 1, 'current'); push(f, { line: 8, msg: `current = [${list[k + 1]}]` }); }
+        push(f, { line: 7, msg: `current.next.next가 None → current [${list[n - 2]}]가 끝에서 두 번째입니다.` });
+        f.items[n - 1].cls = 'hit'; push(f, { line: 9, msg: `value = current.next.data → ${list[n - 1]}` });
+        f.link[n - 2] = 'off'; f.items[n - 1].cls = 'gone'; push(f, { line: 10, msg: '<b>current.next = None</b>: 마지막 노드와의 연결을 끊습니다.' });
+        const g = mk(list.slice(0, -1)); g.size = n - 1; F.push(Object.assign(g, { line: 12, ret: list[n - 1], msg: `${list[n - 1]} 반환. 끝까지 걸어가야 하므로 <b>O(n)</b>`, tone: 'good' }));
+        list = list.slice(0, -1);
+      }
+    }
+    if (act === 'find') {
+      let f = mk(list);
+      if (!n) { push(f, { line: 7, ret: 'None', msg: '비어 있어서 None', tone: 'bad' }); }
+      for (let k = 0; k < n; k++) {
+        lab(f, k, 'current'); f.items.forEach((it, j) => it.cls = j === k ? 'cmp' : ''); push(f, { line: 4, msg: `current.data(${list[k]}) == ${v} ?` });
+        if (list[k] === v) { f.items[k].cls = 'hit'; push(f, { line: 5, ret: `[${v}] 노드`, msg: `찾았습니다. 노드 객체를 반환합니다. 비교 ${k + 1}번`, tone: 'good' }); break; }
+        if (k === n - 1) { lab(f, -1, 'current'); f.items.forEach(it => it.cls = ''); push(f, { line: 7, ret: 'None', msg: `끝까지 없어서 None. 비교 ${n}번`, tone: 'bad' }); }
+      }
+    }
+    if (act === 'rm') {
+      let f = mk(list);
+      if (!n) push(f, { line: 2, msg: '비어 있는 리스트입니다.', tone: 'bad' });
+      else if (list[0] === v) {
+        f.items[0].cls = 'hit'; push(f, { line: 2, msg: `head가 ${v}입니다 → pop_front()로 처리` });
+        f.head = n > 1 ? 1 : -1; f.items[0].cls = 'gone'; f.link[0] = 'off'; push(f, { line: 3, msg: 'head를 다음 노드로 옮깁니다.' });
+        const g = mk(list.slice(1)); F.push(Object.assign(g, { line: 4, msg: '삭제 완료', tone: 'good' })); list = list.slice(1);
+      } else {
+        lab(f, 0, 'current'); push(f, { line: 5, msg: '지울 노드의 <b>바로 앞</b> 노드를 찾아야 합니다. 그래서 current.next를 봅니다.' });
+        let done = false;
+        for (let k = 0; k < n - 1; k++) {
+          f.items.forEach((it, j) => it.cls = j === k + 1 ? 'cmp' : ''); push(f, { line: 7, msg: `current.next.data(${list[k + 1]}) == ${v} ?` });
+          if (list[k + 1] === v) {
+            f.items[k + 1].cls = 'gone lift'; f.link[k] = 'skip'; push(f, { line: 8, msg: `<b>current.next = current.next.next</b>: [${list[k]}]이 [${v}]를 건너뛰고 ${k + 2 < n ? `[${list[k + 2]}]` : 'None'}을 가리킵니다.` });
+            const g = mk(list.filter((_, j) => j !== k + 1)); F.push(Object.assign(g, { line: 10, msg: `${v} 삭제 완료. 비교 ${k + 1}번`, tone: 'good' }));
+            list = list.filter((_, j) => j !== k + 1); done = true; break;
+          }
+          lab(f, k + 1, 'current'); push(f, { line: 11, msg: `current = [${list[k + 1]}]` });
+        }
+        if (!done) { f.items.forEach(it => it.cls = ''); push(f, { line: 12, msg: `${v}가 없어 ValueError`, tone: 'bad' }); }
+      }
+    }
+    if (act === 'ia') {
+      const k = list.indexOf(x);
+      let f = mk(list);
+      if (k < 0) { push(f, { line: 1, msg: `find(${x})가 None입니다. 기준 노드가 없으면 넣을 수 없습니다.`, tone: 'bad' }); }
+      else {
+        f.items[k].cls = 'hit'; f.items[k].lab = 'node'; push(f, { line: 1, msg: `find(${x}) → [${x}] 노드를 받았습니다. (찾는 데 O(n), 넣는 건 O(1))` });
+        const vals = [...list.slice(0, k + 1), v, ...list.slice(k + 1)];
+        let g = mk(vals); g.items[k].lab = 'node'; g.items[k].cls = 'hit'; g.items[k + 1].cls = 'new'; g.items[k + 1].lab = 'new_node';
+        g.link[k] = 'skip'; g.link[k + 1] = 'off'; g.size = n;
+        push(g, { line: 2, msg: `새 노드 [${v}]를 만듭니다. [${x}]는 아직 원래 다음 노드를 가리킵니다.` });
+        g.link[k + 1] = 'on'; push(g, { line: 3, msg: `① <b>new_node.next = node.next</b>: 새 노드가 ${k + 1 < n ? `[${list[k + 1]}]` : 'None'}을 먼저 잡습니다.` });
+        g.link[k] = 'on'; push(g, { line: 4, msg: `② <b>node.next = new_node</b>: [${x}]이 새 노드를 가리킵니다. 순서를 바꾸면 뒤쪽을 잃어버립니다.` });
+        g.items.forEach(it => { it.cls = ''; it.lab = ''; }); g.size = n + 1; push(g, { line: 5, msg: '끝. 링크 2개만 바꿨습니다 → <b>O(1)</b>', tone: 'good' });
+        list = vals;
+      }
+    }
+    P.load(F.slice(), { code: code[1], codeTitle: code[0] });
+  }
+  ui.ctrl.addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b) run(b.dataset.act); });
+  P.setCode(CODE.ia[0], CODE.ia[1]);
+  P.load([Object.assign(mk(list), { tag: '준비', msg: '<b>insert_after</b>를 눌러 링크 두 개가 어떤 순서로 바뀌는지 보세요. <b>pop_back</b>은 current가 끝에서 두 번째에서 멈춥니다.' })], { autoplay: false });
+});
+
+/* ===== 스택: 기본 연산 / 괄호 검사 / 후위 표기식 ===== */
+DSViz.register('stack', (root, mode0) => {
+  const { shell, Player, field, btn, seg, num, esc, clone } = DSViz;
+  const CAP = 7;
+  let mode = mode0 || 'basic';
+  const ui = shell(root, { title: '스택: 위(top)로만 넣고 뺀다', sub: '가장 나중에 넣은 것이 가장 먼저 나옵니다(LIFO).' });
+  const CODE = {
+    basic: ['ArrayStack (list의 끝 = top)', 'class ArrayStack:\n    def __init__(self):\n        self._data = []\n\n    def push(self, x):\n        self._data.append(x)\n\n    def pop(self):\n        if self.is_empty():\n            raise IndexError("스택이 비어 있음")\n        return self._data.pop()\n\n    def peek(self):\n        if self.is_empty():\n            raise IndexError("스택이 비어 있음")\n        return self._data[-1]'],
+    paren: ['is_balanced(s)', "def is_balanced(s):\n    stack = []\n    pairs = {')': '(', ']': '[', '}': '{'}\n    for ch in s:\n        if ch in '([{':\n            stack.append(ch)\n        elif ch in ')]}':\n            if not stack or stack.pop() != pairs[ch]:\n                return False\n    return len(stack) == 0"],
+    post: ['eval_postfix(tokens)', "def eval_postfix(tokens):\n    stack = []\n    for t in tokens:\n        if t in '+-*/':\n            b = stack.pop()   # 오른쪽 피연산자\n            a = stack.pop()   # 왼쪽 피연산자\n            stack.append(calc(a, t, b))\n        else:\n            stack.append(int(t))\n    return stack.pop()"],
+  };
+  function controls() {
+    const top = seg('모드', [['basic', '기본 연산'], ['paren', '괄호 검사'], ['post', '후위식 계산']], mode);
+    let rest = '';
+    if (mode === 'basic') rest = field('값', 'type="number" value="7" data-k="v"') + btn('push', 'push', 'pri') + btn('pop', 'pop') + btn('peek', 'peek') + btn('비우기', 'clear', 'ghost');
+    if (mode === 'paren') rest = field('괄호 문자열', 'type="text" value="{[()]}(" data-k="s" spellcheck="false" style="width:12em"') + btn('검사 시작', 'run', 'pri') +
+      '<span class="vz-presets">' + ['(()())', ')(()', '{(})', '{[()]}'].map(p => `<button type="button" class="vz-chip" data-preset="${esc(p)}">${esc(p)}</button>`).join('') + '</span>';
+    if (mode === 'post') rest = field('후위식 (공백 구분)', 'type="text" value="10 5 2 * - 3 +" data-k="s" spellcheck="false" style="width:13em"') + btn('계산 시작', 'run', 'pri') +
+      '<span class="vz-presets">' + ['5 2 + 3 *', '3 4 5 1 + * +', '8 2 3 * - 4 2 / +'].map(p => `<button type="button" class="vz-chip" data-preset="${esc(p)}">${esc(p)}</button>`).join('') + '</span>';
+    ui.ctrl.innerHTML = top + '<div class="vz-row">' + rest + '</div>';
+  }
+  let data = [3, 9];
+  const P = new Player(ui, f => {
+    let col = '';
+    for (let i = CAP - 1; i >= 0; i--) {
+      const v = f.st[i];
+      const isTop = i === f.st.length - 1;
+      col += `<div class="sk-cell ${v === undefined ? 'empty' : ''} ${isTop ? 'top' : ''} ${(f.hl || {})[i] || ''}"><span class="i">${i}</span><span class="v">${v === undefined ? '' : esc(v)}</span>${isTop ? '<span class="t">← top</span>' : ''}</div>`;
+    }
+    let tape = '';
+    if (f.tokens) tape = `<div class="vz-cap">입력</div><div class="tape">${f.tokens.map((t, i) => `<span class="${i === f.pos ? 'on' : i < f.pos ? 'done' : ''}">${esc(t)}</span>`).join('')}</div>`;
+    const out = f.out != null ? `<div class="sk-out ${f.tone || ''}">${f.out}</div>` : '';
+    ui.stage.innerHTML = `<div class="vz-two sk"><div><div class="vz-cap">스택 (top = ${f.st.length - 1})</div><div class="sk-col">${col}</div></div><div class="sk-side">${tape}${out}</div></div>`;
+  });
+  const fr = (st, o) => Object.assign({ st: clone(st) }, o);
+  function runOp(act) {
+    const F = [];
+    if (mode === 'basic') {
+      const v = num(ui.ctrl.querySelector('[data-k=v]').value);
+      if (act === 'push') {
+        if (data.length >= CAP) { F.push(fr(data, { line: 6, msg: '이 그림은 7칸까지만 보여 줍니다. (파이썬 list는 자동으로 늘어남)', tone: 'bad' })); }
+        else { F.push(fr(data, { line: 5, msg: `push(${v})` })); data.push(v); F.push(fr(data, { line: 6, hl: { [data.length - 1]: 'in' }, msg: `append(${v}) → top이 ${data.length - 1}이 됐습니다. <b>O(1)</b>`, tone: 'good' })); }
+        const iv = ui.ctrl.querySelector('[data-k=v]'); iv.value = Math.floor(Math.random() * 90) + 1;
+      }
+      if (act === 'pop') {
+        if (!data.length) F.push(fr(data, { line: 10, msg: 'is_empty() → IndexError: 비어 있는 스택에서 꺼낼 수 없습니다.', tone: 'bad' }));
+        else { F.push(fr(data, { line: 9, hl: { [data.length - 1]: 'out' }, msg: `top에 있는 ${data[data.length - 1]}을(를) 꺼냅니다.` })); const x = data.pop(); F.push(fr(data, { line: 11, out: `pop() → ${x}`, msg: `${x} 반환. 가장 나중에 넣은 것이 먼저 나왔습니다. <b>O(1)</b>`, tone: 'good' })); }
+      }
+      if (act === 'peek') {
+        if (!data.length) F.push(fr(data, { line: 15, msg: '비어 있어서 IndexError', tone: 'bad' }));
+        else F.push(fr(data, { line: 16, hl: { [data.length - 1]: 'hit' }, out: `peek() → ${data[data.length - 1]}`, msg: '꺼내지 않고 보기만 합니다. 스택은 그대로입니다.', tone: 'good' }));
+      }
+      if (act === 'clear') { data = []; F.push(fr(data, { msg: '스택을 비웠습니다.' })); }
+      P.load(F, { code: CODE.basic[1], codeTitle: CODE.basic[0] }); return;
+    }
+    const s = ui.ctrl.querySelector('[data-k=s]').value;
+    if (mode === 'paren') {
+      const toks = [...s.replace(/\s+/g, '')]; const pairs = { ')': '(', ']': '[', '}': '{' };
+      const st = [];
+      F.push(fr(st, { tokens: toks, pos: -1, line: 2, msg: '빈 스택에서 시작합니다. 여는 괄호는 넣고, 닫는 괄호가 나오면 꺼내서 짝을 맞춥니다.' }));
+      let ok = true;
+      for (let i = 0; i < toks.length; i++) {
+        const ch = toks[i];
+        if ('([{'.includes(ch)) { st.push(ch); F.push(fr(st, { tokens: toks, pos: i, line: 6, hl: { [st.length - 1]: 'in' }, msg: `'${ch}' 여는 괄호 → push` })); }
+        else if (')]}'.includes(ch)) {
+          if (!st.length) { F.push(fr(st, { tokens: toks, pos: i, line: 8, out: 'NO', tone: 'bad', msg: `'${ch}'를 만났는데 스택이 비어 있습니다. 닫는 괄호가 먼저 나왔습니다 → <b>실패</b>` })); ok = false; break; }
+          F.push(fr(st, { tokens: toks, pos: i, line: 8, hl: { [st.length - 1]: 'out' }, msg: `'${ch}' 닫는 괄호 → pop 해서 '${pairs[ch]}'인지 확인` }));
+          const t = st.pop();
+          if (t !== pairs[ch]) { F.push(fr(st, { tokens: toks, pos: i, line: 9, out: 'NO', tone: 'bad', msg: `꺼낸 것은 '${t}'인데 '${pairs[ch]}'이어야 합니다. 괄호가 엉켰습니다 → <b>실패</b>` })); ok = false; break; }
+          F.push(fr(st, { tokens: toks, pos: i, line: 8, msg: `'${t}'와 '${ch}' 짝이 맞습니다.` }));
+        }
+      }
+      if (ok) F.push(fr(st, { tokens: toks, pos: toks.length, line: 10, out: st.length ? 'NO' : 'YES', tone: st.length ? 'bad' : 'good', msg: st.length ? `끝났는데 스택에 ${st.length}개가 남았습니다. 여는 괄호가 더 많습니다 → <b>실패</b>` : '끝까지 짝이 맞고 스택도 비었습니다 → <b>균형 잡힘</b>' }));
+      P.load(F, { code: CODE.paren[1], codeTitle: CODE.paren[0] }); return;
+    }
+    if (mode === 'post') {
+      const toks = s.trim().split(/\s+/).filter(Boolean); const st = [];
+      F.push(fr(st, { tokens: toks, pos: -1, line: 2, msg: '앞에서부터 읽습니다. 숫자는 push, 연산자는 두 개를 꺼내 계산하고 결과를 push.' }));
+      for (let i = 0; i < toks.length; i++) {
+        const t = toks[i];
+        if ('+-*/'.includes(t) && t.length === 1) {
+          if (st.length < 2) { F.push(fr(st, { tokens: toks, pos: i, out: '오류', tone: 'bad', msg: '피연산자가 부족합니다. 올바른 후위식이 아닙니다.' })); P.load(F, { code: CODE.post[1], codeTitle: CODE.post[0] }); return; }
+          F.push(fr(st, { tokens: toks, pos: i, line: 5, hl: { [st.length - 1]: 'out' }, msg: `'${t}' → 먼저 꺼낸 ${st[st.length - 1]}이 <b>오른쪽(b)</b>` }));
+          const b = st.pop();
+          F.push(fr(st, { tokens: toks, pos: i, line: 6, hl: { [st.length - 1]: 'out' }, msg: `다음에 꺼낸 ${st[st.length - 1]}이 <b>왼쪽(a)</b>` }));
+          const a = st.pop();
+          const r = t === '+' ? a + b : t === '-' ? a - b : t === '*' ? a * b : Math.trunc(a / b);
+          st.push(r);
+          F.push(fr(st, { tokens: toks, pos: i, line: 7, hl: { [st.length - 1]: 'in' }, msg: `${a} ${t} ${b} = ${r} → push` }));
+        } else {
+          const n = Number(t);
+          if (!Number.isFinite(n)) { F.push(fr(st, { tokens: toks, pos: i, out: '오류', tone: 'bad', msg: `'${esc(t)}'는 숫자도 연산자도 아닙니다.` })); P.load(F, { code: CODE.post[1], codeTitle: CODE.post[0] }); return; }
+          st.push(n); F.push(fr(st, { tokens: toks, pos: i, line: 9, hl: { [st.length - 1]: 'in' }, msg: `숫자 ${n} → push` }));
+        }
+      }
+      const okk = st.length === 1;
+      F.push(fr(st, { tokens: toks, pos: toks.length, line: 10, out: okk ? `결과 ${st[0]}` : '오류', tone: okk ? 'good' : 'bad', msg: okk ? `마지막에 하나 남은 ${st[0]}이 답입니다.` : '스택에 값이 여러 개 남았습니다. 연산자가 부족합니다.' }));
+      P.load(F, { code: CODE.post[1], codeTitle: CODE.post[0] });
+    }
+  }
+  function setMode(m) {
+    mode = m; controls();
+    const c = CODE[mode]; P.setCode(c[0], c[1]);
+    const hint = { basic: '<b>push</b>를 몇 번 누른 뒤 <b>pop</b>을 눌러 보세요. 넣은 순서와 반대로 나옵니다.', paren: '예시 칩을 누르거나 직접 입력하고 <b>검사 시작</b>. <code>{(})</code>는 개수가 맞아도 실패합니다.', post: '<b>계산 시작</b>을 누르세요. 뺄셈에서 먼저 꺼낸 값이 오른쪽이라는 점을 보세요.' }[mode];
+    P.load([fr(mode === 'basic' ? data : [], { tag: '준비', msg: hint })], { autoplay: false });
+  }
+  ui.ctrl.addEventListener('click', e => {
+    const m = e.target.closest('.vz-seg [data-mode]'); if (m) { setMode(m.dataset.mode); return; }
+    const p = e.target.closest('[data-preset]'); if (p) { ui.ctrl.querySelector('[data-k=s]').value = p.dataset.preset; runOp('run'); return; }
+    const b = e.target.closest('[data-act]'); if (b) runOp(b.dataset.act);
+  });
+  ui.ctrl.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); runOp(mode === 'basic' ? 'push' : 'run'); } });
+  setMode(mode);
+});
+
+/* ===== 큐: 원형 큐(교재 규칙) / 선형 배열 큐 ===== */
+DSViz.register('queue', (root, mode0) => {
+  const { shell, Player, field, btn, seg, num, esc, clone } = DSViz;
+  let mode = mode0 === 'linear' ? 'linear' : 'circular';
+  let SIZE = 6;
+  const ui = shell(root, { title: '큐: 뒤(rear)로 넣고 앞(front)으로 뺀다', sub: '먼저 들어온 것이 먼저 나갑니다(FIFO). 원형 큐는 % 연산으로 끝에서 0번으로 돌아옵니다.' });
+  const CODE = {
+    circular: ['원형 큐 (front = 첫 데이터 바로 앞, 한 칸 비움)', 'class CircularQueue:\n    def __init__(self, size):\n        self.size = size\n        self.items = [None] * size\n        self.front = 0\n        self.rear = 0\n\n    def is_empty(self):\n        return self.front == self.rear\n\n    def is_full(self):\n        return (self.rear + 1) % self.size == self.front\n\n    def enqueue(self, x):\n        if self.is_full():\n            raise OverflowError("가득 참")\n        self.rear = (self.rear + 1) % self.size\n        self.items[self.rear] = x\n\n    def dequeue(self):\n        if self.is_empty():\n            raise IndexError("비어 있음")\n        self.front = (self.front + 1) % self.size\n        return self.items[self.front]'],
+    linear: ['선형 배열 큐 (front, rear는 -1에서 시작)', 'class LinearQueue:\n    def __init__(self, size):\n        self.size = size\n        self.items = [None] * size\n        self.front = -1\n        self.rear = -1\n\n    def is_empty(self):\n        return self.front == self.rear\n\n    def is_full(self):\n        return self.rear == self.size - 1\n\n    def enqueue(self, x):\n        if self.is_full():\n            raise OverflowError("가득 참")\n        self.rear += 1\n        self.items[self.rear] = x\n\n    def dequeue(self):\n        if self.is_empty():\n            raise IndexError("비어 있음")\n        self.front += 1\n        return self.items[self.front]'],
+  };
+  let q;
+  const reset = () => { q = { items: Array(SIZE).fill(null), front: mode === 'linear' ? -1 : 0, rear: mode === 'linear' ? -1 : 0 }; };
+  reset();
+  function controls() {
+    ui.ctrl.innerHTML = seg('종류', [['circular', '원형 큐'], ['linear', '선형 배열 큐']], mode) +
+      `<div class="vz-row">${field('값', 'type="number" value="10" data-k="v"')}${btn('enqueue', 'enq', 'pri')}${btn('dequeue', 'deq')}${btn('peek', 'peek')}
+      <label class="vz-f"><span>배열 크기</span><select data-k="size">${[4, 5, 6, 7, 8].map(n => `<option ${n === SIZE ? 'selected' : ''}>${n}</option>`).join('')}</select></label>${btn('비우기', 'reset', 'ghost')}</div>`;
+  }
+  const P = new Player(ui, f => {
+    const N = f.items.length;
+    const used = i => f.items[i] !== null;
+    let ring = '';
+    if (f.mode === 'circular') {
+      const R = 96, cx = 150, cy = 150;
+      let segs = '';
+      for (let i = 0; i < N; i++) {
+        const a0 = (i / N) * 2 * Math.PI - Math.PI / 2 - Math.PI / N, a1 = a0 + 2 * Math.PI / N;
+        const p = (r, a) => `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
+        const r1 = R + 26, r0 = R - 26;
+        const d = `M${p(r0, a0)} L${p(r1, a0)} A${r1},${r1} 0 0 1 ${p(r1, a1)} L${p(r0, a1)} A${r0},${r0} 0 0 0 ${p(r0, a0)}Z`;
+        const am = (a0 + a1) / 2;
+        const c = (f.hl || {})[i] || '';
+        segs += `<path d="${d}" class="rs ${used(i) ? 'used' : ''} ${c}"/>`;
+        segs += `<text x="${cx + R * Math.cos(am)}" y="${cy + R * Math.sin(am)}" dy=".35em" class="rv">${used(i) ? esc(f.items[i]) : ''}</text>`;
+        segs += `<text x="${cx + (R + 40) * Math.cos(am)}" y="${cy + (R + 40) * Math.sin(am)}" dy=".35em" class="ri">${i}</text>`;
+      }
+      const mark = (idx, cls, txt, off) => { const a = (idx / N) * 2 * Math.PI - Math.PI / 2; const r = R - 46 - off; return `<g class="${cls}"><line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(a)}" y2="${cy + r * Math.sin(a)}"/><text x="${cx + (r + 0) * Math.cos(a) * 0.55}" y="${cy + (r + 0) * Math.sin(a) * 0.55}" dy=".35em">${txt}</text></g>`; };
+      ring = `<svg class="vz-svg ring" viewBox="0 0 300 300" style="max-width:300px">${segs}${mark(f.rear, 'rmk', 'R', 0)}${mark(f.front, 'fmk', 'F', 8)}<circle cx="${cx}" cy="${cy}" r="5" class="hub"/></svg>`;
+    }
+    let strip = '';
+    for (let i = 0; i < N; i++) {
+      const tags = [];
+      if (i === f.front) tags.push('<b class="qf">front</b>');
+      if (i === f.rear) tags.push('<b class="qr">rear</b>');
+      strip += `<div class="vz-cell ${used(i) ? '' : 'empty'} ${(f.hl || {})[i] || ''}"><span class="v">${used(i) ? esc(f.items[i]) : ''}</span><span class="i">${i}</span><span class="tg">${tags.join('')}</span></div>`;
+    }
+    const pre = f.mode === 'linear' ? `<div class="vz-cell ghost"><span class="v"></span><span class="i">-1</span><span class="tg">${f.front === -1 ? '<b class="qf">front</b>' : ''}${f.rear === -1 ? '<b class="qr">rear</b>' : ''}</span></div>` : '';
+    const cnt = f.mode === 'circular' ? (f.rear - f.front + N) % N : f.rear - f.front;
+    const empty = f.front === f.rear;
+    const full = f.mode === 'circular' ? (f.rear + 1) % N === f.front : f.rear === N - 1;
+    ui.stage.innerHTML = `<div class="vz-two q">${ring ? `<div>${ring}</div>` : ''}<div class="q-right"><div class="vz-cap">배열 items</div><div class="vz-strip q">${pre}${strip}</div>
+      <div class="vz-meta"><span>front = <b>${f.front}</b></span><span>rear = <b>${f.rear}</b></span><span>데이터 <b>${cnt}</b>개</span>
+      <span class="pill ${empty ? 'on' : ''}">is_empty ${empty}</span><span class="pill ${full ? 'on bad' : ''}">is_full ${full}</span></div>${f.out ? `<div class="sk-out ${f.tone || ''}">${f.out}</div>` : ''}</div></div>`;
+  });
+  const fr = o => Object.assign(clone(q), { mode }, o);
+  function run(act) {
+    const F = []; const N = SIZE;
+    const v = num(ui.ctrl.querySelector('[data-k=v]').value);
+    const L = mode === 'linear';
+    if (act === 'reset') { reset(); P.load([fr({ msg: '큐를 비웠습니다.' })], { autoplay: false }); return; }
+    if (act === 'enq') {
+      const full = L ? q.rear === N - 1 : (q.rear + 1) % N === q.front;
+      if (L) F.push(fr({ line: 12, msg: `is_full(): rear(${q.rear}) == size − 1(${N - 1}) ?` }));
+      else F.push(fr({ line: 12, msg: `is_full(): (rear + 1) % size = (${q.rear} + 1) % ${N} = <b>${(q.rear + 1) % N}</b>, front = ${q.front} → ${full ? '같음' : '다름'}` }));
+      if (full) {
+        const emptyFront = L && q.front > -1;
+        F.push(fr({ line: 16, out: 'OverflowError', tone: 'bad', msg: L ? (emptyFront ? `rear가 끝에 닿았습니다. 앞쪽 0~${q.front}번이 비어 있는데도 <b>가득 찼다고 판정</b>합니다. 선형 큐의 문제점!` : '가득 찼습니다.') : `가득 찼습니다. 칸은 ${N}개지만 <b>한 칸을 비워 두는 규칙</b>이라 ${N - 1}개까지만 넣습니다.` }));
+      } else {
+        const nr = L ? q.rear + 1 : (q.rear + 1) % N;
+        F.push(fr({ line: 17, hl: { [nr]: 'mark' }, msg: L ? `rear += 1 → ${nr}` : `rear = (${q.rear} + 1) % ${N} = <b>${nr}</b>${nr === 0 ? ' ← 끝에서 0번으로 돌아왔습니다!' : ''}` }));
+        q.rear = nr; q.items[nr] = v;
+        F.push(fr({ line: 18, hl: { [nr]: 'in' }, msg: `items[${nr}] = ${v}. <b>O(1)</b>`, tone: 'good' }));
+      }
+      ui.ctrl.querySelector('[data-k=v]').value = Math.floor(Math.random() * 90) + 1;
+    }
+    if (act === 'deq' || act === 'peek') {
+      F.push(fr({ line: 9, msg: `is_empty(): front(${q.front}) == rear(${q.rear}) ?` }));
+      if (q.front === q.rear) { F.push(fr({ line: 22, out: 'IndexError', tone: 'bad', msg: '비어 있습니다. front와 rear가 같은 칸을 가리킵니다.' })); }
+      else {
+        const nf = L ? q.front + 1 : (q.front + 1) % N;
+        if (act === 'peek') F.push(fr({ hl: { [nf]: 'hit' }, out: `peek() → ${q.items[nf]}`, tone: 'good', msg: `맨 앞 데이터는 items[(front + 1)${L ? '' : ' % ' + N}] = items[${nf}]. 꺼내지 않습니다.` }));
+        else {
+          F.push(fr({ line: 23, hl: { [nf]: 'mark' }, msg: L ? `front += 1 → ${nf}` : `front = (${q.front} + 1) % ${N} = <b>${nf}</b>` }));
+          const x = q.items[nf]; q.front = nf; q.items[nf] = null;
+          F.push(fr({ line: 24, out: `dequeue() → ${x}`, tone: 'good', msg: `${x} 반환. 가장 먼저 들어온 데이터가 나갔습니다. (그림에서는 꺼낸 칸을 비워 보여 줍니다)` }));
+        }
+      }
+    }
+    P.load(F, { code: CODE[mode][1], codeTitle: CODE[mode][0] });
+  }
+  function setMode(m) {
+    mode = m; reset(); controls(); P.setCode(CODE[mode][0], CODE[mode][1]);
+    P.load([fr({ tag: '준비', msg: mode === 'circular' ? '<b>enqueue</b>를 5번 → <b>dequeue</b> 2번 → 다시 <b>enqueue</b>. rear가 끝에서 0번으로 돌아오는 순간을 보세요.' : '<b>enqueue</b>로 끝까지 채우고 <b>dequeue</b> 몇 번 한 뒤 다시 <b>enqueue</b>를 눌러 보세요. 앞이 비어도 못 넣습니다.' })], { autoplay: false });
+  }
+  ui.ctrl.addEventListener('click', e => {
+    const m = e.target.closest('.vz-seg [data-mode]'); if (m) { setMode(m.dataset.mode); return; }
+    const b = e.target.closest('[data-act]'); if (b) run(b.dataset.act);
+  });
+  ui.ctrl.addEventListener('change', e => { if (e.target.matches('[data-k=size]')) { SIZE = +e.target.value; setMode(mode); } });
+  ui.ctrl.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); run('enq'); } });
+  setMode(mode);
+});
+
+/* ===== 이진 트리: 배열 표현 + 전위/중위/후위 순회 ===== */
+DSViz.register('tree', (root, mode0) => {
+  const { shell, Player, field, btn, seg, esc, treeSVG, arrayStrip } = DSViz;
+  const ui = shell(root, { title: '이진 트리: 배열 인덱스와 세 가지 순회', sub: '배열의 1번 칸이 루트. i번 노드의 왼쪽 자식은 2i, 오른쪽은 2i+1, 부모는 i // 2.' });
+  let order = mode0 === 'index' ? 'pre' : (mode0 || 'pre');
+  const DEF = 'A B C D E F - - - G';
+  let arr = [null];
+  const CODE = {
+    pre: ['전위 순회: Root → Left → Right', 'def preorder(tree):\n    if tree is None or tree.is_empty():\n        return\n    print(tree.get_root_data())        # 1. 루트 방문\n    preorder(tree.get_left_child())    # 2. 왼쪽\n    preorder(tree.get_right_child())   # 3. 오른쪽'],
+    in: ['중위 순회: Left → Root → Right', 'def inorder(tree):\n    if tree is None or tree.is_empty():\n        return\n    inorder(tree.get_left_child())     # 1. 왼쪽\n    print(tree.get_root_data())        # 2. 루트 방문\n    inorder(tree.get_right_child())    # 3. 오른쪽'],
+    post: ['후위 순회: Left → Right → Root', 'def postorder(tree):\n    if tree is None or tree.is_empty():\n        return\n    postorder(tree.get_left_child())   # 1. 왼쪽\n    postorder(tree.get_right_child())  # 2. 오른쪽\n    print(tree.get_root_data())        # 3. 루트 방문'],
+  };
+  const NAME = { pre: 'preorder', in: 'inorder', post: 'postorder' };
+  ui.ctrl.innerHTML = field('층별 순서 (빈 자리는 -)', `type="text" value="${DEF}" data-k="s" spellcheck="false" style="width:15em"`) + btn('트리 만들기', 'build', 'ghost') +
+    '<div class="vz-row">' + seg('순회', [['pre', '전위'], ['in', '중위'], ['post', '후위']], order) + btn('순회 시작', 'run', 'pri') + '</div>';
+  const exists = i => i < arr.length && arr[i] !== null && arr[i] !== undefined;
+  function stats() {
+    let n = 0, leaf = 0, h = 0;
+    (function w(i, d) { if (!exists(i)) return; n++; h = Math.max(h, d); if (!exists(2 * i) && !exists(2 * i + 1)) leaf++; w(2 * i, d + 1); w(2 * i + 1, d + 1); })(1, 1);
+    return { n, leaf, h };
+  }
+  const P = new Player(ui, f => {
+    const cls = {}; const sub = {};
+    (f.visited || []).forEach((i, k) => { cls[i] = 'done'; sub[i] = k + 1; });
+    if (f.cur) cls[f.cur] = 'cur';
+    (f.rel || []).forEach(([i, c]) => { cls[i] = c; });
+    (f.stack || []).forEach(i => { if (!cls[i]) cls[i] = 'onstack'; });
+    const st = stats();
+    const stackHtml = f.stack ? `<div class="vz-cap">호출 스택 (위가 지금 실행 중)</div><div class="callstack">${f.stack.slice().reverse().map((i, k) => `<div class="${k === 0 ? 'top' : ''}">${NAME[order]}(${i === 0 ? 'None' : esc(arr[i])})</div>`).join('') || '<div class="empty">비어 있음</div>'}</div>` : '';
+    const outHtml = f.visited ? `<div class="vz-cap">출력</div><div class="tape out">${f.visited.map(i => `<span>${esc(arr[i])}</span>`).join('') || '<span class="ph">아직 없음</span>'}</div>` : '';
+    const scls = {}; (f.rel || []).forEach(([i, c]) => scls[i] = c); if (f.cur) scls[f.cur] = 'cur';
+    ui.stage.innerHTML = `<div class="tree-wrap">${treeSVG(arr, { cls, sub })}</div>
+      <div class="vz-cap">배열 표현 (0번 칸은 비움)</div>${arrayStrip(arr, { from: 1, cls: scls })}
+      <div class="vz-two tr"><div>${outHtml}</div><div>${stackHtml}</div></div>
+      <div class="vz-meta"><span>노드 <b>${st.n}</b>개</span><span>높이 <b>${st.h}</b></span><span>리프 <b>${st.leaf}</b>개</span><span>에지 <b>${Math.max(0, st.n - 1)}</b>개 = n − 1</span></div>`;
+  });
+  function build(showMsg = true) {
+    const toks = ui.ctrl.querySelector('[data-k=s]').value.trim().split(/[\s,]+/).filter(Boolean).slice(0, 31);
+    arr = [null, ...toks.map(t => (t === '-' || t === '_' || t.toLowerCase() === 'none') ? null : t)];
+    // 부모가 없는 노드는 제거
+    for (let i = 2; i < arr.length; i++) if (arr[i] !== null && !exists(i >> 1)) arr[i] = null;
+    while (arr.length > 1 && arr[arr.length - 1] === null) arr.pop();
+    if (showMsg) P.load([{ tag: '트리', msg: '노드를 누르면 배열 인덱스 관계(부모 i // 2, 자식 2i, 2i+1)를 보여 줍니다. <b>순회 시작</b>으로 방문 순서를 확인하세요.' }], { autoplay: false });
+  }
+  function traverse() {
+    const F = []; const visited = []; const stack = [];
+    const L = order === 'pre' ? { visit: 4, left: 5, right: 6 } : order === 'in' ? { left: 4, visit: 5, right: 6 } : { left: 4, right: 5, visit: 6 };
+    const snap = (o) => F.push(Object.assign({ visited: visited.slice(), stack: stack.slice() }, o));
+    (function rec(i, line) {
+      stack.push(exists(i) ? i : 0);
+      if (!exists(i)) { snap({ line: 3, msg: '빈 트리(None) → 바로 return', cur: 0 }); stack.pop(); return; }
+      snap({ cur: i, line: 1, msg: `${NAME[order]}(${arr[i]}) 호출` });
+      const visit = () => { visited.push(i); snap({ cur: i, line: L.visit, msg: `<b>${arr[i]}</b> 방문 → 출력` }); };
+      const goL = () => { snap({ cur: i, line: L.left, msg: `${arr[i]}의 왼쪽 서브트리로` }); rec(2 * i); };
+      const goR = () => { snap({ cur: i, line: L.right, msg: `${arr[i]}의 오른쪽 서브트리로` }); rec(2 * i + 1); };
+      if (order === 'pre') { visit(); goL(); goR(); }
+      else if (order === 'in') { goL(); visit(); goR(); }
+      else { goL(); goR(); visit(); }
+      stack.pop();
+      snap({ cur: stack.length ? stack[stack.length - 1] : null, msg: `${NAME[order]}(${arr[i]}) 끝 → 호출한 곳으로 돌아감` });
+    })(1);
+    F.push({ visited: visited.slice(), stack: [], tone: 'good', tag: '결과', msg: `${{ pre: '전위', in: '중위', post: '후위' }[order]} 순회: <b>${visited.map(i => esc(arr[i])).join(' ')}</b>` });
+    // drop None frames if too many? keep: they show recursion base case
+    P.load(F, { code: CODE[order][1], codeTitle: CODE[order][0] });
+  }
+  ui.ctrl.addEventListener('click', e => {
+    const m = e.target.closest('.vz-seg [data-mode]');
+    if (m) { order = m.dataset.mode; ui.ctrl.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', b === m)); P.setCode(CODE[order][0], CODE[order][1]); return; }
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    if (b.dataset.act === 'build') build(); else { build(false); traverse(); }
+  });
+  function nodeInfo(i) {
+    i = +i; if (!exists(i)) return;
+    const rel = [[i, 'cur']];
+    const parts = [`<b>${esc(arr[i])}</b>는 인덱스 <b>${i}</b>`];
+    if (i > 1) { rel.push([i >> 1, 'par']); parts.push(`부모 ${i} // 2 = ${i >> 1} (${esc(arr[i >> 1])})`); } else parts.push('루트라서 부모 없음');
+    parts.push(exists(2 * i) ? `왼쪽 2×${i} = ${2 * i} (${esc(arr[2 * i])})` : `왼쪽 ${2 * i} 비어 있음`);
+    parts.push(exists(2 * i + 1) ? `오른쪽 2×${i}+1 = ${2 * i + 1} (${esc(arr[2 * i + 1])})` : `오른쪽 ${2 * i + 1} 비어 있음`);
+    if (exists(2 * i)) rel.push([2 * i, 'kid']); if (exists(2 * i + 1)) rel.push([2 * i + 1, 'kid']);
+    P.stop(); P.frames = [{ rel, tag: '인덱스', msg: parts.join(' · ') }]; P.go(0);
+  }
+  ui.stage.addEventListener('click', e => { const g = e.target.closest('g.n'); if (g) nodeInfo(g.dataset.i); });
+  ui.stage.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('g.n')) { e.preventDefault(); nodeInfo(e.target.dataset.i); } });
+  P.setCode(CODE[order][0], CODE[order][1]);
+  build();
+  if (mode0 === 'index') nodeInfo(2);
+});
+
+/* ===== 힙 (우선순위 큐) ===== */
+DSViz.register('heap', (root) => {
+  const { shell, Player, field, btn, seg, num, esc, clone, treeSVG, arrayStrip } = DSViz;
+  const ui = shell(root, { title: '힙: 넣으면 위로, 빼면 아래로', sub: '완전 이진 트리를 1번부터 배열에 담습니다. 삽입은 부모와 비교하며 올라가고(up-heap), 삭제는 마지막 노드를 루트로 올린 뒤 내려갑니다(down-heap).' });
+  let kind = 'max';
+  let H = [null];
+  const better = (a, b) => kind === 'max' ? a > b : a < b;
+  const CODE = {
+    max: ['MaxHeap (heap[0]은 비워 둠)', 'def insert(self, item):              # up-heap\n    self.heap.append(item)\n    i = self.size()\n    while i > 1 and self.heap[i // 2] < self.heap[i]:\n        swap(i, i // 2)\n        i = i // 2\n\ndef delete(self):                     # down-heap\n    root = self.heap[1]\n    last = self.heap.pop()\n    if self.size() > 0:\n        self.heap[1] = last\n        i = 1\n        while 2 * i <= self.size():\n            child = 2 * i\n            if child + 1 <= self.size() and self.heap[child + 1] > self.heap[child]:\n                child += 1            # 더 큰 자식\n            if self.heap[i] >= self.heap[child]:\n                break\n            swap(i, child)\n            i = child\n    return root'],
+    min: ['MinHeap (부등호만 반대)', 'def insert(self, item):              # up-heap\n    self.heap.append(item)\n    i = self.size()\n    while i > 1 and self.heap[i // 2] > self.heap[i]:\n        swap(i, i // 2)\n        i = i // 2\n\ndef delete(self):                     # down-heap\n    root = self.heap[1]\n    last = self.heap.pop()\n    if self.size() > 0:\n        self.heap[1] = last\n        i = 1\n        while 2 * i <= self.size():\n            child = 2 * i\n            if child + 1 <= self.size() and self.heap[child + 1] < self.heap[child]:\n                child += 1            # 더 작은 자식\n            if self.heap[i] <= self.heap[child]:\n                break\n            swap(i, child)\n            i = child\n    return root'],
+  };
+  ui.ctrl.innerHTML = seg('힙 종류', [['max', '최대 힙'], ['min', '최소 힙']], kind) +
+    '<div class="vz-row">' + field('값', 'type="number" value="18" data-k="v"') + btn('insert', 'ins', 'pri') + btn('delete (루트 꺼내기)', 'del') + '</div>' +
+    '<div class="vz-row">' + field('여러 값 차례로 넣기', 'type="text" value="17 10 22 15 12 20 24 11 14" data-k="s" spellcheck="false" style="width:15em"') + btn('처음부터 쌓기', 'build', 'ghost') + '</div>';
+  const P = new Player(ui, f => {
+    const cls = Object.assign({}, f.hl || {});
+    ui.stage.innerHTML = `<div class="tree-wrap">${f.h.length > 1 ? treeSVG(f.h, { cls }) : '<p class="vz-empty">빈 힙</p>'}</div>
+      <div class="vz-cap">배열 heap (인덱스 1부터)</div>${arrayStrip(f.h, { from: 1, cls })}
+      <div class="vz-meta"><span>크기 <b>${f.h.length - 1}</b></span><span>비교 <b>${f.cmp || 0}</b>번</span><span>교환 <b>${f.sw || 0}</b>번</span>${f.out != null ? `<span class="good">꺼낸 값 <b>${esc(f.out)}</b></span>` : ''}</div>`;
+  });
+  const snap = (F, h, o) => F.push(Object.assign({ h: clone(h) }, o));
+  function insertFrames(F, h, v, c) {
+    h.push(v); let i = h.length - 1;
+    snap(F, h, { line: 2, hl: { [i]: 'mark' }, msg: `${v}를 맨 끝(인덱스 ${i})에 붙입니다. 완전 이진 트리 모양을 지키기 위해서입니다.`, ...c });
+    while (i > 1) {
+      const p = i >> 1; c.cmp++;
+      if (better(h[i], h[p])) {
+        snap(F, h, { line: 4, hl: { [i]: 'mark', [p]: 'cmp' }, msg: `부모 heap[${i} // 2] = heap[${p}] = ${h[p]} ${kind === 'max' ? '<' : '>'} ${h[i]} → 자리를 바꿔야 합니다.`, ...c });
+        [h[i], h[p]] = [h[p], h[i]]; c.sw++;
+        snap(F, h, { line: 5, hl: { [p]: 'mark', [i]: 'swap' }, msg: `교환! ${h[p]}가 인덱스 ${p}로 올라갔습니다.`, ...c });
+        i = p;
+      } else {
+        snap(F, h, { line: 4, hl: { [i]: 'hit', [p]: 'cmp' }, msg: `부모 ${h[p]} ${kind === 'max' ? '≥' : '≤'} ${h[i]} → 멈춥니다.`, ...c });
+        return;
+      }
+    }
+    snap(F, h, { line: 4, hl: { 1: 'hit' }, msg: `루트까지 올라왔습니다.`, ...c });
+  }
+  function run(act) {
+    const F = []; const c = { cmp: 0, sw: 0 };
+    if (act === 'ins') {
+      const v = num(ui.ctrl.querySelector('[data-k=v]').value); if (Number.isNaN(v)) return;
+      if (H.length > 31) { P.load([{ h: clone(H), msg: '그림이 넘치지 않도록 31개까지만 넣습니다.', tone: 'bad' }]); return; }
+      insertFrames(F, H, v, c);
+      F.push({ h: clone(H), ...c, tone: 'good', tag: '완료', msg: `삽입 끝. 비교 ${c.cmp}번, 교환 ${c.sw}번 — 많아야 트리 높이만큼 → <b>O(log n)</b>` });
+      ui.ctrl.querySelector('[data-k=v]').value = Math.floor(Math.random() * 40) + 1;
+    }
+    if (act === 'del') {
+      if (H.length <= 1) { P.load([{ h: clone(H), msg: '빈 힙에서는 꺼낼 수 없습니다.', tone: 'bad' }]); return; }
+      const rootv = H[1];
+      snap(F, H, { line: 9, hl: { 1: 'gone' }, msg: `삭제는 항상 <b>루트</b>에서: ${rootv}을(를) 꺼냅니다.`, ...c });
+      const last = H.pop();
+      if (H.length > 1) {
+        H[1] = last;
+        snap(F, H, { line: 12, hl: { 1: 'mark' }, msg: `마지막 노드 ${last}를 루트로 옮깁니다. (빈자리 없는 완전 이진 트리 유지)`, ...c });
+        let i = 1; const n = H.length - 1;
+        while (2 * i <= n) {
+          let ch = 2 * i;
+          if (ch + 1 <= n) { c.cmp++; if (better(H[ch + 1], H[ch])) ch++; }
+          snap(F, H, { line: 16, hl: { [i]: 'mark', [2 * i]: 'cmp', ...(2 * i + 1 <= n ? { [2 * i + 1]: 'cmp' } : {}), [ch]: 'pick' }, msg: `자식 중 ${kind === 'max' ? '더 큰' : '더 작은'} 쪽은 heap[${ch}] = ${H[ch]}`, ...c });
+          c.cmp++;
+          if (!better(H[ch], H[i])) { snap(F, H, { line: 19, hl: { [i]: 'hit', [ch]: 'cmp' }, msg: `${H[i]} ${kind === 'max' ? '≥' : '≤'} ${H[ch]} → 멈춥니다.`, ...c }); break; }
+          [H[i], H[ch]] = [H[ch], H[i]]; c.sw++;
+          snap(F, H, { line: 20, hl: { [ch]: 'mark', [i]: 'swap' }, msg: `교환! ${H[ch]}가 인덱스 ${ch}로 내려갔습니다.`, ...c });
+          i = ch;
+        }
+      }
+      F.push({ h: clone(H), ...c, out: rootv, tone: 'good', tag: '완료', msg: `${rootv} 반환. 지금 배열의 마지막 원소는 <b>${H.length > 1 ? H[H.length - 1] : '없음'}</b>. <b>O(log n)</b>` });
+    }
+    if (act === 'build') {
+      const vals = ui.ctrl.querySelector('[data-k=s]').value.split(/[\s,]+/).map(Number).filter(Number.isFinite).slice(0, 31);
+      H = [null];
+      F.push({ h: clone(H), tag: '시작', msg: `빈 힙에 ${vals.join(', ')}을 차례로 넣습니다.` });
+      vals.forEach(v => insertFrames(F, H, v, c));
+      F.push({ h: clone(H), ...c, tone: 'good', tag: '완료', msg: `완성: [${H.slice(1).join(', ')}]. 루트 ${H[1]}이 ${kind === 'max' ? '최댓값' : '최솟값'}입니다.` });
+    }
+    P.load(F, { code: CODE[kind][1], codeTitle: CODE[kind][0] });
+  }
+  ui.ctrl.addEventListener('click', e => {
+    const m = e.target.closest('.vz-seg [data-mode]');
+    if (m) { kind = m.dataset.mode; ui.ctrl.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', b === m)); H = [null]; P.setCode(CODE[kind][0], CODE[kind][1]); P.load([{ h: clone(H), tag: '준비', msg: `${kind === 'max' ? '최대' : '최소'} 힙으로 바꿨습니다. <b>처음부터 쌓기</b>를 눌러 보세요.` }], { autoplay: false }); return; }
+    const b = e.target.closest('[data-act]'); if (b) run(b.dataset.act);
+  });
+  // 시작: 교재 연습문제 데이터로 쌓은 상태
+  const vals0 = [17, 10, 22, 15, 12, 20, 24, 11, 14];
+  vals0.forEach(v => insertFrames([], H, v, { cmp: 0, sw: 0 }));
+  P.setCode(CODE.max[0], CODE.max[1]);
+  P.load([{ h: clone(H), tag: '준비', msg: '교재 연습문제 데이터(17, 10, 22, 15, 12, 20, 24, 11, 14)로 쌓아 둔 최대 힙입니다. <b>delete</b>를 두 번 눌러 마지막 원소를 확인해 보세요.' }], { autoplay: false });
+});
+
+/* ===== 그래프: 인접 행렬/리스트, DFS(재귀·스택), BFS ===== */
+const GraphPresets = {
+  g1: { name: '예제 그래프 (7개 정점)', nodes: { A: [80, 60], B: [200, 40], C: [90, 190], D: [330, 40], E: [300, 150], F: [190, 220], G: [400, 230] }, edges: [['A', 'B'], ['A', 'C'], ['B', 'D'], ['B', 'E'], ['C', 'F'], ['E', 'F'], ['F', 'G']] },
+  g2: { name: '사이클이 많은 그래프', nodes: { 1: [70, 130], 2: [170, 50], 3: [170, 210], 4: [290, 50], 5: [290, 210], 6: [400, 130] }, edges: [['1', '2'], ['1', '3'], ['2', '3'], ['2', '4'], ['3', '5'], ['4', '5'], ['4', '6'], ['5', '6']] },
+  g3: { name: '떨어진 두 덩어리', nodes: { A: [70, 70], B: [180, 60], C: [120, 190], D: [300, 80], E: [400, 70], F: [350, 200] }, edges: [['A', 'B'], ['B', 'C'], ['A', 'C'], ['D', 'E'], ['E', 'F']] },
+};
+function graphSVG(g, f, { directed, weights } = {}) {
+  const W = 470, Hh = 270;
+  let e = '';
+  const key = (a, b) => directed ? `${a}>${b}` : [a, b].sort().join('|');
+  g.edges.forEach(ed => {
+    const [a, b] = ed; const [x1, y1] = g.nodes[a], [x2, y2] = g.nodes[b];
+    const k = key(a, b);
+    const c = (f.ecls || {})[k] || '';
+    let dx = x2 - x1, dy = y2 - y1; const L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L;
+    const sx = x1 + dx * 20, sy = y1 + dy * 20, ex = x2 - dx * (directed ? 24 : 20), ey = y2 - dy * (directed ? 24 : 20);
+    e += `<line class="ge ${c}" x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" ${directed ? 'marker-end="url(#gar)"' : ''}/>`;
+    if (weights) { const mx = (x1 + x2) / 2, my = (y1 + y2) / 2; e += `<g class="gw ${c}"><rect x="${mx - 12}" y="${my - 10}" width="24" height="20" rx="6"/><text x="${mx}" y="${my}" dy=".35em">${ed[2]}</text></g>`; }
+  });
+  let n = '';
+  for (const id in g.nodes) {
+    const [x, y] = g.nodes[id];
+    const c = (f.ncls || {})[id] || '';
+    const b = (f.badge || {})[id];
+    n += `<g class="gn ${c}" data-id="${DSViz.esc(id)}" transform="translate(${x},${y})" tabindex="0" role="button" aria-label="정점 ${DSViz.esc(id)}"><circle r="19"/><text dy=".35em">${DSViz.esc(id)}</text>${b != null ? `<g class="gb" transform="translate(16,-16)"><circle r="10"/><text dy=".35em">${b}</text></g>` : ''}</g>`;
+  }
+  return `<svg class="vz-svg graph" viewBox="0 0 ${W} ${Hh}" style="max-width:${W}px"><defs><marker id="gar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="garh"/></marker></defs>${e}${n}</svg>`;
+}
+
+DSViz.register('graph', (root, mode0) => {
+  const { shell, Player, btn, seg, esc, clone } = DSViz;
+  let mode = mode0 || 'dfs';
+  let directed = false;
+  let G = clone(GraphPresets.g1);
+  const ui = shell(root, { title: '그래프: 표현하고 탐색하기', sub: '인접 행렬의 칸을 눌러 간선을 넣고 빼 보세요. DFS는 스택(또는 재귀), BFS는 큐로 다음 정점을 관리합니다.' });
+  const CODE = {
+    rep: ['인접 행렬 / 인접 리스트 만들기', 'n = len(V)\nadj = [[0] * n for _ in range(n)]   # 인접 행렬\nlst = {v: [] for v in V}            # 인접 리스트\nfor u, v in E:\n    adj[idx[u]][idx[v]] = 1\n    lst[u].append(v)\n    if not directed:                # 무방향이면 대칭\n        adj[idx[v]][idx[u]] = 1\n        lst[v].append(u)'],
+    dfsr: ['DFS (재귀)', 'Algorithm DFS_Search(graph, current, goal, visited):\n    visited[current] = true\n    If current == goal:\n        Return true\n    For each neighbor of current.adjacent():\n        If not visited[neighbor]:\n            If DFS_Search(graph, neighbor, goal, visited):\n                Return true\n    Return false'],
+    dfs: ['DFS (스택)', 'Algorithm DFS_Iterative(graph, start, goal):\n    visited = [false] * n\n    stack = EmptyStack()\n    stack.push(start)\n    While stack is not empty:\n        current = stack.pop()\n        If visited[current]:\n            Continue\n        visited[current] = true\n        If current == goal:\n            Return true\n        For neighbor in reverse(current.adjacent()):\n            If not visited[neighbor]:\n                stack.push(neighbor)\n    Return false'],
+    bfs: ['BFS (큐)', 'Algorithm BFS_Search(graph, start, goal):\n    visited = [false] * n\n    queue = EmptyQueue()\n    queue.enqueue(start)\n    visited[start] = true\n    While queue is not empty:\n        current = queue.dequeue()\n        If current == goal:\n            Return true\n        For neighbor in current.adjacent():\n            If not visited[neighbor]:\n                visited[neighbor] = true   # 넣기 전에 표시\n                queue.enqueue(neighbor)\n    Return false'],
+  };
+  const ids = () => Object.keys(G.nodes);
+  const adj = () => { const a = {}; ids().forEach(v => a[v] = []); G.edges.forEach(([u, v]) => { a[u].push(v); if (!directed) a[v].push(u); }); for (const k in a) a[k].sort((x, y) => String(x).localeCompare(String(y), 'ko', { numeric: true })); return a; };
+  const ek = (a, b) => directed ? `${a}>${b}` : [a, b].sort().join('|');
+  function controls() {
+    const sel = (k, lab, opts) => `<label class="vz-f"><span>${lab}</span><select data-k="${k}">${opts}</select></label>`;
+    ui.ctrl.innerHTML = seg('모드', [['rep', '행렬·리스트'], ['dfsr', 'DFS 재귀'], ['dfs', 'DFS 스택'], ['bfs', 'BFS']], mode) +
+      '<div class="vz-row">' + sel('preset', '그래프', Object.entries(GraphPresets).map(([k, p]) => `<option value="${k}">${esc(p.name)}</option>`).join('')) +
+      (mode === 'rep' ? `<label class="vz-chk"><input type="checkbox" data-k="dir" ${directed ? 'checked' : ''}> 방향 그래프</label>` :
+        sel('start', '시작', ids().map(v => `<option>${esc(v)}</option>`).join('')) + sel('goal', '목표', '<option value="">(없음: 전부 방문)</option>' + ids().map(v => `<option>${esc(v)}</option>`).join('')) + btn('탐색 시작', 'run', 'pri')) + '</div>';
+  }
+  const P = new Player(ui, f => {
+    const a = adj(); const V = ids();
+    const g = graphSVG(G, f, { directed });
+    if (mode === 'rep') {
+      const sel = f.sel;
+      let m = `<table class="mat"><thead><tr><th></th>${V.map(v => `<th class="${v === sel ? 'hl' : ''}">${esc(v)}</th>`).join('')}</tr></thead><tbody>`;
+      V.forEach(r => { m += `<tr><th class="${r === sel ? 'hl' : ''}">${esc(r)}</th>` + V.map(c => { const on = G.edges.some(([u, v]) => (u === r && v === c) || (!directed && u === c && v === r)); return `<td><button type="button" class="mc ${on ? 'on' : ''} ${r === sel || c === sel ? 'rowhl' : ''}" data-r="${esc(r)}" data-c="${esc(c)}" ${r === c ? 'disabled' : ''} aria-label="${esc(r)}에서 ${esc(c)}로 간선 ${on ? '있음' : '없음'}">${on ? 1 : 0}</button></td>`; }).join('') + '</tr>'; });
+      m += '</tbody></table>';
+      const L = V.map(v => `<div class="al ${v === sel ? 'hl' : ''}"><b>${esc(v)}</b><span>→</span>${a[v].map(w => `<i>${esc(w)}</i>`).join('<span>→</span>') || '<em>없음</em>'}</div>`).join('');
+      const E = G.edges.length;
+      ui.stage.innerHTML = `<div class="graph-wrap">${g}</div><div class="vz-two gr"><div><div class="vz-cap">인접 행렬 (칸을 눌러 간선 추가·삭제)</div><div class="vz-tbl">${m}</div></div><div><div class="vz-cap">인접 리스트</div><div class="adjl">${L}</div></div></div>
+        <div class="vz-meta"><span>정점 <b>${V.length}</b></span><span>간선 <b>${E}</b></span><span>행렬 칸 <b>${V.length * V.length}</b>개 중 1은 <b>${directed ? E : 2 * E}</b>개</span>${sel ? `<span>${esc(sel)}의 ${directed ? `진출 차수 <b>${a[sel].length}</b>, 진입 차수 <b>${G.edges.filter(e => e[1] === sel).length}</b>` : `차수 <b>${a[sel].length}</b>`}</span>` : ''}</div>`;
+      return;
+    }
+    const isQ = mode === 'bfs';
+    const ds = mode === 'dfsr' ? `<div class="vz-cap">호출 스택</div><div class="callstack">${(f.ds || []).slice().reverse().map((v, k) => `<div class="${k === 0 ? 'top' : ''}">DFS(${esc(v)})</div>`).join('') || '<div class="empty">비어 있음</div>'}</div>`
+      : isQ ? `<div class="vz-cap">큐 (왼쪽이 front)</div><div class="qline">${(f.ds || []).map(v => `<span>${esc(v)}</span>`).join('') || '<em>비어 있음</em>'}</div>`
+        : `<div class="vz-cap">스택 (위가 top)</div><div class="callstack">${(f.ds || []).slice().reverse().map((v, k) => `<div class="${k === 0 ? 'top' : ''}">${esc(v)}</div>`).join('') || '<div class="empty">비어 있음</div>'}</div>`;
+    const vis = `<div class="vz-cap">visited</div><div class="vtab">${V.map(v => `<span class="${(f.vis || []).includes(v) ? 'on' : ''}"><b>${esc(v)}</b>${(f.vis || []).includes(v) ? 'T' : 'F'}</span>`).join('')}</div>`;
+    const ord = `<div class="vz-cap">방문 순서</div><div class="tape out">${(f.order || []).map(v => `<span>${esc(v)}</span>`).join('') || '<span class="ph">아직 없음</span>'}</div>`;
+    ui.stage.innerHTML = `<div class="graph-wrap">${g}</div><div class="vz-two gr"><div>${ds}</div><div>${vis}${ord}</div></div>`;
+  });
+  function search() {
+    const a = adj(); const s = ui.ctrl.querySelector('[data-k=start]').value; const goal = ui.ctrl.querySelector('[data-k=goal]').value;
+    const F = []; const vis = []; const order = []; const tree = {};
+    const snap = (o) => {
+      const ncls = {}, badge = {}, ecls = {};
+      order.forEach((v, i) => { ncls[v] = 'done'; badge[v] = i + 1; });
+      (o.ds || []).forEach(v => { if (!ncls[v]) ncls[v] = 'front'; });
+      vis.forEach(v => { if (!ncls[v]) ncls[v] = 'seen'; });
+      if (o.cur) ncls[o.cur] = 'cur';
+      if (goal) ncls[goal] = (ncls[goal] || '') + ' goal';
+      for (const k in tree) ecls[k] = 'tree';
+      if (o.edge) ecls[ek(o.edge[0], o.edge[1])] = (ecls[ek(o.edge[0], o.edge[1])] || '') + ' look';
+      F.push(Object.assign({ ncls, badge, ecls, vis: vis.slice(), order: order.slice() }, o, { ds: (o.ds || []).slice() }));
+    };
+    let found = false;
+    if (mode === 'dfsr') {
+      const cs = [];
+      (function rec(v, from) {
+        if (found) return;
+        cs.push(v); vis.push(v); order.push(v); if (from) tree[ek(from, v)] = 1;
+        snap({ cur: v, ds: cs, line: 2, msg: `DFS(${v}) 호출 → visited[${v}] = true` });
+        if (goal && v === goal) { found = true; snap({ cur: v, ds: cs, line: 4, tone: 'good', msg: `목표 ${goal} 도착! true를 위로 전달합니다.` }); return; }
+        for (const w of a[v]) {
+          if (found) return;
+          if (vis.includes(w)) { snap({ cur: v, ds: cs, edge: [v, w], line: 6, msg: `${v}의 이웃 ${w}는 이미 방문함 → 건너뜀` }); continue; }
+          snap({ cur: v, ds: cs, edge: [v, w], line: 7, msg: `${v}의 이웃 ${w}는 처음 → DFS(${w})로 더 깊이` });
+          rec(w, v);
+          if (!found) snap({ cur: v, ds: cs, line: 5, msg: `${w}에서 돌아와 ${v}의 다음 이웃을 봅니다 (백트래킹)` });
+        }
+        if (!found) { cs.pop(); snap({ cur: cs[cs.length - 1], ds: cs, line: 9, msg: `${v}에서 더 갈 곳이 없습니다 → DFS(${v}) 끝` }); }
+      })(s, null);
+    } else if (mode === 'dfs') {
+      const st = [s];
+      snap({ ds: st, line: 4, msg: `stack.push(${s})` });
+      while (st.length) {
+        const v = st.pop();
+        snap({ cur: v, ds: st, line: 6, msg: `pop → ${v}` });
+        if (vis.includes(v)) { snap({ cur: v, ds: st, line: 8, msg: `${v}는 이미 방문함 → continue (스택에 중복으로 들어갔던 것)` }); continue; }
+        vis.push(v); order.push(v);
+        snap({ cur: v, ds: st, line: 9, msg: `visited[${v}] = true` });
+        if (goal && v === goal) { found = true; snap({ cur: v, ds: st, line: 11, tone: 'good', msg: `목표 ${goal} 도착!` }); break; }
+        const nb = a[v].slice().reverse();
+        for (const w of nb) {
+          if (!vis.includes(w)) { st.push(w); snap({ cur: v, ds: st, edge: [v, w], line: 14, msg: `이웃 ${w} push (역순으로 넣어야 작은 쪽이 먼저 나옵니다)` }); }
+          else snap({ cur: v, ds: st, edge: [v, w], line: 13, msg: `이웃 ${w}는 방문함 → 넣지 않음` });
+        }
+      }
+    } else {
+      const q = [s]; vis.push(s);
+      snap({ ds: q, line: 5, msg: `enqueue(${s}), visited[${s}] = true` });
+      const from = {};
+      while (q.length) {
+        const v = q.shift(); order.push(v); if (from[v]) tree[ek(from[v], v)] = 1;
+        snap({ cur: v, ds: q, line: 7, msg: `dequeue → ${v}` });
+        if (goal && v === goal) { found = true; snap({ cur: v, ds: q, line: 9, tone: 'good', msg: `목표 ${goal} 도착!` }); break; }
+        for (const w of a[v]) {
+          if (!vis.includes(w)) { vis.push(w); from[w] = v; q.push(w); snap({ cur: v, ds: q, edge: [v, w], line: 13, msg: `이웃 ${w}: visited 표시하고 enqueue` }); }
+          else snap({ cur: v, ds: q, edge: [v, w], line: 11, msg: `이웃 ${w}는 이미 표시됨 → 넣지 않음` });
+        }
+      }
+    }
+    const miss = ids().filter(v => !vis.includes(v));
+    snap({ tag: '결과', tone: goal ? (found ? 'good' : 'bad') : 'good', msg: goal ? (found ? `${goal}까지 갈 수 있습니다. 방문 순서: <b>${order.join(' → ')}</b>` : `${goal}까지 가는 경로가 없습니다.`) : `방문 순서: <b>${order.join(' → ')}</b>${miss.length ? ` · 연결되지 않은 정점: ${miss.join(', ')}` : ''}`, ds: [] });
+    P.load(F, { code: CODE[mode][1], codeTitle: CODE[mode][0] });
+  }
+  function setMode(m) {
+    mode = m; controls(); P.setCode(CODE[mode][0], CODE[mode][1]);
+    const hint = { rep: '정점을 누르면 그 행과 리스트가 강조됩니다. 행렬의 0/1 칸을 눌러 간선을 바꿔 보세요.', dfsr: '<b>탐색 시작</b>. 한 방향으로 끝까지 들어갔다가 막히면 돌아옵니다.', dfs: '스택에 같은 정점이 두 번 들어갈 수 있고, 꺼낼 때 방문 여부를 확인합니다.', bfs: '시작점에서 가까운 정점부터 층층이 방문합니다. 넣기 <b>전에</b> visited를 표시합니다.' }[mode];
+    P.load([{ tag: '준비', msg: hint }], { autoplay: false });
+  }
+  ui.ctrl.addEventListener('click', e => {
+    const m = e.target.closest('.vz-seg [data-mode]'); if (m) { setMode(m.dataset.mode); return; }
+    const b = e.target.closest('[data-act]'); if (b) search();
+  });
+  ui.ctrl.addEventListener('change', e => {
+    if (e.target.matches('[data-k=preset]')) { G = clone(GraphPresets[e.target.value]); const k = e.target.value; setMode(mode); ui.ctrl.querySelector('[data-k=preset]').value = k; }
+    if (e.target.matches('[data-k=dir]')) { directed = e.target.checked; P.load([{ tag: directed ? '방향' : '무방향', msg: directed ? '방향 그래프: 행렬이 더 이상 대칭이 아닙니다. 간선은 행 → 열 방향입니다.' : '무방향 그래프: adj[i][j] == adj[j][i]' }], { autoplay: false }); }
+  });
+  ui.stage.addEventListener('click', e => {
+    const c = e.target.closest('.mc');
+    if (c) {
+      const r = c.dataset.r, cc = c.dataset.c;
+      const idx = G.edges.findIndex(([u, v]) => (u === r && v === cc) || (!directed && u === cc && v === r));
+      if (idx >= 0) G.edges.splice(idx, 1); else G.edges.push([r, cc]);
+      P.load([{ sel: r, tag: idx >= 0 ? '간선 삭제' : '간선 추가', msg: `${r} ${directed ? '→' : '—'} ${cc} 간선을 ${idx >= 0 ? '지웠습니다' : '넣었습니다'}. ${directed ? '' : `대칭 칸 [${cc}][${r}]도 함께 바뀝니다.`}` }], { autoplay: false });
+      return;
+    }
+    const n = e.target.closest('.gn');
+    if (n && mode === 'rep') { const id = n.dataset.id; const a = adj(); P.load([{ sel: id, ncls: { [id]: 'cur', ...Object.fromEntries(a[id].map(w => [w, 'front'])) }, tag: id, msg: `${id}의 인접 정점: ${a[id].join(', ') || '없음'}. 행렬에서는 ${id} 행 전체를 봐야 하므로 O(n), 리스트는 바로 꺼냅니다.` }], { autoplay: false }); }
+  });
+  setMode(mode);
+});
+
+/* ===== 크루스칼 MST + Union-Find ===== */
+DSViz.register('kruskal', (root) => {
+  const { shell, Player, btn, esc, clone } = DSViz;
+  const PRE = {
+    k1: { name: '교재 예제 (A~E)', nodes: { A: [70, 70], B: [210, 50], C: [160, 200], D: [330, 120], E: [400, 230] }, edges: [['A', 'B', 1], ['B', 'C', 2], ['A', 'C', 3], ['B', 'D', 4], ['C', 'D', 5], ['C', 'E', 6], ['D', 'E', 7]] },
+    k2: { name: '마을 6곳 전선 잇기', nodes: { A: [60, 80], B: [190, 40], C: [150, 200], D: [320, 70], E: [290, 220], F: [420, 160] }, edges: [['A', 'B', 4], ['A', 'C', 2], ['B', 'C', 5], ['B', 'D', 10], ['C', 'E', 3], ['E', 'D', 4], ['D', 'F', 11], ['E', 'F', 6]] },
+  };
+  let G = clone(PRE.k1);
+  const ui = shell(root, { title: '크루스칼: 가벼운 간선부터, 사이클만 피해서', sub: '간선을 가중치 순으로 보면서 두 끝점의 대표(find)가 다르면 채택하고 합칩니다(union).' });
+  const CODE = ['kruskal (교재 Python 구현)', 'def kruskal(self):\n    parent = {v: v for v in self.vertices}\n    def find(x):\n        if parent[x] != x:\n            parent[x] = find(parent[x])   # 경로 압축\n        return parent[x]\n    def union(x, y):\n        root_x, root_y = find(x), find(y)\n        if root_x == root_y:\n            return False                  # 사이클!\n        parent[root_y] = root_x\n        return True\n    mst, total = [], 0\n    for weight, u, v in sorted(self.edges):\n        if union(u, v):\n            mst.append((weight, u, v))\n            total += weight\n            if len(mst) == self.size - 1:\n                break\n    return mst, total'];
+  ui.ctrl.innerHTML = `<label class="vz-f"><span>그래프</span><select data-k="p">${Object.entries(PRE).map(([k, p]) => `<option value="${k}">${esc(p.name)}</option>`).join('')}</select></label>` + btn('MST 만들기', 'run', 'pri');
+  const P = new Player(ui, f => {
+    const ecls = {}, ncls = {};
+    (f.status || []).forEach((s, i) => { const [u, v] = f.sorted[i]; ecls[[u, v].sort().join('|')] = s === 'ok' ? 'tree' : s === 'no' ? 'rej' : s === 'look' ? 'look' : ''; });
+    (f.roots || []).forEach(v => ncls[v] = 'cur');
+    const svg = graphSVG(G, { ecls, ncls }, { weights: true });
+    const list = (f.sorted || []).map((e, i) => { const s = (f.status || [])[i] || ''; return `<div class="kl ${s}"><span class="w">${e[2]}</span><span>${esc(e[0])} — ${esc(e[1])}</span><em>${{ ok: '채택', no: '사이클 → 버림', look: '검사 중', '': '' }[s] || ''}</em></div>`; }).join('');
+    const par = Object.keys(G.nodes).map(v => `<span class="${(f.roots || []).includes(v) ? 'on' : ''}"><b>${esc(v)}</b>${esc((f.parent || {})[v] || v)}</span>`).join('');
+    ui.stage.innerHTML = `<div class="graph-wrap">${svg}</div><div class="vz-two gr"><div><div class="vz-cap">가중치 순으로 정렬한 간선</div><div class="klist">${list}</div></div>
+      <div><div class="vz-cap">parent (Union-Find)</div><div class="vtab par">${par}</div><div class="vz-meta"><span>채택 <b>${(f.status || []).filter(s => s === 'ok').length}</b> / ${Object.keys(G.nodes).length - 1}</span><span>총 가중치 <b>${f.total || 0}</b></span></div></div></div>`;
+  });
+  function run() {
+    const F = []; const parent = {}; Object.keys(G.nodes).forEach(v => parent[v] = v);
+    const sorted = G.edges.slice().sort((a, b) => a[2] - b[2] || String(a[0]).localeCompare(b[0]));
+    const status = sorted.map(() => ''); let total = 0, cnt = 0; const need = Object.keys(G.nodes).length - 1;
+    const find = x => { while (parent[x] !== x) x = parent[x]; return x; };
+    const compress = x => { const r = find(x); let y = x; while (parent[y] !== r) { const n = parent[y]; parent[y] = r; y = n; } return r; };
+    const snap = o => F.push(Object.assign({ sorted, status: status.slice(), parent: clone(parent), total }, o));
+    snap({ line: 2, msg: '각 정점이 자기 자신을 대표로 하는 집합으로 시작합니다.' });
+    snap({ line: 14, msg: `간선을 가중치 오름차순으로 정렬: ${sorted.map(e => e[2]).join(', ')}` });
+    for (let i = 0; i < sorted.length; i++) {
+      const [u, v, w] = sorted[i];
+      status[i] = 'look';
+      const ru = compress(u), rv = compress(v);
+      snap({ line: 8, roots: [u, v], msg: `간선 ${u}—${v} (${w}): find(${u}) = <b>${ru}</b>, find(${v}) = <b>${rv}</b>` });
+      if (ru === rv) { status[i] = 'no'; snap({ line: 10, roots: [u, v], msg: `대표가 같음 → 이미 연결되어 있어 넣으면 <b>사이클</b>이 생깁니다. 버립니다.`, tone: 'bad' }); continue; }
+      parent[rv] = ru; status[i] = 'ok'; total += w; cnt++;
+      snap({ line: 16, roots: [u, v], msg: `대표가 다름 → 채택! parent[${rv}] = ${ru} 로 두 집합을 합칩니다. 합계 ${total}`, tone: 'good' });
+      if (cnt === need) { snap({ line: 19, tone: 'good', tag: '완료', msg: `간선 ${need}개(= V − 1)를 모았습니다. 최소 신장 트리 완성, 총 가중치 <b>${total}</b>. 남은 간선은 볼 필요가 없습니다.` }); break; }
+    }
+    if (cnt < need) snap({ tone: 'bad', tag: '결과', msg: '모든 정점을 잇지 못했습니다. 그래프가 연결되어 있지 않습니다.' });
+    P.load(F, { code: CODE[1], codeTitle: CODE[0] });
+  }
+  ui.ctrl.addEventListener('click', e => { if (e.target.closest('[data-act]')) run(); });
+  ui.ctrl.addEventListener('change', e => { if (e.target.matches('[data-k=p]')) { G = clone(PRE[e.target.value]); P.load([{ tag: '준비', msg: '<b>MST 만들기</b>를 눌러 보세요.' }], { autoplay: false }); } });
+  P.setCode(CODE[0], CODE[1]);
+  P.load([{ tag: '준비', msg: '<b>MST 만들기</b>를 누르면 가장 가벼운 간선부터 하나씩 검사합니다. 빨간 간선은 사이클 때문에 버려진 것입니다.' }], { autoplay: false });
+});
+
+/* ===== 격자 탐색: 섬 개수 / 미로 탈출 ===== */
+DSViz.register('grid', (root, mode0) => {
+  const { shell, Player, btn, seg } = DSViz;
+  let mode = mode0 === 'maze' ? 'maze' : 'island';
+  const ISL = [[1, 1, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 1], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 1]];
+  const MAZE = [[0, 0, 1, 0, 0], [0, 0, 0, 0, 0], [1, 1, 1, 1, 0], [0, 0, 0, 0, 0], [0, 0, 1, 0, 0]];
+  let g;
+  const ui = shell(root, { title: '격자 위의 DFS: 섬 세기와 미로 탈출', sub: '칸을 눌러 바꿀 수 있습니다. 상하좌우로 붙은 칸만 연결된 것으로 봅니다.' });
+  const CODE = {
+    island: ['섬 개수 (connected components)', 'def count_islands(g):\n    def dfs(r, c):\n        if r < 0 or r >= R or c < 0 or c >= C or g[r][c] != 1:\n            return\n        g[r][c] = 0                    # 방문 처리\n        dfs(r + 1, c); dfs(r - 1, c)\n        dfs(r, c + 1); dfs(r, c - 1)\n    count = 0\n    for r in range(R):\n        for c in range(C):\n            if g[r][c] == 1:\n                dfs(r, c)              # 섬 하나를 통째로 지움\n                count += 1\n    return count'],
+    maze: ['미로 탈출 가능 여부 (재귀 DFS)', 'def can_escape(g):\n    def dfs(r, c):\n        if r < 0 or r >= N or c < 0 or c >= M:\n            return False\n        if g[r][c] == 1 or visited[r][c]:\n            return False               # 벽이거나 왔던 길\n        if (r, c) == (N - 1, M - 1):\n            return True                # 출구!\n        visited[r][c] = True\n        return (dfs(r + 1, c) or dfs(r - 1, c) or\n                dfs(r, c + 1) or dfs(r, c - 1))\n    return dfs(0, 0)'],
+  };
+  const COL = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
+  function controls() { ui.ctrl.innerHTML = seg('문제', [['island', '섬 개수'], ['maze', '미로 탈출']], mode) + btn('DFS 시작', 'run', 'pri') + btn('예제로 되돌리기', 'reset', 'ghost'); }
+  const P = new Player(ui, f => {
+    const R = f.g.length, C = f.g[0].length;
+    let h = `<div class="grid" style="grid-template-columns:repeat(${C},minmax(0,46px))">`;
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const v = f.g[r][c]; const k = `${r},${c}`; const lab = (f.lab || {})[k];
+      let cls = mode === 'island' ? (v ? 'land' : 'sea') : (v ? 'wall' : 'path');
+      if (lab) cls += ' ' + lab;
+      if (f.cur === k) cls += ' cur';
+      if (mode === 'maze' && r === 0 && c === 0) cls += ' start';
+      if (mode === 'maze' && r === R - 1 && c === C - 1) cls += ' exit';
+      h += `<button type="button" class="gc ${cls}" data-r="${r}" data-c="${c}" aria-label="${r}행 ${c}열">${(f.num || {})[k] || ''}</button>`;
+    }
+    h += '</div>';
+    const legend = mode === 'island' ? '<span><i class="lg land"></i>땅(1)</span><span><i class="lg sea"></i>바다(0)</span><span><i class="lg c1"></i>찾은 섬</span>' : '<span><i class="lg path"></i>통로(0)</span><span><i class="lg wall"></i>벽(1)</span><span><i class="lg seen"></i>방문</span><span><i class="lg route"></i>탈출 경로</span>';
+    ui.stage.innerHTML = `<div class="grid-wrap">${h}</div><div class="vz-meta">${legend}${f.count != null ? `<span>섬 <b>${f.count}</b>개</span>` : ''}${f.depth != null ? `<span>재귀 깊이 <b>${f.depth}</b></span>` : ''}</div>`;
+  });
+  function reset() { g = (mode === 'island' ? ISL : MAZE).map(r => r.slice()); }
+  function base() { return { g: g.map(r => r.slice()) }; }
+  function run() {
+    const F = []; const R = g.length, C = g[0].length;
+    if (mode === 'island') {
+      const w = g.map(r => r.slice()); const lab = {}; const num = {}; let count = 0, step = 0;
+      const snap = o => F.push(Object.assign({ g, lab: { ...lab }, num: { ...num }, count }, o));
+      snap({ line: 8, msg: '왼쪽 위부터 한 칸씩 훑으며 1을 찾습니다.' });
+      for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+        if (w[r][c] !== 1) continue;
+        snap({ cur: `${r},${c}`, line: 11, msg: `(${r}, ${c})에서 새 땅 발견 → dfs(${r}, ${c})로 이 섬 전체를 지웁니다.` });
+        const col = COL[count % COL.length];
+        (function dfs(y, x, d) {
+          if (y < 0 || y >= R || x < 0 || x >= C || w[y][x] !== 1) return;
+          w[y][x] = 0; lab[`${y},${x}`] = col; num[`${y},${x}`] = ++step;
+          snap({ cur: `${y},${x}`, line: 5, msg: `(${y}, ${x}) 방문 처리 → 상하좌우로 퍼집니다`, depth: d });
+          dfs(y + 1, x, d + 1); dfs(y - 1, x, d + 1); dfs(y, x + 1, d + 1); dfs(y, x - 1, d + 1);
+        })(r, c, 1);
+        count++;
+        snap({ line: 13, tone: 'good', msg: `dfs가 끝나 섬 하나를 다 지웠습니다 → count = ${count}` });
+      }
+      snap({ tag: '결과', tone: 'good', line: 14, msg: `섬은 모두 <b>${count}</b>개. 대각선으로만 닿은 칸은 다른 섬입니다.` });
+    } else {
+      const vis = {}; const lab = {}; const num = {}; let step = 0; const pathStack = [];
+      const snap = o => F.push(Object.assign({ g, lab: { ...lab }, num: { ...num } }, o));
+      let ok = false;
+      (function dfs(r, c, d) {
+        if (r < 0 || r >= R || c < 0 || c >= C) return false;
+        const k = `${r},${c}`;
+        if (g[r][c] === 1 || vis[k]) return false;
+        pathStack.push(k);
+        if (r === R - 1 && c === C - 1) { pathStack.forEach(p => lab[p] = 'route'); num[k] = ++step; snap({ cur: k, line: 8, depth: d, tone: 'good', msg: `출구 (${r}, ${c}) 도착! True가 호출한 곳으로 차례로 올라갑니다.` }); ok = true; return true; }
+        vis[k] = 1; lab[k] = 'seen'; num[k] = ++step;
+        snap({ cur: k, line: 9, depth: d, msg: `(${r}, ${c}) 방문 → 아래, 위, 오른쪽, 왼쪽 순서로 시도` });
+        const res = dfs(r + 1, c, d + 1) || dfs(r - 1, c, d + 1) || dfs(r, c + 1, d + 1) || dfs(r, c - 1, d + 1);
+        if (!res) { lab[k] = 'dead'; snap({ cur: k, line: 10, depth: d, msg: `(${r}, ${c})에서는 네 방향 모두 막힘 → False, 되돌아갑니다` }); }
+        pathStack.pop();
+        return res;
+      })(0, 0, 1);
+      if (!ok) snap({ tag: '결과', tone: 'bad', msg: '출구에 닿지 못했습니다. False' });
+      else snap({ tag: '결과', tone: 'good', msg: '탈출 가능: True. 진한 칸이 찾은 경로입니다(최단 경로는 아닐 수 있음 → 최단은 BFS).' });
+    }
+    P.load(F, { code: CODE[mode][1], codeTitle: CODE[mode][0] });
+  }
+  function setMode(m) { mode = m; reset(); controls(); P.setCode(CODE[mode][0], CODE[mode][1]); P.load([Object.assign(base(), { tag: '준비', msg: mode === 'island' ? '교재의 6×6 예제입니다. <b>DFS 시작</b>을 누르거나 칸을 눌러 땅을 바꿔 보세요.' : '교재의 5×5 미로입니다. (0,0)에서 오른쪽 아래 출구까지 갈 수 있을까요? 벽을 더 세워 막아 보세요.' })], { autoplay: false }); }
+  ui.ctrl.addEventListener('click', e => {
+    const m = e.target.closest('.vz-seg [data-mode]'); if (m) { setMode(m.dataset.mode); return; }
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    if (b.dataset.act === 'reset') setMode(mode); else run();
+  });
+  ui.stage.addEventListener('click', e => {
+    const c = e.target.closest('.gc'); if (!c) return;
+    const r = +c.dataset.r, cc = +c.dataset.c;
+    if (mode === 'maze' && ((r === 0 && cc === 0) || (r === g.length - 1 && cc === g[0].length - 1))) return;
+    g[r][cc] = g[r][cc] ? 0 : 1; P.load([Object.assign(base(), { tag: '편집', msg: `(${r}, ${cc}) → ${g[r][cc]}` })], { autoplay: false });
+  });
+  setMode(mode);
+});
+
+/* Drill: exam-style fill-in-the-blank practice under every implementation code block */
+const Drill = (() => {
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const KEY = /\.(next|prev|left|right|head|tail|front|rear|top|data|parent|count|size|_size)\b|\b(head|tail|front|rear|top|visited|stack|queue|pq|heap|parent|rank|dist|distances|count|mid|low|high|left|right|pivot|min_idx|key|current|prev|succ|root|index|dp|memo|result|total)\b|%|\/\/|\* ?2|\+ ?1|- ?1|heappush|heappop|popleft|append|pop\(|\[i\]|\[j\]|\[mid\]|swap|return/;
+  const SKIP_FN = /^(print|display|show|__str__|__repr__|main|print_\w*|test\w*)$/;
+
+  function hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  const indent = l => l.match(/^\s*/)[0].replace(/\t/g, '    ').length;
+
+  /* ---------- function ranges ---------- */
+  function pyFuncs(lines) {
+    const out = [];
+    lines.forEach((l, i) => {
+      const m = l.match(/^(\s*)def\s+(\w+)\s*\(/); if (!m) return;
+      const ind = m[1].length; let j = i + 1;
+      // header may span lines until ':' at end
+      while (j < lines.length && !/:\s*(#.*)?$/.test(lines[j - 1])) j++;
+      const bodyStart = j; let end = bodyStart;
+      for (let k = bodyStart; k < lines.length; k++) {
+        if (!lines[k].trim()) continue;
+        if (indent(lines[k]) <= ind) break;
+        end = k + 1;
+      }
+      if (end > bodyStart) out.push({ name: m[2], head: i, start: bodyStart, end, ind });
+    });
+    return out;
+  }
+  function cppFuncs(lines) {
+    const out = [];
+    const re = /^\s*(?:template\s*<[^>]*>\s*)?(?:[\w:<>,\*&~]+\s+)*?([~\w]+(?:::[~\w]+)?)\s*\(([^;]*)\)\s*(?:const)?\s*(?:override)?\s*(?::[^{]*)?\{\s*(\/\/.*)?$/;
+    lines.forEach((l, i) => {
+      if (/^\s*(if|else|while|for|switch|do|catch|return)\b/.test(l)) return;
+      const m = l.match(re); if (!m) return;
+      let depth = 0, end = -1;
+      for (let k = i; k < lines.length; k++) {
+        const s = lines[k].replace(/\/\/.*$/, '').replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g, '');
+        for (const ch of s) { if (ch === '{') depth++; else if (ch === '}') { depth--; if (depth === 0) { end = k; break; } } }
+        if (end >= 0) break;
+      }
+      if (end > i + 1) out.push({ name: m[1].split('::').pop(), head: i, start: i + 1, end, ind: indent(l) });
+    });
+    // drop functions nested in other captured functions? keep outermost-only ranges for blanks, all for method mode
+    return out;
+  }
+
+  /* ---------- blank target for a line ---------- */
+  function splitAssign(s) {
+    let d = 0, q = null;
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i];
+      if (q) { if (c === q && s[i - 1] !== '\\') q = null; continue; }
+      if (c === '"' || c === "'") { q = c; continue; }
+      if ('([{'.includes(c)) d++; else if (')]}'.includes(c)) d--;
+      else if (c === '=' && d === 0) {
+        const p = s[i - 1], n = s[i + 1];
+        if (n === '=' || p === '=' || p === '!' || p === '<' || p === '>') continue;
+        const opStart = /[+\-*\/%&|^]/.test(p) ? i - 1 : i;
+        return [s.slice(0, opStart), s.slice(opStart, i + 1), s.slice(i + 1)];
+      }
+    }
+    return null;
+  }
+  const TRIVIAL = /^\s*(None|True|False|nullptr|NULL|0|1|-1|\[\]|\{\}|""|''|0\.0)\s*$/;
+
+  function targetPy(line) {
+    const ind = line.match(/^\s*/)[0]; const body = line.slice(ind.length).replace(/\s+#.*$/, '');
+    let m;
+    if ((m = body.match(/^(if|elif|while)\s+(.+):\s*$/))) return { pre: ind + m[1] + ' ', ans: m[2], post: ':' };
+    if ((m = body.match(/^for\s+(.+)\s+in\s+(.+):\s*$/))) return { pre: ind + 'for ' + m[1] + ' in ', ans: m[2], post: ':' };
+    if ((m = body.match(/^return\s+(.+)$/))) return { pre: ind + 'return ', ans: m[1], post: '' };
+    if (/^(else|try|finally|pass|break|continue|return|yield|except.*|import .*|from .*|raise .*|global .*|nonlocal .*|del .*|assert .*)\s*:?\s*$/.test(body)) return null;
+    if (/^print\(|^"""|^'''|^@/.test(body)) return null;
+    const a = splitAssign(body);
+    if (a) {
+      const [lhs, op, rhs] = a;
+      if (TRIVIAL.test(rhs) && op.trim() === '=') return { pre: ind, ans: lhs.trim(), post: ' = ' + rhs.trim() };
+      return { pre: ind + lhs.trimEnd() + ' ' + op + ' ', ans: rhs.trim(), post: '' };
+    }
+    if (/^[\w.\[\]]+\(.*\)$/.test(body) || /^[\w.]+\s*$/.test(body)) return { pre: ind, ans: body, post: '' };
+    return null;
+  }
+  function targetCpp(line) {
+    const ind = line.match(/^\s*/)[0]; let body = line.slice(ind.length).replace(/\s*\/\/.*$/, '');
+    let m;
+    if (/^(cout|cerr|printf|std::cout|std::cerr|#|using |}|{|public:|private:|protected:)/.test(body) || body === '') return null;
+    if ((m = body.match(/^(}\s*else\s+if|if|while)\s*\((.*)\)\s*(\{?)\s*$/))) return { pre: ind + m[1] + ' (', ans: m[2], post: ')' + (m[3] ? ' {' : '') };
+    if ((m = body.match(/^for\s*\((.*)\)\s*(\{?)\s*$/))) return { pre: ind + 'for (', ans: m[1], post: ')' + (m[2] ? ' {' : '') };
+    if ((m = body.match(/^return\s+(.+);$/))) return { pre: ind + 'return ', ans: m[1], post: ';' };
+    if (!body.endsWith(';')) return null;
+    body = body.slice(0, -1);
+    if (/^(break|continue|return)$/.test(body)) return null;
+    const a = splitAssign(body);
+    if (a) {
+      const [lhs, op, rhs] = a;
+      if (TRIVIAL.test(rhs) && op.trim() === '=') return { pre: ind, ans: lhs.trim(), post: ' = ' + rhs.trim() + ';' };
+      return { pre: ind + lhs.trimEnd() + ' ' + op + ' ', ans: rhs.trim(), post: ';' };
+    }
+    if (/^[\w:.\->\[\]<>]+\(.*\)$/.test(body) || /^(\+\+|--)?[\w.\->\[\]]+(\+\+|--)?$/.test(body)) return { pre: ind, ans: body, post: ';' };
+    return null;
+  }
+
+  /* ---------- analyse a code block once ---------- */
+  function analyse(code, lang) {
+    const lines = code.replace(/\s+$/, '').split('\n');
+    const py = lang === 'py';
+    const funcs = (py ? pyFuncs : cppFuncs)(lines);
+    // C++ demos that live entirely in main(): treat main as the method to practise
+    const onlyMain = !py && funcs.length > 0 && funcs.every(f => SKIP_FN.test(f.name)) && funcs.some(f => f.name === 'main');
+    const skip = n => SKIP_FN.test(n) && !(onlyMain && n === 'main');
+    const inFn = new Array(lines.length).fill(null);
+    // innermost function wins
+    funcs.slice().sort((a, b) => (b.start - a.start)).forEach(f => { for (let k = f.start; k < f.end; k++) if (inFn[k] === null) inFn[k] = f; });
+    const cands = [];
+    let inDoc = false;
+    lines.forEach((l, i) => {
+      const t = l.trim();
+      if (py) {
+        const tq = (t.match(/"""|'''/g) || []).length;
+        if (inDoc) { if (tq % 2 === 1) inDoc = false; return; }
+        if (tq % 2 === 1) { inDoc = true; return; }
+        if (tq) return;
+      }
+      const f = inFn[i]; if (!f || skip(f.name)) return;
+      if (!t || t.startsWith('#') || t.startsWith('//')) return;
+      const tg = py ? targetPy(l) : targetCpp(l);
+      if (!tg) return;
+      tg.ans = (tg.ans || '').trim();
+      if (!tg.ans || tg.ans.length > 90) return;
+      let w = 1;
+      if (KEY.test(l)) w += 2;
+      if (/%|\/\/|\*\s*2|[+-]\s*1\b/.test(tg.ans)) w += 1;
+      if (new RegExp('\\b' + f.name + '\\s*\\(').test(tg.ans)) w += 2; // recursive call
+      if (f.name === '__init__' || /^[A-Z]\w*$/.test(f.name)) w *= 0.5;
+      if (TRIVIAL.test(tg.ans)) w = 0.3;
+      cands.push({ i, w, f, ...tg });
+    });
+    return { lines, funcs: funcs.filter(f => !skip(f.name) && f.end - f.start >= 2), allFuncs: funcs.filter(f => !skip(f.name)), cands };
+  }
+
+  function pick(cands, seed) {
+    const r = rng(seed);
+    const n = Math.max(2, Math.min(8, Math.round(cands.length * 0.35)));
+    const pool = cands.map(c => ({ c, k: Math.pow(r(), 1 / c.w) }));
+    pool.sort((a, b) => b.k - a.k);
+    return new Set(pool.slice(0, Math.min(n, cands.length)).map(p => p.c.i));
+  }
+
+  const norm = s => s.replace(/\s+/g, '').replace(/'/g, '"').replace(/;$/, '').replace(/:$/, '');
+  const stripCmt = (s, py) => s.replace(py ? /\s*#.*$/ : /\s*\/\/.*$/, '');
+
+  /* ---------- UI ---------- */
+  function mount(fig) {
+    if (fig.dataset.drill) return; fig.dataset.drill = '1';
+    const codeEl = fig.querySelector('code'); if (!codeEl) return;
+    const cls = codeEl.className || '';
+    const langLabel = (fig.querySelector('.code-h span') || {}).textContent || '';
+    const lang = /python/.test(cls) || /^Python/i.test(langLabel) ? 'py' : (/cpp|language-c\b/.test(cls) || /^C\+\+|^C$/.test(langLabel) ? 'cpp' : null);
+    if (!lang) return;
+    const code = codeEl.textContent;
+    if (lang === 'py' && !/\bdef\s+\w+\s*\(/.test(code)) return;
+    const A = analyse(code, lang);
+    if (A.cands.length < 3) return;
+    const det = document.createElement('details');
+    det.className = 'drill';
+    det.innerHTML = `<summary><span class="dr-ic" aria-hidden="true">✍️</span><b>빈칸 연습</b><span class="dr-sub">시험처럼 직접 채워보기 · 빈칸 후보 ${A.cands.length}줄${A.funcs.length ? ` · 메소드 ${A.funcs.length}개` : ''}</span></summary><div class="dr-body"></div>`;
+    fig.after(det);
+    let built = false;
+    det.addEventListener('toggle', () => { if (det.open && !built) { built = true; build(det.querySelector('.dr-body'), A, lang, code); } });
+  }
+
+  function build(body, A, lang, code) {
+    const py = lang === 'py';
+    let seed = hash(code), mode = 'blank', fnIdx = 0;
+    body.innerHTML = `<div class="dr-tabs" role="tablist"><button type="button" data-m="blank" class="on">빈칸 채우기</button>${A.funcs.length ? '<button type="button" data-m="method">메소드 통째로</button>' : ''}${A.allFuncs.length > 1 ? '<button type="button" data-m="all">모든 메소드 한번에</button>' : ''}</div><div class="dr-pane"></div>`;
+    const pane = body.querySelector('.dr-pane');
+    body.querySelector('.dr-tabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.m; body.querySelectorAll('.dr-tabs button').forEach(x => x.classList.toggle('on', x === b)); render(); };
+
+    function render() { mode === 'blank' ? renderBlank() : mode === 'all' ? renderAll() : renderMethod(); }
+
+    function renderBlank() {
+      const chosen = pick(A.cands, seed);
+      const byLine = new Map(A.cands.filter(c => chosen.has(c.i)).map(c => [c.i, c]));
+      let n = 0;
+      const rows = A.lines.map((l, i) => {
+        const c = byLine.get(i);
+        if (!c) return `<div class="dl">${esc(l) || ' '}</div>`;
+        n++;
+        const w = Math.max(6, Math.ceil((c.ans.length + 2) / 4) * 4);
+        return `<div class="dl hit">${esc(c.pre)}<span class="bx"><span class="bn">${n}</span><input class="bi" style="width:${w}ch" data-a="${esc(c.ans)}" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="빈칸 ${n}"></span>${esc(c.post)}</div>`;
+      }).join('');
+      pane.innerHTML = `<p class="dr-tip">${py ? '조건식·대입식·return 값' : '조건식·대입식·return 값'}이 빈칸입니다. 칸을 채우고 <b>채점</b>을 누르세요. 띄어쓰기와 따옴표 종류는 신경 쓰지 않아도 됩니다.</p>
+        <div class="dr-bar"><button type="button" class="dbtn pri" data-act="check">채점</button><button type="button" class="dbtn" data-act="show">정답 보기</button><button type="button" class="dbtn" data-act="new">↻ 다른 빈칸</button><span class="dr-score" aria-live="polite"></span></div>
+        <pre class="dr-code">${rows}</pre>`;
+      const inputs = [...pane.querySelectorAll('.bi')];
+      inputs.forEach((inp, k) => inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); (inputs[k + 1] || pane.querySelector('[data-act=check]')).focus(); } }));
+      pane.querySelector('.dr-bar').onclick = e => {
+        const act = (e.target.closest('[data-act]') || {}).dataset?.act; if (!act) return;
+        if (act === 'new') { seed = (seed * 31 + 7) >>> 0; renderBlank(); return; }
+        let ok = 0;
+        inputs.forEach(inp => {
+          const box = inp.parentElement; box.querySelector('.ans')?.remove();
+          if (act === 'show') { inp.value = inp.dataset.a; box.className = 'bx shown'; return; }
+          const good = norm(inp.value) === norm(inp.dataset.a);
+          box.className = 'bx ' + (good ? 'ok' : 'no'); if (good) ok++;
+          if (!good) { const s = document.createElement('button'); s.type = 'button'; s.className = 'ans'; s.textContent = '정답'; s.title = '정답 보기'; s.onclick = () => { s.outerHTML = `<span class="ans-t">${esc(inp.dataset.a)}</span>`; }; box.appendChild(s); }
+        });
+        if (act === 'check') pane.querySelector('.dr-score').textContent = `${ok} / ${inputs.length} 정답` + (ok === inputs.length ? ' 🎉' : '');
+        else pane.querySelector('.dr-score').textContent = '';
+      };
+    }
+
+
+    function splitBody(f) {
+      const answer = A.lines.slice(f.start, f.end);
+      let keep = 0;
+      if (py) { const t0 = (answer[0] || '').trim(); if (/^("""|''')/.test(t0)) { keep = 1; if (!(t0.length > 3 && /("""|''')$/.test(t0.slice(3)))) { while (keep < answer.length && !/("""|''')/.test(answer[keep])) keep++; keep++; } } }
+      return { given: answer.slice(0, keep), hidden: answer.slice(keep), ind: ' '.repeat(f.ind + 4) };
+    }
+    function setupTA(ta, ind) {
+      ta.addEventListener('keydown', e => {
+        if (e.key === 'Tab') { e.preventDefault(); const s = ta.selectionStart; ta.setRangeText('    ', s, ta.selectionEnd, 'end'); }
+        else if (e.key === 'Enter') { const s = ta.selectionStart; const lineStart = ta.value.lastIndexOf('\n', s - 1) + 1; const cur = ta.value.slice(lineStart, s); let pad = cur.match(/^\s*/)[0]; if (py && /:\s*$/.test(cur)) pad += '    '; if (!py && /\{\s*$/.test(cur)) pad += '    '; if (!ta.value.trim()) pad = ind; e.preventDefault(); ta.setRangeText('\n' + pad, s, ta.selectionEnd, 'end'); }
+      });
+      ta.addEventListener('focus', () => { if (!ta.value) ta.value = ind; });
+    }
+    function compare(hidden, text) {
+      const clean = arr => arr.map(l => stripCmt(l, py)).filter(l => l.trim());
+      const want = clean(hidden), got = clean(text.split('\n'));
+      const W = want.map(norm), G = got.map(norm);
+      const dp = Array.from({ length: W.length + 1 }, () => new Array(G.length + 1).fill(0));
+      for (let a = W.length - 1; a >= 0; a--) for (let b = G.length - 1; b >= 0; b--) dp[a][b] = W[a] === G[b] ? dp[a + 1][b + 1] + 1 : Math.max(dp[a + 1][b], dp[a][b + 1]);
+      const matched = new Set(); let a = 0, b = 0;
+      while (a < W.length && b < G.length) { if (W[a] === G[b]) { matched.add(a); a++; b++; } else if (dp[a + 1][b] >= dp[a][b + 1]) a++; else b++; }
+      const html = `<pre class="dr-code">${want.map((l, k) => `<div class="dl ${matched.has(k) ? 'm-ok' : 'm-no'}">${esc(l)}</div>`).join('')}</pre>`;
+      return { want, matched, html };
+    }
+    const LEGEND = '<span class="lg"><span class="sw g"></span>맞게 쓴 줄 <span class="sw r"></span>빠졌거나 다른 줄</span>';
+    const ctx = arr => arr.length ? `<pre class="dr-code ctx">${arr.map(l => `<div class="dl">${esc(l) || ' '}</div>`).join('')}</pre>` : '';
+
+    function renderAll() {
+      // outermost methods only (nested helpers are part of their parent's body)
+      const fs = []; A.allFuncs.slice().sort((x, y) => x.start - y.start).forEach(f => { if (!fs.some(g => f.head >= g.start && f.head < g.end)) fs.push(f); });
+      const parts = fs.map(f => ({ f, ...splitBody(f) }));
+      let html = '', pos = 0, total = 0;
+      parts.forEach((p, k) => {
+        html += ctx(A.lines.slice(pos, p.f.start).concat(p.given));
+        const n = p.hidden.filter(l => l.trim() && !/^\s*(#|\/\/)/.test(l)).length; total += n;
+        html += `<div class="dr-m"><div class="dr-m-h"><b>${esc(p.f.name)}()</b> 본문 · ${n}줄 안팎<span class="dr-m-s"></span></div>
+          <textarea class="dr-ta" data-k="${k}" spellcheck="false" autocomplete="off" autocapitalize="off" rows="${Math.min(14, Math.max(3, p.hidden.length + 1))}" placeholder="${esc(p.ind)}${esc(p.f.name)}() 본문"></textarea><div class="dr-cmp" hidden></div></div>`;
+        pos = p.f.end;
+      });
+      html += ctx(A.lines.slice(pos));
+      pane.innerHTML = `<p class="dr-tip"><b>메소드 ${parts.length}개의 본문을 한꺼번에 비웠습니다.</b> 클래스 전체를 처음부터 다시 짜는 연습이에요. 다 쓰고 <b>전체 채점</b>을 누르면 메소드별로 맞은 줄을 보여줍니다. 주석은 채점에서 빠집니다.</p>
+        <div class="dr-bar"><button type="button" class="dbtn pri" data-act="cmp">전체 채점</button><button type="button" class="dbtn" data-act="reset">모두 지우기</button><span class="dr-score" aria-live="polite">총 ${total}줄</span></div>
+        <div class="dr-all">${html}</div>
+        <div class="dr-bar"><button type="button" class="dbtn pri" data-act="cmp">전체 채점</button><span class="dr-score2" aria-live="polite"></span></div>`;
+      const tas = [...pane.querySelectorAll('.dr-ta')];
+      tas.forEach(ta => setupTA(ta, parts[+ta.dataset.k].ind));
+      pane.querySelectorAll('.dr-bar').forEach(bar => bar.onclick = e => {
+        const act = (e.target.closest('[data-act]') || {}).dataset?.act; if (!act) return;
+        if (act === 'reset') { tas.forEach(ta => { ta.value = ''; ta.nextElementSibling.hidden = true; ta.parentElement.querySelector('.dr-m-s').textContent = ''; ta.parentElement.className = 'dr-m'; }); pane.querySelector('.dr-score').textContent = `총 ${total}줄`; pane.querySelector('.dr-score2').textContent = ''; return; }
+        let ok = 0, all = 0, perfect = 0;
+        tas.forEach(ta => {
+          const p = parts[+ta.dataset.k]; const r = compare(p.hidden, ta.value);
+          ok += r.matched.size; all += r.want.length; if (r.matched.size === r.want.length) perfect++;
+          const c = ta.nextElementSibling; c.hidden = false; c.innerHTML = `<div class="dr-cmp-h"><span>정답</span>${LEGEND}</div>${r.html}`;
+          ta.parentElement.querySelector('.dr-m-s').textContent = ` · ${r.matched.size}/${r.want.length}`;
+          ta.parentElement.className = 'dr-m ' + (r.matched.size === r.want.length ? 'ok' : 'no');
+        });
+        const pct = all ? Math.round(ok / all * 100) : 0;
+        const msg = `${ok} / ${all}줄 일치 (${pct}%) · 완벽한 메소드 ${perfect}/${parts.length}` + (pct === 100 ? ' 🎉' : '');
+        pane.querySelector('.dr-score').textContent = msg; pane.querySelector('.dr-score2').textContent = msg;
+      });
+    }
+
+    function renderMethod() {
+      const f = A.funcs[fnIdx];
+      const ind = ' '.repeat(f.ind + 4);
+      const before = A.lines.slice(0, f.start), after = A.lines.slice(f.end);
+      const answer = A.lines.slice(f.start, f.end);
+      // keep the docstring as the method's spec (exam style)
+      let keep = 0;
+      if (py) { const t0 = (answer[0] || '').trim(); if (/^("""|''')/.test(t0)) { keep = 1; if (!(t0.length > 3 && /("""|''')$/.test(t0.slice(3)))) { while (keep < answer.length && !/("""|''')/.test(answer[keep])) keep++; keep++; } } }
+      const given = answer.slice(0, keep), hidden = answer.slice(keep);
+      const realLines = hidden.filter(l => l.trim() && !/^\s*(#|\/\/)/.test(l)).length;
+      const opts = A.funcs.map((x, k) => `<option value="${k}"${k === fnIdx ? ' selected' : ''}>${esc(x.name)}()</option>`).join('');
+      pane.innerHTML = `<p class="dr-tip">교수님 출제 방식처럼 <b>메소드 하나를 통째로 비웠습니다.</b> 시그니처${py ? '와 docstring' : ''}만 보고 본문(${realLines}줄 안팎)을 써 보세요. 주석은 채점에서 빠집니다.</p>
+        <div class="dr-bar"><label class="dr-sel">메소드 <select>${opts}</select></label><button type="button" class="dbtn pri" data-act="cmp">정답과 비교</button><button type="button" class="dbtn" data-act="reset">지우기</button><span class="dr-score" aria-live="polite"></span></div>
+        <pre class="dr-code ctx">${before.map(l => `<div class="dl">${esc(l) || ' '}</div>`).join('')}${given.map(l => `<div class="dl">${esc(l) || ' '}</div>`).join('')}</pre>
+        <textarea class="dr-ta" spellcheck="false" autocomplete="off" autocapitalize="off" rows="${Math.min(18, Math.max(4, hidden.length + 1))}" placeholder="${esc(ind)}여기에 본문을 작성하세요"></textarea>
+        <div class="dr-cmp" hidden></div>
+        <pre class="dr-code ctx">${after.map(l => `<div class="dl">${esc(l) || ' '}</div>`).join('')}</pre>`;
+      const ta = pane.querySelector('.dr-ta');
+      ta.value = '';
+      ta.addEventListener('keydown', e => {
+        if (e.key === 'Tab') { e.preventDefault(); const s = ta.selectionStart; ta.setRangeText('    ', s, ta.selectionEnd, 'end'); }
+        else if (e.key === 'Enter') { const s = ta.selectionStart; const lineStart = ta.value.lastIndexOf('\n', s - 1) + 1; const cur = ta.value.slice(lineStart, s); let pad = cur.match(/^\s*/)[0]; if (py && /:\s*$/.test(cur)) pad += '    '; if (!py && /\{\s*$/.test(cur)) pad += '    '; if (!ta.value.trim()) pad = ind; e.preventDefault(); ta.setRangeText('\n' + pad, s, ta.selectionEnd, 'end'); }
+      });
+      ta.addEventListener('focus', () => { if (!ta.value) ta.value = ind; });
+      pane.querySelector('select').onchange = e => { fnIdx = +e.target.value; renderMethod(); };
+      pane.querySelector('.dr-bar').onclick = e => {
+        const act = (e.target.closest('[data-act]') || {}).dataset?.act; if (!act) return;
+        const cmp = pane.querySelector('.dr-cmp');
+        if (act === 'reset') { ta.value = ''; cmp.hidden = true; pane.querySelector('.dr-score').textContent = ''; return; }
+        const clean = arr => arr.map(l => stripCmt(l, py)).filter(l => l.trim());
+        const want = clean(hidden), got = clean(ta.value.split('\n'));
+        const W = want.map(norm), G = got.map(norm);
+        // LCS to align lines
+        const dp = Array.from({ length: W.length + 1 }, () => new Array(G.length + 1).fill(0));
+        for (let a = W.length - 1; a >= 0; a--) for (let b = G.length - 1; b >= 0; b--) dp[a][b] = W[a] === G[b] ? dp[a + 1][b + 1] + 1 : Math.max(dp[a + 1][b], dp[a][b + 1]);
+        const matched = new Set(); let a = 0, b = 0;
+        while (a < W.length && b < G.length) { if (W[a] === G[b]) { matched.add(a); a++; b++; } else if (dp[a + 1][b] >= dp[a][b + 1]) a++; else b++; }
+        cmp.hidden = false;
+        cmp.innerHTML = `<div class="dr-cmp-h"><span>정답 코드</span><span class="lg"><span class="sw g"></span>맞게 쓴 줄 <span class="sw r"></span>빠졌거나 다른 줄</span></div><pre class="dr-code">${want.map((l, k) => `<div class="dl ${matched.has(k) ? 'm-ok' : 'm-no'}">${esc(l)}</div>`).join('')}</pre>`;
+        const pct = want.length ? Math.round(matched.size / want.length * 100) : 0;
+        pane.querySelector('.dr-score').textContent = `${matched.size} / ${want.length}줄 일치 (${pct}%)` + (pct === 100 ? ' 🎉' : '');
+      };
+    }
+    render();
+  }
+
+  function mountAll(root) {
+    (root || document).querySelectorAll('figure.code').forEach(f => { try { mount(f); } catch (e) { /* skip block */ } });
+  }
+  return { mountAll, _analyse: analyse };
+})();
+
+</script>
+<script>
+const META={"titles": ["책 소개", "Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석", "1. 프로그래밍 기초와 소프트웨어 공학", "2. 자료 구조와 알고리즘의 본질 - 효율적인 문제 해결", "3. 알고리즘의 성능 분석", "4. 재귀(Recursion)", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "5. 배열과 연결 리스트: 순서가 중요한 데이터", "6. [알고리즘] 정렬(Sorting)", "7. [알고리즘] 선택(Selection)", "8. 스택과 큐: 후입선출/선입선출의 활용", "9. 트리: 효율적인 탐색을 위한 자료구조", "10. [알고리즘] 탐색(Searching)", "11. 그래프(graphs): 관계를 표현하는 자료구조", "Part 3. 알고리즘 전략: 최적화된 문제 해결", "12. [알고리즘] 백트래킹(Backtracking)", "13. [알고리즘] 탐욕(Greedy)", "14. [알고리즘] 분할 정복(Divide and Conquer)", "15. [알고리즘] 다이내믹 프로그래밍(Dynamic Programming)", "[자료 구조] 실전 문제", "[알고리즘] 실전 문제", "팀 프로젝트"], "partOf": ["", "", "Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석", "Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석", "Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석", "Part 1. 프로그래밍의 기초와 알고리즘의 성능 분석", "", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "Part 2. 상황별 자료구조 선택(Problem-Oriented)", "", "Part 3. 알고리즘 전략: 최적화된 문제 해결", "Part 3. 알고리즘 전략: 최적화된 문제 해결", "Part 3. 알고리즘 전략: 최적화된 문제 해결", "Part 3. 알고리즘 전략: 최적화된 문제 해결", "실전과 프로젝트", "실전과 프로젝트", "실전과 프로젝트"]};
+let BOOK=null, cur=-1, spy=null;
+const $=s=>document.querySelector(s);
+const home=$('#home'), chap=$('#chap'), toc=$('#toc');
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+let bookP=null;
+function loadBook(){ if(!bookP) bookP=fetch('book.json').then(r=>{if(!r.ok) throw new Error(r.status); return r.json()}).then(j=>{BOOK=j; return j}); return bookP; }
+
+function secIndex(){ const m={}; BOOK.chapters.forEach(c=>c.sections.forEach(s=>m[s.id]=c.i)); return m; }
+let SECMAP=null;
+
+function toast(t){const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,1600);}
+
+function setDrawer(on){ document.body.classList.toggle('drawer',on); $('#scrim').hidden=!on; }
+$('#menu').onclick=()=>setDrawer(true); $('#closeRail').onclick=()=>setDrawer(false); $('#scrim').onclick=()=>setDrawer(false);
+
+function markToc(){
+  toc.querySelectorAll('.ch').forEach(b=>{ const on=+b.dataset.i===cur; b.classList.toggle('on',on); b.setAttribute('aria-current',on?'page':'false'); });
+  toc.querySelectorAll('.subtoc').forEach(u=>u.remove());
+  if(cur<0||!BOOK) return;
+  const c=BOOK.chapters[cur]; const subs=c.sections.filter(s=>s.depth===1||s.depth===2);
+  if(!subs.length) return;
+  const ul=document.createElement('ul'); ul.className='subtoc';
+  ul.innerHTML=subs.map(s=>`<li><a class="d${s.depth}" href="#${s.id}" data-go="${s.id}">${esc(s.title)}</a></li>`).join('');
+  const btn=toc.querySelector(`.ch[data-i="${cur}"]`); if(!btn) return; btn.parentElement.appendChild(ul);
+}
+function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+function showHome(push){
+  cur=-1; chap.hidden=true; home.hidden=false; markToc(); renderResume();
+  if(push) setHash('home'); window.scrollTo({top:0}); document.title='자료구조와 알고리즘 요약';
+}
+function setHash(h){ try{ history.replaceState(null,'','#'+h); }catch(e){} }
+
+async function openChapter(i, secId, push=true){
+  setDrawer(false);
+  home.hidden=true; chap.hidden=false;
+  if(!BOOK){ chap.innerHTML='<div class="sheet"><div class="sheet-in loading">불러오는 중…</div></div>'; try{ await loadBook(); }catch(e){ chap.innerHTML='<div class="sheet"><div class="sheet-in loading">본문을 불러오지 못했습니다. 페이지를 새로고침해 주세요.</div></div>'; return; } }
+  if(i!==cur){
+    cur=i; const c=BOOK.chapters[i];
+    const prev=BOOK.chapters[i-1], next=BOOK.chapters[i+1];
+    chap.innerHTML=`<article class="chap">
+        <header class="ch-head blk"><h1>${esc(c.title)}</h1></header>
+        <div class="pgtop blk" id="pgtop"></div>
+        ${c.html}
+      </article>
+      <div class="blk"><div class="pager" id="pgnav"></div></div>`;
+    document.title=c.title.replace(/^\d+\.\s*/,'')+' · 요약';
+    markToc(); enhance(chap); buildPages();
+  }
+  const k=secId==='__last'?PAGES.length-1:pageFor(secId);
+  showPage(k, secId&&secId!=='__last'&&PAGES[k]&&secId!==PAGES[k].id?secId:null, push);
+}
+
+/* ---- paging: one section per page ---- */
+let PAGES=[], PG=0;
+function buildPages(){
+  PAGES=[];
+  const c=BOOK.chapters[cur];
+  const root=chap.querySelector('section.sec.d0');
+  const own=root?[...root.children].find(e=>e.classList.contains('sb')):null;
+  const ttl=el=>{ const h=[...el.children].find(x=>x.matches('header.sec-h')); return h?(h.querySelector('.st')||h).textContent.trim():''; };
+  if(own||!chap.querySelector('section.sec.d1')) PAGES.push({id:c.id, el:null, kind:'intro', title:'들어가며'});
+  chap.querySelectorAll('section.sec.d1').forEach(d1=>{
+    const sb=[...d1.children].find(e=>e.classList.contains('sb'));
+    const body=sb&&(sb.textContent.trim().length>=40||sb.querySelector('figure,table,[data-viz],.mx-d,aside,ul,ol'));
+    const kids=[...d1.children].filter(e=>e.matches('section.sec.d2'));
+    if(body||!kids.length) PAGES.push({id:d1.id, el:d1, kind:'d1', title:ttl(d1)});
+    kids.forEach(d2=>PAGES.push({id:d2.id, el:d2, kind:'d2', parent:d1, title:ttl(d2), ptitle:ttl(d1)}));
+  });
+  if(!PAGES.length) PAGES.push({id:c.id, el:null, kind:'intro', title:'들어가며'});
+}
+function pageFor(id){
+  if(!id) return 0;
+  let k=PAGES.findIndex(p=>p.id===id); if(k>=0) return k;
+  const el=document.getElementById(id); if(!el) return 0;
+  k=PAGES.findIndex(p=>p.el&&p.el.contains(el)); if(k>=0) return k;
+  k=PAGES.findIndex(p=>p.parent&&p.parent.id===id); return k>=0?k:0;
+}
+function showPage(k, scrollId, push=true){
+  k=Math.max(0,Math.min(PAGES.length-1,k)); PG=k; const p=PAGES[k]; const c=BOOK.chapters[cur];
+  chap.querySelectorAll('.pg-hide').forEach(e=>e.classList.remove('pg-hide'));
+  chap.querySelectorAll('.pg-d2').forEach(e=>e.classList.remove('pg-d2'));
+  const head=chap.querySelector('.ch-head'), top=$('#pgtop');
+  const root=chap.querySelector('section.sec.d0');
+  const own=root?[...root.children].find(e=>e.classList.contains('sb')):null;
+  const d1s=[...chap.querySelectorAll('section.sec.d1')];
+  if(p.kind==='intro'){ d1s.forEach(s=>s.classList.add('pg-hide')); }
+  else{
+    if(own) own.classList.add('pg-hide');
+    const d1=p.kind==='d1'?p.el:p.parent;
+    if(p.kind==='d2') d1.classList.add('pg-d2');
+    d1s.forEach(s=>{ if(s!==d1) s.classList.add('pg-hide'); });
+    [...d1.children].forEach(e=>{
+      if(p.kind==='d1'){ if(e.matches('section.sec.d2')) e.classList.add('pg-hide'); }
+      else if(e!==p.el) e.classList.add('pg-hide');
+    });
+  }
+  const first=k===0;
+  head.classList.toggle('pg-hide',!first);
+  const num=c.title.match(/^(\d+)\./);
+  top.innerHTML=`<button type="button" class="pg-crumb" data-pg="0">${esc(num?num[1]+'장':'')}${num?' · ':''}${esc(c.title.replace(/^\d+\.\s*/,''))}</button>${p.kind==='d2'?`<span class="pg-sep">›</span><span class="pg-par">${esc(p.ptitle)}</span>`:''}<span class="pg-cnt num">${k+1} / ${PAGES.length}</span>`;
+  top.classList.toggle('pg-hide',first);
+  top.querySelector('[data-pg]').onclick=()=>showPage(0);
+  // nav
+  const pv=PAGES[k-1], nx=PAGES[k+1];
+  const pc=BOOK.chapters[cur-1], nc=BOOK.chapters[cur+1];
+  const nav=$('#pgnav');
+  nav.innerHTML=`<button type="button" class="prev" ${pv||pc?'':'disabled'}><small>${pv?'이전':'이전 장'}</small><b>${esc(pv?pv.title:(pc?pc.title:''))}</b></button>
+    <button type="button" class="next" ${nx||nc?'':'disabled'}><small>${nx?`다음 · ${k+2}/${PAGES.length}`:'다음 장'}</small><b>${esc(nx?nx.title:(nc?nc.title:''))}</b></button>`;
+  nav.querySelector('.prev').onclick=()=>pagePrev();
+  nav.querySelector('.next').onclick=()=>pageNext();
+  // toc highlight
+  toc.querySelectorAll('.subtoc a').forEach(a=>a.classList.toggle('on',a.dataset.go===p.id||(p.kind==='d2'&&false)));
+  const on=toc.querySelector('.subtoc a.on');
+  if(on&&innerWidth>=1080){ const r=$('#rail'); const ar=on.getBoundingClientRect(), rr=r.getBoundingClientRect(); if(ar.top<rr.top+60||ar.bottom>rr.bottom-20) r.scrollTop+=ar.top-rr.top-rr.height/3; }
+  const target=scrollId?document.getElementById(scrollId):null;
+  if(target) requestAnimationFrame(()=>target.scrollIntoView({block:'start'})); else window.scrollTo({top:0});
+  if(push) setHash(p.id);
+  store.set('ds-sum-last',{i:cur,sec:p.id,t:c.title});
+}
+function pageNext(){ if(PG<PAGES.length-1) showPage(PG+1); else if(BOOK.chapters[cur+1]) openChapter(cur+1); }
+function pagePrev(){ if(PG>0) showPage(PG-1); else if(BOOK.chapters[cur-1]) openChapter(cur-1,'__last'); }
+addEventListener('keydown',e=>{
+  if(chap.hidden||!$('#dlg').hidden||e.altKey||e.ctrlKey||e.metaKey) return;
+  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+  if(e.key==='ArrowRight'){ e.preventDefault(); pageNext(); } else if(e.key==='ArrowLeft'){ e.preventDefault(); pagePrev(); }
+});
+
+/* code language on/off (off = folded) */
+const LANGS=Object.assign({py:false,cpp:true},store.get('ds-langs')||{});
+function paintLangs(){ document.querySelectorAll('#langs [data-lang]').forEach(b=>{ const on=!!LANGS[b.dataset.lang]; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); }); }
+function setLang(l,on){ LANGS[l]=on; store.set('ds-langs',LANGS); paintLangs(); document.querySelectorAll(`details.pyfold[data-lang="${l}"]`).forEach(d=>d.open=on); toast(`${l==='py'?'Python':'C++'} 코드 ${on?'펼침':'접음'}`); }
+$('#langs').onclick=e=>{ const b=e.target.closest('[data-lang]'); if(b) setLang(b.dataset.lang,!LANGS[b.dataset.lang]); }; paintLangs();
+function enhance(root){
+  if(window.hljs){ root.querySelectorAll('pre code').forEach(el=>{ if(!el.classList.contains('language-plaintext')) try{hljs.highlightElement(el)}catch(e){} }); }
+  root.querySelectorAll('.cp').forEach(b=>b.onclick=async()=>{
+    const code=b.closest('figure').querySelector('code').innerText;
+    try{ await navigator.clipboard.writeText(code); toast('코드를 복사했습니다'); }
+    catch(e){ const r=document.createRange(); r.selectNodeContents(b.closest('figure').querySelector('code')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('선택했습니다. Ctrl+C로 복사하세요'); }
+  });
+  typeset(root);
+  root.querySelectorAll('figure.code').forEach(fig=>{
+    const c=fig.querySelector('code'); if(!c||fig.closest('details.pyfold')) return;
+    const lang=/language-python/.test(c.className)?'py':/language-(cpp|c)\b/.test(c.className)?'cpp':null; if(!lang) return;
+    const n=c.textContent.replace(/\s+$/,'').split('\n').length;
+    const d=document.createElement('details'); d.className='pyfold'; d.dataset.lang=lang;
+    d.innerHTML=`<summary><span class="pf-tag">${lang==='py'?'Python':'C++'}</span>${fig.classList.contains('extra')?'<span class="pf-x">추가 구현</span>':''}<span class="pf-n">${n}줄</span></summary>`;
+    fig.before(d); d.appendChild(fig); d.open=!!LANGS[lang];
+  });
+  if(typeof DSViz!=='undefined') DSViz.mountAll(root);
+  if(typeof Drill!=='undefined') Drill.mountAll(root);
+}
+function typeset(root){
+  const els=[...root.querySelectorAll('[data-tex]:not(.ok)')]; if(!els.length) return;
+  const run=()=>{ for(const el of els){ try{ const svg=MathJax.tex2svg(el.dataset.tex,{display:el.classList.contains('mx-d')}); el.replaceChildren(svg); el.classList.add('ok'); }catch(e){} } };
+  if(window.MathJax&&MathJax.tex2svg) run();
+  else { const t=setInterval(()=>{ if(window.MathJax&&MathJax.startup&&MathJax.startup.promise&&MathJax.tex2svg){ clearInterval(t); MathJax.startup.promise.then(run); } },200); setTimeout(()=>clearInterval(t),20000); }
+}
+
+function setupSpy(){
+  if(spy) spy.disconnect();
+  const links=new Map([...toc.querySelectorAll('.subtoc a')].map(a=>[a.dataset.go,a]));
+  const secs=[...chap.querySelectorAll('section.sec.d1, section.sec.d2')];
+  let last=null;
+  spy=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ const a=links.get(e.target.id); if(a&&a!==last){ last&&last.classList.remove('on'); a.classList.add('on'); last=a; if(innerWidth>=1080){ const r=$('#rail'); const ar=a.getBoundingClientRect(), rr=r.getBoundingClientRect(); if(ar.top<rr.top+60||ar.bottom>rr.bottom-20) r.scrollTop+=ar.top-rr.top-rr.height/3; } try{ const l=store.get('ds-sum-last'); if(l&&l.i===cur){ l.sec=e.target.id; store.set('ds-sum-last',l);} }catch(_){} } } });
+  },{rootMargin:'-70px 0px -70% 0px'});
+  secs.forEach(s=>spy.observe(s));
+}
+
+/* clicks: toc, cards, page mentions */
+document.addEventListener('click',e=>{
+  const ch=e.target.closest('[data-chi]'); if(ch){ e.preventDefault(); openChapter(+ch.dataset.chi); return; }
+  const g=e.target.closest('[data-go]');
+  if(g){ e.preventDefault(); go(g.dataset.go); return; }
+  if(e.target.closest('[data-home]')){ e.preventDefault(); showHome(true); setDrawer(false); }
+});
+async function go(id){
+  if(!BOOK) await loadBook(); if(!SECMAP) SECMAP=secIndex();
+  const ci=SECMAP[id]; if(ci===undefined) return;
+  if(ci===cur){ setDrawer(false); const k=pageFor(id); showPage(k, PAGES[k]&&id!==PAGES[k].id?id:null); }
+  else openChapter(ci,id);
+}
+
+/* resume */
+function renderResume(){
+  const el=$('#resume'); if(!el) return; const l=store.get('ds-sum-last');
+  if(l&&typeof l.i==='number'&&META.titles[l.i]){ el.hidden=false; el.querySelector('.v').textContent=META.titles[l.i]; el.onclick=()=>openChapter(l.i,l.sec); }
+  else el.hidden=true;
+}
+
+/* progress + top button */
+addEventListener('scroll',()=>{ const h=document.documentElement; const p=h.scrollTop/(h.scrollHeight-h.clientHeight||1); $('#totop').hidden=h.scrollTop<900; },{passive:true});
+$('#totop').onclick=()=>window.scrollTo({top:0});
+
+/* search */
+const dlg=$('#dlg'), q=$('#q'), res=$('#res'); let hits=[], sel=0, docs=null;
+function openSearch(){ dlg.hidden=false; q.focus(); q.select(); loadBook().then(()=>{ if(!docs) docs=BOOK.chapters.flatMap(c=>c.sections.map(s=>({c:c.i,ct:c.title,id:s.id,t:s.title,p:s.path,x:s.text,lt:s.title.toLowerCase(),lx:s.text.toLowerCase()}))); if(q.value) search(); }); }
+function closeSearch(){ dlg.hidden=true; }
+$('#openSearch').onclick=openSearch; $('#closeSearch').onclick=closeSearch;
+dlg.addEventListener('click',e=>{ if(e.target===dlg) closeSearch(); });
+addEventListener('keydown',e=>{
+  if(e.key==='/'&&dlg.hidden&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){ e.preventDefault(); openSearch(); }
+  else if(e.key==='Escape'){ if(!dlg.hidden) closeSearch(); else setDrawer(false); }
+});
+q.addEventListener('input',()=>search());
+q.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){e.preventDefault(); sel=Math.min(hits.length-1,sel+1); paintSel();}
+  else if(e.key==='ArrowUp'){e.preventDefault(); sel=Math.max(0,sel-1); paintSel();}
+  else if(e.key==='Enter'&&hits[sel]){ pick(hits[sel]); }
+});
+function paintSel(){ res.querySelectorAll('.hit').forEach((h,i)=>h.classList.toggle('sel',i===sel)); const s=res.querySelector('.hit.sel'); s&&s.scrollIntoView({block:'nearest'}); }
+function mark(s,terms){ let h=esc(s); terms.forEach(t=>{ if(!t) return; const re=new RegExp(t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'); h=h.replace(re,m=>`<mark>${m}</mark>`); }); return h; }
+function search(){
+  if(!docs) return; const v=q.value.trim().toLowerCase(); sel=0;
+  if(!v){ res.innerHTML='<div class="hint">요약 236개 항목에서 제목과 본문, 코드까지 찾습니다.</div>'; hits=[]; return; }
+  const terms=v.split(/\s+/).filter(Boolean);
+  hits=[];
+  for(const d of docs){ let sc=0, ok=true; for(const t of terms){ const inT=d.lt.includes(t), inX=d.lx.includes(t); if(!inT&&!inX){ok=false;break;} sc+=inT?10:1; } if(ok){ if(d.lt===v) sc+=20; hits.push([sc,d]); } }
+  hits.sort((a,b)=>b[0]-a[0]); const total=hits.length; hits=hits.slice(0,60).map(h=>h[1]);
+  if(!hits.length){ res.innerHTML=`<div class="hint">“${esc(q.value)}”와 맞는 절이 없습니다. 다른 낱말로 찾아보세요.</div>`; return; }
+  res.innerHTML=`<div class="count">${total}개 절${total>60?' · 상위 60개':''}</div>`+hits.map((d,i)=>{
+    const t0=terms[0]; const k=d.lx.indexOf(t0); let snip='';
+    if(k>=0){ const a=Math.max(0,k-40); snip=(a>0?'…':'')+d.x.slice(a,a+150); } else snip=d.x.slice(0,150);
+    const path=[d.ct.replace(/^(\d+)\.\s*/,'$1장 · ')].concat(d.p||[]).join(' › ');
+    return `<button type="button" class="hit${i===0?' sel':''}" data-k="${i}"><div class="hp">${esc(path)}</div><div class="ht">${mark(d.t,terms)}</div>${snip?`<div class="hs">${mark(snip,terms)}</div>`:''}</button>`;
+  }).join('');
+  res.querySelectorAll('.hit').forEach(b=>b.onclick=()=>pick(hits[+b.dataset.k]));
+}
+function pick(d){ closeSearch(); openChapter(d.c,d.id); }
+
+/* boot */
+renderResume();
+(async()=>{
+  const h=(location.hash||'').slice(1);
+  if(h&&h!=='home'){
+    await loadBook(); SECMAP=secIndex();
+    if(SECMAP[h]!==undefined) openChapter(SECMAP[h],h,false);
+  } else { loadBook().catch(()=>{}); }
+})();
+</script>
