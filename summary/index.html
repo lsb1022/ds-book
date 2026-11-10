@@ -191,7 +191,7 @@ main{min-width:0}
 .sb .nest{margin-left:22px}
 .bh{margin:30px 0 4px;font-weight:800;line-height:1.4}
 .bh1{font-size:21px}.bh2{font-size:19px}.bh3{font-size:17px}.bh4{font-size:16px;font-weight:700;color:var(--fg-muted)}
-.sb code{font-family:var(--mono);font-size:.84em;background:var(--bg-weak);padding:1px 6px;border-radius:5px;color:var(--crit-fg)}
+.sb code{font-family:var(--mono);font-size:.84em;background:var(--bg-weak);padding:1px 3px;border-radius:4px;color:var(--crit-fg);-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .sb a.ext{color:var(--info-fg);text-underline-offset:3px}
 .sb a.pm{color:var(--fg);font-weight:600;text-decoration:none;background:var(--bg-weak);padding:1px 7px;border-radius:6px}
 .sb a.pm::before{content:"↳ ";color:var(--fg-subtle)}
@@ -243,6 +243,8 @@ figure.code figcaption{text-align:left;padding:0 14px 10px}
 .mx.ok,.mx-d.ok{font-family:inherit;font-size:inherit}
 .mx svg{vertical-align:-0.2em;max-width:100%}
 mjx-container[display="true"]{margin:0!important}
+mjx-assistive-mml{display:none!important}
+.nw{white-space:nowrap}
 
 .file{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 14px;border-radius:var(--r-m);border:1px solid var(--line)}
 .file .fi{flex:none;font-size:18px}
@@ -694,7 +696,7 @@ section.sec.d2{margin-top:30px}
 <button class="totop" id="totop" type="button" aria-label="맨 위로" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <div class="toast" id="toast" hidden aria-live="polite"></div>
 
-<script>window.MathJax={startup:{typeset:false},svg:{fontCache:'global'},options:{enableMenu:false}};</script>
+<script>window.MathJax={startup:{typeset:false},svg:{fontCache:'local'},options:{enableMenu:false,enableAssistiveMml:false}};</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
 <script>/* ===== DSViz core: player, helpers ===== */
